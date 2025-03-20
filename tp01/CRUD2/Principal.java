@@ -12,10 +12,12 @@ public static void main(String[] args) {
         int opcao;
         do {
 
-            System.out.println("\n\nAEDsIII");
+            System.out.println("\n\nPUCFlix 1.0");
             System.out.println("-------");
             System.out.println("> Início");
-            System.out.println("\n1 - Clientes");
+            System.out.println("\n1 - Séries");
+            System.out.println("\n2 - Episódios");
+            System.out.println("\n3 - Atores");
             System.out.println("0 - Sair");
 
             System.out.print("\nOpção: ");
@@ -27,8 +29,13 @@ public static void main(String[] args) {
 
             switch (opcao) {
                 case 1:
-                    (new MenuClientes()).menu();
+                    (new MenuSeries()).menu();
                     break;
+                case 2:
+                    (new MenuEpisodios()).menu();
+                    break;
+                case 3: 
+                    (new MenuAtores()).menu();
                 case 0:
                     break;
                 default:
