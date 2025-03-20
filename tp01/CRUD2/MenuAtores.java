@@ -2,12 +2,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-public class MenuClientes {
+public class MenuAtores {
     
     ArquivoCliente arqClientes;
     private static Scanner console = new Scanner(System.in);
 
-    public MenuClientes() throws Exception {
+    public MenuAtores() throws Exception {
         arqClientes = new ArquivoCliente();
     }
 
