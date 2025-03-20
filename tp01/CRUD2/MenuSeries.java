@@ -16,14 +16,14 @@ public class MenuSeries {
         int opcao;
         do {
 
-            System.out.println("\n\nAEDsIII");
+            System.out.println("\n\nPUCFlix 1.0");
             System.out.println("-------");
-            System.out.println("> Início > Clientes");
-            System.out.println("\n1 - Buscar");
-            System.out.println("2 - Incluir");
+            System.out.println("> Início > Séries");
+            System.out.println("\n1 - Incluir");
+            System.out.println("2 -  Buscar");
             System.out.println("3 - Alterar");
             System.out.println("4 - Excluir");
-            System.out.println("0 - Voltar");
+            System.out.println("0 - Retornar ao menu anterior");
 
             System.out.print("\nOpção: ");
             try {
@@ -34,16 +34,16 @@ public class MenuSeries {
 
             switch (opcao) {
                 case 1:
-                    buscarCliente();
+                    incluirSerie();
                     break;
                 case 2:
-                    incluirCliente();
+                    buscarSerie();
                     break;
                 case 3:
-                    alterarCliente();
+                    alterarSerie();
                     break;
                 case 4:
-                    excluirCliente();
+                    excluirSerie();
                     break;
                 case 0:
                     break;
@@ -56,7 +56,7 @@ public class MenuSeries {
     }
 
 
-    public void buscarCliente() {
+    public void buscarSerie() {
         System.out.println("\nBusca de cliente");
         String cpf;
         boolean cpfValido = false;
@@ -79,7 +79,7 @@ public class MenuSeries {
         try {
             Cliente cliente = arqClientes.read(cpf);  // Chama o método de leitura da classe Arquivo
             if (cliente != null) {
-                mostraCliente(cliente);  // Exibe os detalhes do cliente encontrado
+                mostraSerie(cliente);  // Exibe os detalhes do cliente encontrado
             } else {
                 System.out.println("Cliente não encontrado.");
             }
@@ -90,7 +90,7 @@ public class MenuSeries {
     }   
 
 
-    public void incluirCliente() {
+    public void incluirSerie() {
         System.out.println("\nInclusão de cliente");
         String nome = "";
         String cpf = "";
@@ -152,7 +152,7 @@ public class MenuSeries {
         }
     }
 
-    public void alterarCliente() {
+    public void alterarSerie() {
         System.out.println("\nAlteração de cliente");
         String cpf;
         boolean cpfValido = false;
@@ -178,7 +178,7 @@ public class MenuSeries {
             Cliente cliente = arqClientes.read(cpf);
             if (cliente != null) {
                 System.out.println("Cliente encontrado:");
-                mostraCliente(cliente);  // Exibe os dados do cliente para confirmação
+                mostraSerie(cliente);  // Exibe os dados do cliente para confirmação
 
                 // Alteração de nome
                 System.out.print("\nNovo nome (deixe em branco para manter o anterior): ");
@@ -242,7 +242,7 @@ public class MenuSeries {
     }
 
 
-    public void excluirCliente() {
+    public void excluirSerie() {
         System.out.println("\nExclusão de cliente");
         String cpf;
         boolean cpfValido = false;
@@ -267,7 +267,7 @@ public class MenuSeries {
             Cliente cliente = arqClientes.read(cpf);
             if (cliente != null) {
                 System.out.println("Cliente encontrado:");
-                mostraCliente(cliente);  // Exibe os dados do cliente para confirmação
+                mostraSerie(cliente);  // Exibe os dados do cliente para confirmação
 
                 System.out.print("\nConfirma a exclusão do cliente? (S/N) ");
                 char resp = console.next().charAt(0);  // Lê a resposta do usuário
@@ -292,14 +292,14 @@ public class MenuSeries {
     }
 
 
-    public void mostraCliente(Cliente cliente) {
+    public void mostraSerie(Cliente cliente) {
     if (cliente != null) {
         System.out.println("\nDetalhes do Cliente:");
         System.out.println("----------------------");
         System.out.printf("Nome......: %s%n", cliente.nome);
         System.out.printf("CPF.......: %s%n", cliente.cpf);
         System.out.printf("Salário...: R$ %.2f%n", cliente.salario);
-        System.out.printf("Nascimento: %s%n", cliente.nascimento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        System.out.printf("Ano de Lançamento: %s%n", cliente.nascimento.format(DateTimeFormatter.ofPattern("yyyy")));
         System.out.println("----------------------");
     }
 }
