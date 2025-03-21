@@ -1,69 +1,43 @@
-# Projeto: Gerenciamento de Séries e Episódios
+# Projeto de Algoritmos e Estruturas de Dados 3
 
-## Informações Gerais
-**Disciplina:** Algoritmos e Estrutura de Dados  
-**Integrantes do Grupo:**  
-- Mariana Almeida  
-- Felipe Barros  
-- Bruna Furtado  
-- Gustavo Henrique  
+## Sobre o Projeto
+Este repositório contém a implementação de um sistema de gerenciamento de filmes e séries, desenvolvido como parte da disciplina **Algoritmos e Estruturas de Dados 3** na entrega do Trabalhos Práticos (TPs). O sistema permite realizar operações CRUD (Create, Read, Update, Delete) nos registros de filmes e séries, aplicando conceitos avançados de estruturas de dados e algoritmos.
 
-## Sobre a Tarefa
-O objetivo deste projeto é desenvolver um sistema para gerenciar séries e episódios, implementando funcionalidades essenciais de CRUD (Create, Read, Update, Delete) e garantindo a integridade dos relacionamentos entre as entidades. A principal estrutura de dados utilizada será a Árvore B+ para otimização das buscas e indexação, além da Tabela Hash Extensível.
+## Estrutura do Repositório
+O repositório está organizado da seguinte forma:
+- **tp01/** - Primeira tarefa do projeto, contendo README e código relacionado.
+- **tp02/** - Segunda tarefa do projeto, com README e arquivos correspondentes.
+- **...** - Outras tarefas seguindo a mesma estrutura.
 
-## Organização do Grupo
-A equipe está organizada por meio das seguintes ferramentas e metodologias:
-- **Metodologia Ágil:** As tarefas foram distribuídas em **sprints**.
-- **Comunicação:** O grupo utiliza **Discord** e **WhatsApp** para alinhamento das atividades.
-- **Gerenciamento de Tarefas:** O acompanhamento das atividades ocorre no **GitHub Projects**.
+Cada pasta contém um README específico explicando os detalhes da implementação de cada etapa do projeto.
 
-## Sprints e Tarefas
+## Funcionalidades
+- **Adicionar** novos filmes e séries ao sistema.
+- **Consultar** informações sobre filmes e séries cadastrados.
+- **Atualizar** registros existentes.
+- **Remover** itens do sistema.
 
-### 🟢 Sprint 1: Estrutura e Funcionalidade Principal (Foco no CRUD e no Relacionamento 1:N)
-**Prazo recomendado:** Até 24
+## Tecnologias Utilizadas
+- Linguagem de programação: Java
+- Estruturas de dados aplicadas:  Árvore B+, Tabela Hash Extensível, etc
 
-1️⃣ **Implementar CRUD de Séries** (🗂️)  
-   - Criar a estrutura da entidade Série  
-   - Implementar inclusão, alteração, busca e exclusão  
+## Participantes
+- Mariana Almeida
+- Felipe Barros
+- Bruna Furtado
+- Gustavo Henrique
 
-2️⃣ **Implementar CRUD de Episódios** (🎞️)  
-   - Criar a estrutura da entidade Episódio  
-   - Implementar inclusão, alteração, busca e exclusão  
+## Como Executar
+1. Clone este repositório:
+   ```bash
+   https://github.com/marialmeida1/study-aeds3_tps.git
+   ```
+2. Acesse a pasta desejada (ex: `tp01/`):
+   ```bash
+   cd tp01
+   ```
+3. Compile e execute o projeto conforme as instruções do README da tarefa correspondente.
 
-3️⃣ **Criar a relação 1:N entre séries e episódios usando Árvore B+** (🔗)  
-   - Definir o par (idSerie; idEpisódio)  
-   - Criar e gerenciar os índices na Árvore B+  
-
-4️⃣ **Criar a visão e controle de séries (Interface + Lógica)** (📺)  
-   - Criar a classe VisaoSeries para entrada/saída de dados  
-   - Criar a classe ControleSeries para gerenciar operações  
-
-5️⃣ **Criar a visão e controle de episódios (Interface + Lógica)** (🎭)  
-   - Criar a classe VisaoEpisodios para entrada/saída de dados  
-   - Criar a classe ControleEpisodios para gerenciar operações  
-
-6️⃣ **Garantir que séries não possam ser excluídas se tiverem episódios vinculados** (🚫)  
-   - Implementar regra de negócio para evitar exclusão incorreta  
-
-### 🟡 Sprint 2: Regras Extras, Testes e Documentação (Foco em otimização, regras e finalização)
-**Prazo recomendado:** Até 30 (com tolerância até 31)
-
-7️⃣ **Permitir visualização dos episódios organizados por temporada** (📆)  
-   - Criar método para exibir episódios de uma série separados por temporada  
-
-8️⃣ **Criar e configurar os índices usando Tabela Hash Extensível e Árvore B+** (📌)  
-   - Implementar os índices para otimizar as buscas  
-
-9️⃣ **Garantir que episódios só possam ser criados para séries existentes** (✔️)  
-   - Criar validação para impedir episódios sem série válida  
-
-🔟 **Testar todas as operações e validar o funcionamento** (🔍)  
-   - Testar CRUD, relacionamento 1:N e regras de exclusão  
-
-1️⃣1️⃣ **Criar documentação e relatório (README) para o GitHub** (📝)  
-   - Explicar como o sistema funciona, estrutura de classes e métodos principais  
-
-1️⃣2️⃣ **Responder ao checklist do professor e relatar desafios** ✅ (📑)  
-   - Verificar cada requisito do trabalho e documentar dificuldades enfrentadas  
-
+## Contato
+Para quaisquer dúvidas ou sugestões, entre em contato com um dos participantes do projeto.
 
