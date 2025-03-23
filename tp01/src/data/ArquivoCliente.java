@@ -1,6 +1,9 @@
-import aed3.*;
+package tp01.src.data;
+import tp01.src.models.Cliente;
+import tp01.src.util.*;
+import tp01.src.storeage.*;
 
-public class ArquivoCliente extends aed3.Arquivo<Cliente> {
+public class ArquivoCliente extends Arquivo<Cliente> {
 
     Arquivo<Cliente> arqClientes;
     HashExtensivel<ParCPFID> indiceIndiretoCPF;

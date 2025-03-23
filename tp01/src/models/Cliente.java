@@ -1,6 +1,7 @@
+package tp01.src.models;
 import java.time.LocalDate;
 
-import aed3.Registro;
+import tp01.src.storeage.*;
 
 import java.io.IOException;
 import java.io.ByteArrayOutputStream;

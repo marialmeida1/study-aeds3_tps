@@ -1,3 +1,4 @@
+package tp01.src.util;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;

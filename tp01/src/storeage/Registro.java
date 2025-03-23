@@ -1,6 +1,4 @@
-package aed3;
-
-
+package tp01.src.storeage;
 import java.io.IOException;
 
 public interface Registro {

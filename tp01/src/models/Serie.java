@@ -1,6 +1,7 @@
+package tp01.src.models;
 import java.time.LocalDate;
 
-import aed3.Registro;
+import tp01.src.storage.Registro;
 
 import java.io.IOException;
 import java.io.ByteArrayOutputStream;
@@ -29,7 +30,6 @@ public class Serie implements Registro {
         this.nome = n;
         this.cpf = c;
         this.salario = s;
-        this.nascimento = d;
     }
 
     public void setId(int id) {
@@ -48,8 +48,7 @@ public class Serie implements Registro {
         return "\nID........: " + this.id +
                "\nNome......: " + this.nome +
                "\nCPF.......: " + this.cpf +
-               "\nSalário...: " + this.salario +
-               "\nNascimento: " + this.nascimento;
+               "\nSalário...: " + this.salario;
     }
 
     public byte[] toByteArray() throws IOException {
@@ -59,7 +58,6 @@ public class Serie implements Registro {
         dos.writeUTF(this.nome);
         dos.write(this.cpf.getBytes());
         dos.writeFloat(this.salario);
-        dos.writeInt((int) this.nascimento.toEpochDay());
         return baos.toByteArray();
     }
 
@@ -74,6 +72,5 @@ public class Serie implements Registro {
         dis.read(cpf);
         this.cpf = new String(cpf);
         this.salario = dis.readFloat();
-        this.nascimento = LocalDate.ofEpochDay(dis.readInt());
     }
 }

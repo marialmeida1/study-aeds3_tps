@@ -1,6 +1,4 @@
-package aed3;
-
-
+package tp01.src.storeage;
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;

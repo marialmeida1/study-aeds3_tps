@@ -16,8 +16,10 @@ v1.1 - 2021
 */
 
 import java.util.Scanner;
+
+import tp01.src.storage.HashExtensivel;
+
 import java.io.File;
-import aed3.HashExtensivel;
 
 public class Main {
 

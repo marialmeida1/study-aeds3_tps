@@ -1,11 +1,11 @@
-package aed3;
+package tp01.src.storeage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class ParIDEndereco implements aed3.RegistroHashExtensivel<ParIDEndereco> {
+public class ParIDEndereco implements RegistroHashExtensivel<ParIDEndereco> {
     
     private int id;   // chave
     private long endereco;    // valor

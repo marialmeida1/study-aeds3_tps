@@ -1,3 +1,4 @@
+
 /*
 TABELA HASH EXTENSÍVEL
 
@@ -12,8 +13,7 @@ disciplina:
 Implementado pelo Prof. Marcos Kutova
 v1.1 - 2021
 */
-package aed3;
-
+package tp01.src.storeage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;

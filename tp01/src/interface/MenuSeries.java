@@ -2,6 +2,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+import tp01.src.data.ArquivoCliente;
+import tp01.src.models.Cliente;
+
 public class MenuSeries {
     
     ArquivoCliente arqClientes;

@@ -25,7 +25,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class ParEmailID implements aed3.RegistroHashExtensivel<ParEmailID> {
+public class ParEmailID implements tp01.src.storage.RegistroHashExtensivel<ParEmailID> {
 
   private String email;
   private int id;
