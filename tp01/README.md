@@ -17,6 +17,23 @@ A equipe está organizada por meio das seguintes ferramentas e metodologias:
 - **Comunicação:** O grupo utiliza **Discord** e **WhatsApp** para alinhamento das atividades.
 - **Gerenciamento de Tarefas:** O acompanhamento das atividades ocorre no **GitHub Projects**.
 
+## Organização de Pastas do Projeto
+
+- **`tp01/base_code`**: Armazena implementações de código base, como árvores B+, tabelas hash extensíveis e operações CRUD, ainda não utilizadas no projeto, mas fundamentais para futuras expansões.
+
+- **`tp01/bin`**: Contém os arquivos `.class` compilados do código-fonte, organizados conforme a estrutura de pacotes de `src`. São usados para rodar a aplicação.
+
+- **`tp01/src`**: Contém o código-fonte da aplicação, organizado em subpastas:
+  - **data**: Manipulação e leitura de dados (ex: `ArquivoCliente`).
+  - **models**: Representação das entidades do sistema (ex: `Cliente`, `Serie`).
+  - **storeage**: Lógica de armazenamento e persistência de dados (ex: `HashExtensivel`).
+  - **util**: Funções auxiliares e utilitárias (ex: `ParCPFID`).
+  - **view**: Interfaces e interação com o usuário (ex: `MenuEpisodios`, `MenuSeries`).
+
+- **`tp01/files`**: Armazena os dados persistentes do sistema, como arquivos de clientes e índices.
+
+Essa estrutura facilita a organização modular e futura expansão do projeto.
+
 ## Sprints e Tarefas
 
 ### 🟢 Sprint 1: Estrutura e Funcionalidade Principal (Foco no CRUD e no Relacionamento 1:N)
