@@ -10,7 +10,7 @@ public class ArquivoEpisodio extends Arquivo<Episodio> {
     HashExtensivel<ParCPFID> indiceIndiretoCPF;
 
     public ArquivoEpisodio() throws Exception {
-        super("episodio", Episodio.class.getConstructor());
+        super("episodio", Episodio.class.getConstructor()); // Cria um episódio básico
 
         indiceIndiretoCPF = new HashExtensivel<>(
                 ParCPFID.class.getConstructor(),
