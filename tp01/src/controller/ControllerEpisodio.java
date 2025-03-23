@@ -1,21 +1,21 @@
 package tp01.src.controller;
 
-import tp01.src.models.Cliente;
-import tp01.src.data.ArquivoCliente;
-import tp01.src.view.ViewSerie;
+import tp01.src.models.*;
+import tp01.src.data.ArquivoEpisodio;
+import tp01.src.view.ViewEpisodio;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class ControllerEpisodio {
 
-    private ArquivoCliente arqClientes;
-    private ViewSerie visao;
+    private ArquivoEpisodio arqEpisodios;
+    private ViewEpisodio visao;
     private static final Scanner console = new Scanner(System.in);
 
     public ControllerEpisodio() throws Exception {
-        arqClientes = new ArquivoCliente();
-        visao = new ViewSerie();
+        arqEpisodios = new ArquivoEpisodio();
+        visao = new ViewEpisodio();
     }
 
     public void menu() throws Exception {
@@ -26,16 +26,16 @@ public class ControllerEpisodio {
 
             switch (opcao) {
                 case 1:
-                    incluirSerie();
+                    incluirEpisodio();
                     break;
                 case 2:
-                    buscarSerie();
+                    buscarEpisodio();
                     break;
                 case 3:
-                    alterarSerie();
+                    alterarEpisodio();
                     break;
                 case 4:
-                    excluirSerie();
+                    excluirEpisodio();
                     break;
                 case 0:
                     break;
@@ -47,63 +47,68 @@ public class ControllerEpisodio {
         } while (opcao != 0);
     }
 
-    private void buscarSerie() {
-        String cpf = visao.lerCpf();
+    private void buscarEpisodio() {
+        int fkSerie = visao.lerSerie();
+        int idEpisodio = visao.lerEpisodio();
         try {
-            Cliente cliente = arqClientes.read(cpf);
-            if (cliente != null) {
-                visao.mostraSerie(cliente);
+            Episodio episodio = arqEpisodios.read(idEpisodio, fkSerie);
+            if (episodio != null) {
+                visao.mostraEpisodio(episodio);
             } else {
-                System.out.println("Cliente não encontrado.");
+                System.out.println("Episódio não encontrado.");
             }
         } catch (Exception e) {
-            System.out.println("Erro ao buscar o cliente!");
+            System.out.println("Erro ao buscar o episódio!");
             e.printStackTrace();
         }
     }
 
-    private void incluirSerie() {
+    private void incluirEpisodio() {
         String nome = visao.obterNome();
-        if (nome.isEmpty()) return;
+        if (nome.isEmpty())
+            return;
 
-        String cpf = visao.obterCpf();
-        float salario = visao.obterSalario();
-        LocalDate dataNascimento = visao.obterDataNascimento();
+        int temporada = visao.obterTemporada();
+        LocalDate dataLancamento = visao.obterDataLancamento();
+        int duracao = visao.obterDuracao();
 
-        System.out.print("\nConfirma a inclusão do cliente? (S/N) ");
+        System.out.print("\nConfirma a inclusão do episodio? (S/N) ");
         if (visao.confirmarAlteracoes()) {
             try {
-                Cliente cliente = new Cliente(nome, cpf, salario, dataNascimento);
-                arqClientes.create(cliente);
-                System.out.println("Cliente incluído com sucesso.");
+                Episodio episodio = new Episodio(nome, temporada, dataLancamento, duracao);
+                arqEpisodios.create(episodio);
+                System.out.println("Episódio incluído com sucesso.");
             } catch (Exception e) {
-                System.out.println("Erro ao incluir o cliente!");
+                System.out.println("Erro ao incluir o episódio!");
             }
         }
     }
 
-    private void alterarSerie() throws Exception {
-        String cpf = visao.lerCpf();
-        Cliente cliente = arqClientes.read(cpf);
-        if (cliente != null) {
-            visao.mostraSerie(cliente);
+    private void alterarEpisodio() throws Exception {
+        int fkSerie = visao.lerSerie();
+        int idEpisodio = visao.lerEpisodio();
+
+        Episodio episodio = arqEpisodios.read(idEpisodio, fkSerie);
+        if (episodio != null) {
+            visao.mostraEpisodio(episodio);
 
             String novoNome = visao.obterNome();
-            if (!novoNome.isEmpty()) cliente.nome = novoNome;
+            if (!novoNome.isEmpty())
+                episodio.nome = novoNome;
 
-            String novoCpf = visao.obterCpf();
-            if (!novoCpf.isEmpty()) cliente.cpf = novoCpf;
+            int novaTemporada = visao.obterTemporada();
+            episodio.temporada = novaTemporada;
 
-            float novoSalario = visao.obterSalario();
-            cliente.salario = novoSalario;
+            LocalDate novaDataLancamento = visao.obterDataLancamento();
+            episodio.lancamento = novaDataLancamento;
 
-            LocalDate novaDataNascimento = visao.obterDataNascimento();
-            cliente.nascimento = novaDataNascimento;
+            int novaDuracao = visao.obterDuracao();
+            episodio.duracao = novaDuracao;
 
             if (visao.confirmarAlteracoes()) {
-                boolean alterado = arqClientes.update(cliente);
+                boolean alterado = arqEpisodios.update(episodio);
                 if (alterado) {
-                    System.out.println("Cliente alterado com sucesso.");
+                    System.out.println("Episódio alterado com sucesso.");
                 } else {
                     System.out.println("Erro ao alterar o cliente.");
                 }
@@ -111,27 +116,29 @@ public class ControllerEpisodio {
                 System.out.println("Alterações canceladas.");
             }
         } else {
-            System.out.println("Cliente não encontrado.");
+            System.out.println("Episódio não encontrado.");
         }
     }
 
-    private void excluirSerie() throws Exception {
-        String cpf = visao.lerCpf();
-        Cliente cliente = arqClientes.read(cpf);
-        if (cliente != null) {
-            visao.mostraSerie(cliente);
+    private void excluirEpisodio() throws Exception {
+        int fkSerie = visao.lerSerie();
+        int idEpisodio = visao.lerEpisodio();
+
+        Episodio episodio = arqEpisodios.read(idEpisodio, fkSerie);
+        if (episodio != null) {
+            visao.mostraEpisodio(episodio);
             if (visao.confirmarExclusao()) {
-                boolean excluido = arqClientes.delete(cpf);
+                boolean excluido = arqEpisodios.delete(idEpisodio, fkSerie);
                 if (excluido) {
-                    System.out.println("Cliente excluído com sucesso.");
+                    System.out.println("Episódio excluído com sucesso.");
                 } else {
-                    System.out.println("Erro ao excluir o cliente.");
+                    System.out.println("Erro ao excluir o episódio.");
                 }
             } else {
                 System.out.println("Exclusão cancelada.");
             }
         } else {
-            System.out.println("Cliente não encontrado.");
+            System.out.println("Episódio não encontrado.");
         }
     }
 }

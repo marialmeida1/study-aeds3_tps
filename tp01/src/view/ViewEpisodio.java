@@ -21,7 +21,35 @@ public class ViewEpisodio {
         System.out.print("\nOpção: ");
     }
 
-    public void mostraSerie(Episodio episodio) {
+    public int lerSerie() {
+        int fkSerie;
+        while (true) {
+            System.out.print("\nID da Série: ");
+            fkSerie = console.nextInt();
+            if (fkSerie > 0) {
+                console.nextLine();
+                return fkSerie;
+            } else {
+                System.out.println("ID da Série inválido! O valor deve ser maior que zero.");
+            }
+        }
+    }
+
+    public int lerEpisodio() {
+        int idEpisodio;
+        while (true) {
+            System.out.print("\nID do Episódio: ");
+            idEpisodio = console.nextInt();
+            if (idEpisodio > 0) {
+                console.nextLine();
+                return idEpisodio;
+            } else {
+                System.out.println("ID do Episódio inválido! O valor deve ser maior que zero.");
+            }
+        }
+    }
+
+    public void mostraEpisodio(Episodio episodio) {
         if (episodio != null) {
             System.out.println("\nDetalhes do episodio:");
             System.out.println("----------------------");
@@ -52,21 +80,21 @@ public class ViewEpisodio {
         }
     }
 
-    public float obterDuracao() {
-        float duracao;
+    public int obterTemporada() {
+        int temporada;
         while (true) {
-            System.out.print("Salário: ");
+            System.out.print("Temporada: ");
             if (console.hasNextInt()) {
-                duracao = console.nextInt();
-                if (duracao > 0) {
+                temporada = console.nextInt();
+                if (temporada > 0) {
                     console.nextLine();
-                    return duracao;
+                    return temporada;
                 } else {
-                    System.out.println("Duração inválida! O valor deve ser maior que zero.");
+                    System.out.println("Temporada inválida! O valor deve ser maior que zero.");
                 }
             } else {
-                System.out.println("Entrada inválida! Digite um valor numérico para a duração.");
-                console.nextLine(); 
+                System.out.println("Entrada inválida! Digite um valor numérico para a temporada.");
+                console.nextLine();
             }
         }
     }
@@ -85,11 +113,31 @@ public class ViewEpisodio {
         }
     }
 
+
+    public int obterDuracao() {
+        int duracao;
+        while (true) {
+            System.out.print("Salário: ");
+            if (console.hasNextInt()) {
+                duracao = console.nextInt();
+                if (duracao > 0) {
+                    console.nextLine();
+                    return duracao;
+                } else {
+                    System.out.println("Duração inválida! O valor deve ser maior que zero.");
+                }
+            } else {
+                System.out.println("Entrada inválida! Digite um valor numérico para a duração.");
+                console.nextLine();
+            }
+        }
+    }
+
     public boolean confirmarAlteracoes() {
         String resposta;
         while (true) {
             System.out.print("\nConfirma as alterações? (S/N) ");
-            resposta = console.nextLine().trim(); 
+            resposta = console.nextLine().trim();
 
             if (resposta.equalsIgnoreCase("S")) {
                 return true;
@@ -105,7 +153,7 @@ public class ViewEpisodio {
         String resposta;
         while (true) {
             System.out.print("\nConfirma a exclusão do episódio? (S/N) ");
-            resposta = console.nextLine().trim(); 
+            resposta = console.nextLine().trim();
 
             if (resposta.equalsIgnoreCase("S")) {
                 return true;
