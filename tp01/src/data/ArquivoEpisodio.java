@@ -12,13 +12,11 @@ public class ArquivoEpisodio extends Arquivo<Episodio> {
     public ArquivoEpisodio() throws Exception {
         super("episodio", Episodio.class.getConstructor());
 
-        // Criação do índice indireto com HashExtensível, ajustando os caminhos para a
-        // pasta tp01/files
         indiceIndiretoCPF = new HashExtensivel<>(
                 ParCPFID.class.getConstructor(),
                 4,
-                "tp01/files/episodio/indiceCPF.d.db", // Diretório para o índice de CPF
-                "tp01/files/episodio/indiceCPF.c.db" // Cestos para o índice de CPF
+                "tp01/files/episodio/indiceCPF.d.db", 
+                "tp01/files/episodio/indiceCPF.c.db"
         );
     }
 

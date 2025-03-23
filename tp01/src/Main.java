@@ -1,7 +1,6 @@
 package tp01.src;
 
 import java.util.Scanner;
-import tp01.src.view.*;
 import tp01.src.controller.*;
 
 
@@ -32,7 +31,7 @@ public class Main {
 
                 switch (opcao) {
                     case 1:
-                        (new ControllersSerie()).menu();
+                        (new ControllerSerie()).menu();
                         /*System.out.   println("Menu Séries");*/
                         break;
                     case 2:
