@@ -1,5 +1,7 @@
 package tp01.src.data;
 
+import java.util.ArrayList;
+
 import tp01.src.models.*;
 import tp01.src.util.*;
 import tp01.src.storeage.*;
@@ -7,61 +9,38 @@ import tp01.src.storeage.*;
 public class ArquivoEpisodio extends Arquivo<Episodio> {
 
     Arquivo<Episodio> arqEpisodio;
-    HashExtensivel<ParCPFID> indiceIndiretoCPF;
+    ArvoreBMais<ParIDFK> arvore;
 
     public ArquivoEpisodio() throws Exception {
         super("episodio", Episodio.class.getConstructor()); // Cria um episódio básico
 
-        indiceIndiretoCPF = new HashExtensivel<>(
-                ParCPFID.class.getConstructor(),
-                4,
-                "tp01/files/episodio/indiceCPF.d.db", 
-                "tp01/files/episodio/indiceCPF.c.db"
-        );
+        arvore = new ArvoreBMais<>(ParIDFK.class.getConstructor(), 5, "tp01/files/episodio/arvore.c.db");
     }
 
     @Override
     public int create(Episodio c) throws Exception {
         int id = super.create(c);
-        indiceIndiretoCPF.create(new ParCPFID(c.getCpf(), id));
+        arvore.create(new ParIDFK(c.id, c.fkSerie)); // Cria um par int int, com o id do episodio e id da serie
         return id;
     }
 
-    public Episodio read(String cpf) throws Exception {
-        ParCPFID pci = indiceIndiretoCPF.read(ParCPFID.hash(cpf));
-        if (pci == null)
-            return null;
-        return read(pci.getId());
-    }
-
-    public boolean delete(String cpf) throws Exception {
-        ParCPFID pci = indiceIndiretoCPF.read(ParCPFID.hash(cpf));
-        if (pci != null)
-            if (delete(pci.getId()))
-                return indiceIndiretoCPF.delete(ParCPFID.hash(cpf));
-        return false;
-    }
-
-    @Override
-    public boolean delete(int id) throws Exception {
-        Episodio c = super.read(id);
-        if (c != null) {
-            if (super.delete(id))
-                return indiceIndiretoCPF.delete(ParCPFID.hash(c.getCpf()));
+    public Episodio read(int c1, int c2) throws Exception {
+        ArrayList<ParIDFK> lista = arvore.read(new ParIDFK(c1, c2)); // Acha uma lista de valores
+        if (!lista.isEmpty()) { // Irá sempre retornar um valor
+            ParIDFK resultado = lista.get(0); // Ou seja, pega o primeiro
+            return read(resultado.getId()); // Retorna o episódio dele
+        } else {
+            return null; // Não retorna nada
         }
-        return false;
     }
 
-    @Override
-    public boolean update(Episodio novoEpisodio) throws Exception {
-        Episodio clienteVelho = read(novoEpisodio.getCpf());
-        if (super.update(novoEpisodio)) {
-            if (novoEpisodio.getCpf().compareTo(clienteVelho.getCpf()) != 0) {
-                indiceIndiretoCPF.delete(ParCPFID.hash(clienteVelho.getCpf()));
-                indiceIndiretoCPF.create(new ParCPFID(novoEpisodio.getCpf(), novoEpisodio.getId()));
-            }
-            return true;
+    public boolean delete(int c1, int c2) throws Exception {
+        ArrayList<ParIDFK> lista = arvore.read(new ParIDFK(c1, c2)); 
+        if (!lista.isEmpty()){
+            ParIDFK resultado = lista.get(0); 
+            if (delete(resultado.getId())) 
+                return arvore.delete(resultado);
         }
-        return false;
+        return false; 
     }
 }
