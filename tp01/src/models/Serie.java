@@ -1,13 +1,11 @@
 package tp01.src.models;
 import java.time.LocalDate;
-
-import tp01.src.storage.Registro;
-
 import java.io.IOException;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import tp01.src.storeage.*;
 
 public class Serie implements Registro {
 

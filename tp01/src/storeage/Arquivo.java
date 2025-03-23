@@ -11,31 +11,38 @@ public class Arquivo<T extends Registro> {
     HashExtensivel<ParIDEndereco> indiceDireto;
 
     public Arquivo(String na, Constructor<T> c) throws Exception {
-        File d = new File(".\\dados");
-        if(!d.exists())
-            d.mkdir();
-
-        d = new File(".\\dados\\"+na);
-        if(!d.exists())
-            d.mkdir();
-
-        this.nomeArquivo = ".\\dados\\"+na+"\\"+na+".db";
+        // Define o diretório onde os dados serão armazenados (tp01/files)
+        File d = new File("tp01/files");
+        if (!d.exists()) {
+            d.mkdir();  // Cria o diretório tp01/files se não existir
+        }
+    
+        // Agora cria o subdiretório com o nome fornecido em 'na'
+        d = new File("tp01/files/" + na);
+        if (!d.exists()) {
+            d.mkdir();  // Cria o subdiretório com o nome fornecido em 'na'
+        }
+    
+        // Define o nome do arquivo e o caminho completo
+        this.nomeArquivo = "tp01/files/" + na + "/" + na + ".db";
         this.construtor = c;
         arquivo = new RandomAccessFile(this.nomeArquivo, "rw");
-        if(arquivo.length()<TAM_CABECALHO) {
-            // inicializa o arquivo, criando seu cabecalho
+    
+        // Se o arquivo for novo (comprimento menor que TAM_CABECALHO), inicializa-o
+        if (arquivo.length() < TAM_CABECALHO) {
             arquivo.writeInt(0);   // último ID
-            arquivo.writeLong(-1);   // lista de registros marcados para exclusão 
+            arquivo.writeLong(-1);  // lista de registros marcados para exclusão
         }
-
+    
+        // Criação do índice direto utilizando a nova pasta
         indiceDireto = new HashExtensivel<>(
             ParIDEndereco.class.getConstructor(), 
             4, 
-            ".\\dados\\"+na+"\\"+na+".d.db", // diretório 
-            ".\\dados\\"+na+"\\"+na+".c.db"  // cestos
+            "tp01/files/" + na + "/" + na + ".d.db", // diretório
+            "tp01/files/" + na + "/" + na + ".c.db"  // cestos
         );
     }
-
+        
     public int create(T obj) throws Exception {
         arquivo.seek(0);
         int proximoID = arquivo.readInt()+1;
