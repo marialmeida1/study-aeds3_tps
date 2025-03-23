@@ -1,5 +1,6 @@
 package tp01.src;
 import java.util.Scanner;
+import tp01.src.view.*;
 
 public class Main {
 
@@ -28,8 +29,8 @@ public class Main {
 
                 switch (opcao) {
                     case 1:
-                        /*(new MenuSeries()).menu();*/
-                        System.out.println("Menu Séries");
+                        (new MenuSeries()).menu();
+                        /*System.out.   println("Menu Séries");*/
                         break;
                     case 2:
                         /*(new MenuEpisodios()).menu();*/
