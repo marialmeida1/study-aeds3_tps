@@ -7,13 +7,13 @@ import tp01.src.view.ViewSerie;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class ControllersSerie {
+public class ControllerSerie {
 
     private ArquivoCliente arqClientes;
     private ViewSerie visao;
     private static final Scanner console = new Scanner(System.in);
 
-    public ControllersSerie() throws Exception {
+    public ControllerSerie() throws Exception {
         arqClientes = new ArquivoCliente();
         visao = new ViewSerie();
     }
