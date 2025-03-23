@@ -34,6 +34,7 @@ A equipe está organizada por meio das seguintes ferramentas e metodologias:
 
 Essa estrutura facilita a organização modular e futura expansão do projeto.
 
+
 ## Sprints e Tarefas
 
 ### 🟢 Sprint 1: Estrutura e Funcionalidade Principal (Foco no CRUD e no Relacionamento 1:N)
@@ -82,5 +83,22 @@ Essa estrutura facilita a organização modular e futura expansão do projeto.
 
 1️⃣2️⃣ **Responder ao checklist do professor e relatar desafios** ✅ (📑)  
    - Verificar cada requisito do trabalho e documentar dificuldades enfrentadas  
+
+
+## Rodando o Código
+
+**Compilando o código:**
+
+```bash
+javac -d tp01/bin tp01/src/**/*.java 
+```
+
+**Rodando o código:**
+
+```bash
+java -cp tp01/bin tp01.src.Main                                    
+```
+
+
 
 
