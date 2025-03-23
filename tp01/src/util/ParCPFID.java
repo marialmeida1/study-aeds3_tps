@@ -4,8 +4,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import tp01.src.storeage.*;
 
-public class ParCPFID implements aed3.RegistroHashExtensivel<ParCPFID> {
+public class ParCPFID implements RegistroHashExtensivel<ParCPFID> {
     
     private String cpf; // chave
     private int id;     // valor
