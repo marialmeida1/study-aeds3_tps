@@ -2,8 +2,7 @@ package tp01.src;
 
 import java.util.Scanner;
 import tp01.src.view.*;
-import tp01.src.controller.*;
-
+import tp01.src.controller.ControllerSerie;
 
 public class Main {
 
@@ -32,12 +31,10 @@ public class Main {
 
                 switch (opcao) {
                     case 1:
-                        (new ControllersSerie()).menu();
-                        /*System.out.   println("Menu Séries");*/
+                        (new ControllerSerie()).menu(); // Corrected reference to ControllerSerie
                         break;
                     case 2:
-                        /*(new MenuEpisodios()).menu();*/
-                        System.out.println("Menu Episódios");
+                        System.out.println("Menu Episódios (não implementado ainda)");
                         break;
                     case 0:
                         break;

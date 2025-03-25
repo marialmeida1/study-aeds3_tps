@@ -1,10 +1,11 @@
-package tp01.src.util;
+package tp01.src.storage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import tp01.src.storeage.*;
+
+import tp01.src.storage.*;
 
 public class ParCPFID implements RegistroHashExtensivel<ParCPFID> {
     
