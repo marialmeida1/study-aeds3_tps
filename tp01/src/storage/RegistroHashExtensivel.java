@@ -9,7 +9,7 @@ conter.
 Implementado pelo Prof. Marcos Kutova
 v1.1 - 2021
 */
-package tp01.src.storeage;
+package tp01.src.storage;
 import java.io.IOException;
 
 public interface RegistroHashExtensivel<T> {

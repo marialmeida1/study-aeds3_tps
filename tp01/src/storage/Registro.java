@@ -1,4 +1,4 @@
-package tp01.src.storeage;
+package tp01.src.storage;
 import java.io.IOException;
 
 public interface Registro {

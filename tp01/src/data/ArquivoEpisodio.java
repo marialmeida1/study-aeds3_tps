@@ -1,8 +1,8 @@
 package tp01.src.data;
 
 import tp01.src.models.*;
+import tp01.src.storage.*;
 import tp01.src.util.*;
-import tp01.src.storeage.*;
 
 public class ArquivoEpisodio extends Arquivo<Episodio> {
 
