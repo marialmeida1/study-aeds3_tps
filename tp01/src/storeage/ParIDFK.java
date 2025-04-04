@@ -10,7 +10,7 @@ relacionamentos entre dois IDs de entidades quaisquer
 Implementado pelo Prof. Marcos Kutova
 v1.0 - 2021
 */
-package tp01.src.util;
+package tp01.src.storeage;
 
 import tp01.src.storeage.*;
 import java.io.ByteArrayInputStream;

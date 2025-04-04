@@ -1,7 +1,6 @@
 package tp01.src.data;
 
 import tp01.src.models.Cliente;
-import tp01.src.util.*;
 import tp01.src.storeage.*;
 
 public class ArquivoCliente extends Arquivo<Cliente> {

@@ -35,7 +35,9 @@ public static void main(String[] args) {
                     (new MenuEpisodios()).menu();
                     break;
                 case 3: 
-                    (new MenuAtores()).menu();
+                    //Since Atores is not implemented by now, it will not be possible to access it.
+                    System.out.println("Atores não implementado ainda!");
+                    //(new MenuAtores()).menu(); 
                 case 0:
                     break;
                 default:
