@@ -11,8 +11,6 @@ Implementado pelo Prof. Marcos Kutova
 v1.0 - 2021
 */
 package tp01.src.storeage;
-
-import tp01.src.storeage.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
