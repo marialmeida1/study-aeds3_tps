@@ -25,8 +25,8 @@ public class Episodio implements Registro {
         this(-1, -1, "", -1, LocalDate.now(), -1);
     }
 
-    public Episodio(String n, int t, LocalDate l, int d) {
-        this(-1, -1, n, t, l, d);
+    public Episodio(int f, String n, int t, LocalDate l, int d) {
+        this(-1, f, n, t, l, d);
     }
 
     public Episodio(int i, int f, String n, int t, LocalDate l, int d) {

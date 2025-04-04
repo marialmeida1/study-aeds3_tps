@@ -2,6 +2,7 @@ package tp01.src.controller;
 
 import tp01.src.models.*;
 import tp01.src.data.ArquivoEpisodio;
+import tp01.src.data.ArquivoSerie;
 import tp01.src.view.ViewEpisodio;
 
 import java.time.LocalDate;
@@ -10,11 +11,13 @@ import java.util.Scanner;
 public class ControllerEpisodio {
 
     private ArquivoEpisodio arqEpisodios;
+    private ArquivoSerie arqSeries;
     private ViewEpisodio visao;
     private static final Scanner console = new Scanner(System.in);
 
     public ControllerEpisodio() throws Exception {
         arqEpisodios = new ArquivoEpisodio();
+        arqSeries = new ArquivoSerie();        
         visao = new ViewEpisodio();
     }
 
@@ -47,9 +50,11 @@ public class ControllerEpisodio {
         } while (opcao != 0);
     }
 
-    private void buscarEpisodio() {
+    private void buscarEpisodio() throws Exception {
+        
         int fkSerie = visao.lerSerie();
         int idEpisodio = visao.lerEpisodio();
+
         try {
             Episodio episodio = arqEpisodios.read(idEpisodio, fkSerie);
             if (episodio != null) {
@@ -63,7 +68,18 @@ public class ControllerEpisodio {
         }
     }
 
-    private void incluirEpisodio() {
+    private void incluirEpisodio() throws Exception {
+
+        // Lê o nome da série e retorna a série para pegar o id
+        String nomeSerie = visao.obterNomeSerie();
+        Serie serie = arqSeries.read(nomeSerie);
+
+        if(serie == null) { // Verifica se encontrou
+            System.out.println("Erro: Série não encontrada!");
+            return;
+        }
+
+        // Dados básicos
         String nome = visao.obterNome();
         if (nome.isEmpty())
             return;
@@ -72,10 +88,12 @@ public class ControllerEpisodio {
         LocalDate dataLancamento = visao.obterDataLancamento();
         int duracao = visao.obterDuracao();
 
+
+        // Confirmar a inclusão
         System.out.print("\nConfirma a inclusão do episodio? (S/N) ");
         if (visao.confirmarAlteracoes()) {
             try {
-                Episodio episodio = new Episodio(nome, temporada, dataLancamento, duracao);
+                Episodio episodio = new Episodio(serie.id, nome, temporada, dataLancamento, duracao);
                 arqEpisodios.create(episodio);
                 System.out.println("Episódio incluído com sucesso.");
             } catch (Exception e) {

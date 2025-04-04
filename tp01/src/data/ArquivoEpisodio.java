@@ -32,6 +32,21 @@ public class ArquivoEpisodio extends Arquivo<Episodio> {
             return null; // Não retorna nada
         }
     }
+    
+    public ArrayList<Episodio> readAllBySerie(int c1) throws Exception { // Alterado nome do método
+        ArrayList<Episodio> episodios = new ArrayList<>();
+        ArrayList<ParIDFK> lista = arvore.read(new ParIDFK(c1, -1)); // Acha uma lista de valores
+    
+        for (ParIDFK par : lista) { // Itera sobre todos os pares encontrados
+            Episodio ep = read(par.getId()); // Lê o episódio pelo ID
+            if (ep != null) {
+                episodios.add(ep);
+            }
+        }
+    
+        return episodios; // Retorna a lista com os episódios encontrados
+    }    
+    
 
     public boolean delete(int c1, int c2) throws Exception {
         ArrayList<ParIDFK> lista = arvore.read(new ParIDFK(c1, c2)); 

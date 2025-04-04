@@ -29,6 +29,7 @@ public class ArquivoSerie extends Arquivo<Serie> {
 
     public Serie read(String nome) throws Exception {
         ParStringID psi = indiceIndiretoNome.read(ParStringID.hash(nome));
+        System.out.println("Hash do nome buscado: " + ParStringID.hash(nome));
         if (psi == null)
             return null;
         return read(psi.getId());

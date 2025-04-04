@@ -38,7 +38,7 @@ public class ViewEpisodio {
     public int lerEpisodio() {
         int idEpisodio;
         while (true) {
-            System.out.print("\nID do Episódio: ");
+            System.out.print("ID do Episódio: ");
             idEpisodio = console.nextInt();
             if (idEpisodio > 0) {
                 console.nextLine();
@@ -56,7 +56,7 @@ public class ViewEpisodio {
             System.out.printf("Nome:................ %s%n", episodio.nome);
             System.out.printf("Temporada:........... %d%n", episodio.temporada);
             System.out.printf("Data Lançamento:..... %s%n",
-                    episodio.lancamento.format(DateTimeFormatter.ofPattern("yyyy")));
+                    episodio.lancamento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             System.out.printf("Duração:............. %d%n", episodio.duracao);
             System.out.println("----------------------");
         } else {
@@ -67,15 +67,27 @@ public class ViewEpisodio {
     public String obterNome() {
         String nome;
         while (true) {
-            System.out.print("\nNome (min. de 4 letras ou vazio para cancelar): ");
+            System.out.print("Nome do Episódio: ");
             nome = console.nextLine();
             if (nome.isEmpty()) {
                 return null; // Cancela a operação
             }
-            if (nome.length() >= 4) {
+            if (nome.length() >= 0) {
                 return nome;
-            } else {
-                System.out.println("Nome inválido! O nome deve ter pelo menos 4 letras.");
+            }
+        }
+    }
+
+    public String obterNomeSerie() {
+        String nome;
+        while (true) {
+            System.out.print("Nome da Série: ");
+            nome = console.nextLine();
+            if (nome.isEmpty()) {
+                return null; // Cancela a operação
+            }
+            if (nome.length() >= 0) {
+                return nome;
             }
         }
     }
