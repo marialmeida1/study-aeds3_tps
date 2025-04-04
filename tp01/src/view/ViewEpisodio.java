@@ -117,7 +117,7 @@ public class ViewEpisodio {
     public int obterDuracao() {
         int duracao;
         while (true) {
-            System.out.print("Salário: ");
+            System.out.print("Duração: ");
             if (console.hasNextInt()) {
                 duracao = console.nextInt();
                 if (duracao > 0) {

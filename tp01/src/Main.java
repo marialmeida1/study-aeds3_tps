@@ -3,7 +3,6 @@ package tp01.src;
 import java.util.Scanner;
 import tp01.src.controller.*;
 
-
 public class Main {
 
     public static void main(String[] args) {
@@ -32,11 +31,11 @@ public class Main {
                 switch (opcao) {
                     case 1:
                         (new ControllerSerie()).menu();
-                        /*System.out.   println("Menu Séries");*/
+                        /* System.out. println("Menu Séries"); */
                         break;
                     case 2:
-                        /*(new MenuEpisodios()).menu();*/
-                        System.out.println("Menu Episódios");
+                        (new ControllerEpisodio()).menu();
+                        /* System.out.println("Menu Episódios"); */
                         break;
                     case 0:
                         break;
