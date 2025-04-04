@@ -1,7 +1,7 @@
 package tp01.src.models;
 import java.io.IOException;
 
-import tp01.src.storage.*;
+import tp01.src.storeage.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
