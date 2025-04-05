@@ -3,9 +3,6 @@ package tp01.src.controller;
 import tp01.src.models.Serie;
 import tp01.src.data.ArquivoSerie;
 import tp01.src.view.ViewSerie;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class ControllerSerie {
