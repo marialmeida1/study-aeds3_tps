@@ -29,7 +29,7 @@ public class ControllerEpisodio {
 
             switch (opcao) {
                 case 1:
-                    incluirEpisodio();
+                    /*incluirEpisodio();*/
                     break;
                 case 2:
                     buscarEpisodio();
@@ -68,7 +68,7 @@ public class ControllerEpisodio {
         }
     }
 
-    private void incluirEpisodio() throws Exception {
+    /*private void incluirEpisodio() throws Exception {
 
         // Lê o nome da série e retorna a série para pegar o id
         String nomeSerie = visao.obterNomeSerie();
@@ -100,7 +100,7 @@ public class ControllerEpisodio {
                 System.out.println("Erro ao incluir o episódio!");
             }
         }
-    }
+    }*/
 
     private void alterarEpisodio() throws Exception {
         int fkSerie = visao.lerSerie();

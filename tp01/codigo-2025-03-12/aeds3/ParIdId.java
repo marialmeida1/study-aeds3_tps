@@ -1,3 +1,5 @@
+package aeds3; 
+
 /*
 Esta classe representa um objeto para uma entidade
 que será armazenado em uma árvore B+
@@ -16,64 +18,64 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class ParIntInt implements aed3.RegistroArvoreBMais<ParIntInt> {
+public class ParIdId implements aeds3.RegistroArvoreBMais<ParIdId> {
 
-  private int num1;
-  private int num2;
+  private int id1;
+  private int id2;
   private short TAMANHO = 8;
 
-  public ParIntInt() {
+  public ParIdId() {
     this(-1, -1);
   }
 
-  public ParIntInt(int n1) {
+  public ParIdId(int n1) {
     this(n1, -1);
   }
 
-  public ParIntInt(int n1, int n2) {
+  public ParIdId(int n1, int n2) {
     try {
-      this.num1 = n1; // ID do Usuário
-      this.num2 = n2; // ID da Pergunta
+      this.id1 = n1; // ID da entidade agregadora
+      this.id2 = n2; // ID da outra entidade
     } catch (Exception ec) {
       ec.printStackTrace();
     }
   }
 
   @Override
-  public ParIntInt clone() {
-    return new ParIntInt(this.num1, this.num2);
+  public ParIdId clone() {
+    return new ParIdId(this.id1, this.id2);
   }
 
   public short size() {
     return this.TAMANHO;
   }
 
-  public int compareTo(ParIntInt a) {
-    if (this.num1 != a.num1)
-      return this.num1 - a.num1;
+  public int compareTo(ParIdId a) {
+    if (this.id1 != a.id1)
+      return this.id1 - a.id1;
     else
-      // Só compara os valores de Num2, se o Num2 da busca for diferente de -1
+      // Só compara os valores de id2, se o id2 da busca for diferente de -1
       // Isso é necessário para que seja possível a busca de lista
-      return this.num2 == -1 ? 0 : this.num2 - a.num2;
+      return this.id2 == -1 ? 0 : this.id2 - a.id2;
   }
 
   public String toString() {
-    return String.format("%3d", this.num1) + ";" + String.format("%-3d", this.num2);
+    return String.format("%3d", this.id1) + ";" + String.format("%-3d", this.id2);
   }
 
   public byte[] toByteArray() throws IOException {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     DataOutputStream dos = new DataOutputStream(baos);
-    dos.writeInt(this.num1);
-    dos.writeInt(this.num2);
+    dos.writeInt(this.id1);
+    dos.writeInt(this.id2);
     return baos.toByteArray();
   }
 
   public void fromByteArray(byte[] ba) throws IOException {
     ByteArrayInputStream bais = new ByteArrayInputStream(ba);
     DataInputStream dis = new DataInputStream(bais);
-    this.num1 = dis.readInt();
-    this.num2 = dis.readInt();
+    this.id1 = dis.readInt();
+    this.id2 = dis.readInt();
   }
 
 }

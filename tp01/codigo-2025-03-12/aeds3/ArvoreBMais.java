@@ -11,7 +11,7 @@
  * Implementado pelo Prof. Marcos Kutova
  * v2.0 - 2021
  */
-package aed3;
+package aeds3;
 
 import java.io.*;
 import java.util.ArrayList;

@@ -1,1 +1,0 @@
-this is a test folder destined to be run with the new dependencies files and codes, it doesnt relate to the original main code in any ways, and it could be deleted only when the main code it is destined to test has been homologated and approved.

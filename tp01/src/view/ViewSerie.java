@@ -24,11 +24,11 @@ public class ViewSerie {
         if (serie != null) {
             System.out.println("\nDetalhes da Série:");
             System.out.println("----------------------");
-            System.out.printf("Nome.................: %s%n", serie.nome);
-            System.out.printf("Sinopse..............: %s%n", serie.sinopse);
-            System.out.printf("Episódios............: %d%n", serie.episodes);
-            System.out.printf("Ano de Lançamento....: %d%n", serie.releaseYear);
-            System.out.printf("Streaming............: %s%n", serie.streaming);
+            System.out.printf("Nome.................: %s%n", serie.getName());
+            System.out.printf("Sinopse..............: %s%n", serie.getSynopsis());
+            System.out.printf("Episódios............: %d%n", serie.getEpisodes());
+            System.out.printf("Ano de Lançamento....: %d%n", serie.getReleaseYear());
+            System.out.printf("Streaming............: %s%n", serie.getStreaming());
             System.out.println("----------------------");
         } else {
             System.out.println("Série não encontrada.");

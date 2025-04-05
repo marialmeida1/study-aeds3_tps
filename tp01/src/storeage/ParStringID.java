@@ -1,32 +1,44 @@
 package tp01.src.storeage;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.text.Normalizer;
+import java.util.regex.Pattern;
 
-public class ParStringID implements RegistroHashExtensivel<ParStringID> {
+public class ParStringID implements RegistroArvoreBMais<ParStringID> {
 
-    private String chave; // String key (e.g., 'nome')
-    private int id;       // Integer value (e.g., 'id')
-    private final short TAMANHO = 64; // Fixed size in bytes (e.g., 60 bytes for the string + 4 bytes for the int)
+    private String chave;
+    private int id;
+    private static final short TAMANHO = 64;
+    private static final short TAMANHO_CHAVE = 60;
 
     public ParStringID() {
-        this.chave = ""; // Default empty string
-        this.id = -1;    // Default invalid ID
+        this.chave = "";
+        this.id = -1;
     }
 
-    public ParStringID(String chave, int id) throws Exception {
-        if (chave.length() > 60) {
-            throw new IllegalArgumentException("A chave deve ter no máximo 60 caracteres.");
+    public ParStringID(String chave) {
+        this(chave, -1);
+    }
+
+    public ParStringID(String t, int i) {
+        this.chave = ajustarTamanhoChave(t);
+        this.id = i;
+    }
+
+    private String ajustarTamanhoChave(String t) {
+        if (t == null || t.isEmpty()) return "";
+        byte[] vb = t.getBytes(StandardCharsets.UTF_8);
+        if (vb.length > TAMANHO_CHAVE) {
+            byte[] vb2 = new byte[TAMANHO_CHAVE];
+            System.arraycopy(vb, 0, vb2, 0, TAMANHO_CHAVE);
+            t = new String(vb2, StandardCharsets.UTF_8).trim();
         }
-        this.chave = String.format("%-60s", chave); // Pad or truncate to 60 characters
-        this.id = id;
+        return t;
     }
 
     public String getChave() {
-        return chave.trim(); // Return trimmed string
+        return chave;
     }
 
     public int getId() {
@@ -34,40 +46,54 @@ public class ParStringID implements RegistroHashExtensivel<ParStringID> {
     }
 
     @Override
-    public int hashCode() {
-        return hash(this.chave.trim());
+    public ParStringID clone() {
+        return new ParStringID(this.chave, this.id);
     }
 
     public short size() {
-        return this.TAMANHO;
+        return TAMANHO;
     }
 
+    public int compareTo(ParStringID a) {
+        String str1 = transforma(this.chave);
+        String str2 = transforma(a.chave);
+        if (str2.length() > str1.length()) {
+            str2 = str2.substring(0, str1.length());
+        }
+        int cmp = str1.compareTo(str2);
+        return (cmp == 0) ? Integer.compare(this.id, a.id) : cmp;
+    }
+
+    @Override
     public String toString() {
-        return "(" + this.chave.trim() + ";" + this.id + ")";
+        return String.format("%-60s", this.chave) + ";" + String.format("%-3d", this.id);
     }
 
     public byte[] toByteArray() throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
-        dos.writeBytes(this.chave); // Write the fixed-size string
-        dos.writeInt(this.id);      // Write the integer ID
+        byte[] chaveBytes = new byte[TAMANHO_CHAVE];
+        byte[] originalBytes = this.chave.getBytes(StandardCharsets.UTF_8);
+        System.arraycopy(originalBytes, 0, chaveBytes, 0, Math.min(originalBytes.length, TAMANHO_CHAVE));
+        dos.write(chaveBytes);
+        dos.writeInt(this.id);
+        dos.flush();
         return baos.toByteArray();
     }
 
     public void fromByteArray(byte[] ba) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(ba);
         DataInputStream dis = new DataInputStream(bais);
-        byte[] chaveBytes = new byte[60]; // Fixed size for the string
-        dis.read(chaveBytes);
-        this.chave = new String(chaveBytes).trim(); // Convert bytes to string and trim
-        this.id = dis.readInt(); // Read the integer ID
+        byte[] chaveBytes = new byte[TAMANHO_CHAVE];
+        dis.readFully(chaveBytes);
+        this.chave = new String(chaveBytes, StandardCharsets.UTF_8).trim();
+        this.id = dis.readInt();
     }
 
-    public static int hash(String chave) {
-        int hash = 0;
-        for (int i = 0; i < chave.length(); i++) {
-            hash = 31 * hash + chave.charAt(i); // Simple hash function
-        }
-        return Math.abs(hash); // Ensure positive hash value
+    public static String transforma(String str) {
+        if (str == null) return "";
+        String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(nfdNormalizedString).replaceAll("" ).toLowerCase();
     }
 }
