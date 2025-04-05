@@ -1,3 +1,4 @@
+
 /*
 REGISTRO ÁRVORE B+
 
@@ -8,8 +9,7 @@ conter.
 Implementado pelo Prof. Marcos Kutova
 v1.0 - 2021
 */
-package aeds3;
-
+package tp01.src.storeage.records;
 import java.io.IOException;
 
 public interface RegistroArvoreBMais<T> {

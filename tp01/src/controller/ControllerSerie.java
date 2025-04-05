@@ -3,6 +3,7 @@ package tp01.src.controller;
 import tp01.src.models.Serie;
 import tp01.src.data.ArquivoSerie;
 import tp01.src.view.ViewSerie;
+
 import java.util.Scanner;
 
 public class ControllerSerie {
@@ -30,10 +31,10 @@ public class ControllerSerie {
                     buscarSeriePorNome();
                     break;
                 case 3:
-                    /* alterarSerie(); */
+                    alterarSerie();
                     break;
                 case 4:
-                    /* excluirSerie(); */
+                    excluirSerie();
                     break;
                 case 0:
                     break;
@@ -45,7 +46,7 @@ public class ControllerSerie {
     }
 
     public void buscarSeriePorNome() {
-        System.out.println("\nBusca de série por name");
+        System.out.println("\nBusca de série por nome");
         System.out.print("\nNome: ");
         String name = console.nextLine();
 
@@ -205,60 +206,48 @@ public class ControllerSerie {
         System.out.println("\nExclusão de série");
         System.out.print("\nNome: ");
         String name = console.nextLine();
-
-        if (name.isEmpty())
-            return;
-
+    
+        if (name.isEmpty()) return;
+    
         try {
             Serie[] series = arqSeries.readNome(name);
-            if (series.length > 0) {
-                int n = 1;
-                for (Serie s : series) {
-                    System.out.println((n++) + ": " + s.getName());
-                }
-                System.out.print("Escolha a série: ");
-                int o;
-                do {
-                    try {
-                        o = Integer.valueOf(console.nextLine());
-                    } catch (NumberFormatException e) {
-                        o = -1;
-                    }
-                    if (o <= 0 || o > n - 1)
-                        System.out.println("Escolha um número entre 1 e " + (n - 1));
-                } while (o <= 0 || o > n - 1);
-
-                Serie serie = series[o - 1];
-                visao.mostraSerie(serie);
-
-                if (visao.confirmAction(3)) {
-                    boolean excluido = arqSeries.delete(serie.getId());
-                    if (excluido) {
-                        System.out.println("Série excluída com sucesso.");
-                    } else {
-                        System.out.println("Erro ao excluir a série.");
-                    }
-                } else {
-                    System.out.println("Exclusão cancelada.");
-                }
-                System.out.print("Escolha a série: ");
-                int o;
-                do {
-                    try {
-                        o = Integer.valueOf(console.nextLine());
-                    } catch (NumberFormatException e) {
-                        o = -1;
-                    }
-                    if (o <= 0 || o > n - 1)
-                        System.out.println("Escolha um número entre 1 e " + (n - 1));
-                } while (o <= 0 || o > n - 1);
-                visao.mostraSerie(series[o - 1]); // Exibe os detalhes do livro encontrado
-            } else {
+            if (series.length == 0) {
                 System.out.println("Nenhuma série encontrada.");
+                return;
+            }
+    
+            for (int i = 0; i < series.length; i++) {
+                System.out.println((i + 1) + ": " + series[i].getName());
+            }
+    
+            int escolha;
+            do {
+                System.out.print("Escolha a série: ");
+                try {
+                    escolha = Integer.parseInt(console.nextLine());
+                } catch (NumberFormatException e) {
+                    escolha = -1;
+                }
+                if (escolha < 1 || escolha > series.length) {
+                    System.out.println("Escolha um número entre 1 e " + series.length);
+                }
+            } while (escolha < 1 || escolha > series.length);
+    
+            Serie serie = series[escolha - 1];
+            visao.mostraSerie(serie);
+    
+            if (visao.confirmAction(3)) {
+                if (arqSeries.delete(serie.getId())) {
+                    System.out.println("Série excluída com sucesso.");
+                } else {
+                    System.out.println("Erro ao excluir a série.");
+                }
+            } else {
+                System.out.println("Exclusão cancelada.");
             }
         } catch (Exception e) {
             System.out.println("Erro do sistema. Não foi possível excluir a série!");
             e.printStackTrace();
         }
-    }
+    }    
 }

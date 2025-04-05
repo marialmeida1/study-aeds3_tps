@@ -125,7 +125,6 @@ public class ViewEpisodio {
         }
     }
 
-
     public int obterDuracao() {
         int duracao;
         while (true) {
@@ -156,24 +155,30 @@ public class ViewEpisodio {
                 mensagem = "\nConfirma as alterações? (S/N) ";
                 break;
             case 3:
-                mensagem = "\nConfirma a exclusão do episódio? (S/N) ";
+                mensagem = "\nConfirma a exclusão da série? (S/N) "; // Corrigido para "série"
                 break;
             default:
                 mensagem = "\nConfirma a ação? (S/N) ";
                 break;
         }
 
+        System.out.print(mensagem);
+
         while (true) {
-            System.out.print(mensagem);
+            if (!console.hasNextLine()) {
+                continue; // Aguarda entrada do usuário
+            }
+
             String resposta = console.nextLine().trim().toUpperCase();
 
-            if (resposta.equalsIgnoreCase("S")) {
+            if (resposta.equals("S")) {
                 return true;
-            } else if (resposta.equalsIgnoreCase("N")) {
+            } else if (resposta.equals("N")) {
                 return false;
             } else {
-                System.out.println("Resposta inválida! Por favor, digite 'S' para Sim ou 'N' para Não.");
+                System.out.print("Resposta inválida! Digite 'S' para Sim ou 'N' para Não: ");
             }
         }
     }
+
 }

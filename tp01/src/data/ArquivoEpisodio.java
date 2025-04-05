@@ -3,7 +3,8 @@ package tp01.src.data;
 import java.util.ArrayList;
 
 import tp01.src.models.*;
-import tp01.src.storeage.*;
+import tp01.src.storeage.indexes.*;
+import tp01.src.storeage.structures.*;
 
 public class ArquivoEpisodio extends Arquivo<Episodio> {
 

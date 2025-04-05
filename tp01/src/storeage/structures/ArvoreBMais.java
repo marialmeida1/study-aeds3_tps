@@ -13,9 +13,12 @@
  * v2.0 - 2021
  */
 
-package tp01.src.storeage;
+package tp01.src.storeage.structures;
 import java.io.*;
 import java.util.ArrayList;
+
+import tp01.src.storeage.records.RegistroArvoreBMais;
+
 import java.lang.reflect.Constructor;
 
 // Esta versão da árvore funciona apenas como um conjunto de par de chaves.

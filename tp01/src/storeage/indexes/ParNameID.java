@@ -1,4 +1,4 @@
-package tp01.src.storeage;
+package tp01.src.storeage.indexes;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,22 +9,24 @@ import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
 
-public class ParTituloId implements RegistroArvoreBMais<ParTituloId> {
+import tp01.src.storeage.records.RegistroArvoreBMais;
+
+public class ParNameID implements RegistroArvoreBMais<ParNameID> {
 
   private String nome;
   private int id;
   private short TAMANHO = 34;
   private short TAMANHO_NOME = 30;
 
-  public ParTituloId() throws Exception {
+  public ParNameID() throws Exception {
     this("", -1);
   }
 
-  public ParTituloId(String n) throws Exception {
+  public ParNameID(String n) throws Exception {
     this(n, -1);
   }
 
-  public ParTituloId(String t, int i) throws Exception {
+  public ParNameID(String t, int i) throws Exception {
 
     if(!t.isEmpty()) {
 
@@ -65,9 +67,9 @@ public class ParTituloId implements RegistroArvoreBMais<ParTituloId> {
   }
 
   @Override
-  public ParTituloId clone() {
+  public ParNameID clone() {
     try {
-      return new ParTituloId(this.nome, this.id);
+      return new ParNameID(this.nome, this.id);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -78,7 +80,7 @@ public class ParTituloId implements RegistroArvoreBMais<ParTituloId> {
     return this.TAMANHO;
   }
 
-  public int compareTo(ParTituloId a) {
+  public int compareTo(ParNameID a) {
     String str1 = transforma(this.nome);
     String str2 = transforma(a.nome);
 

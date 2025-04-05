@@ -2,24 +2,25 @@ package tp01.src.data;
 import java.util.ArrayList;
 
 import tp01.src.models.Serie;
-import tp01.src.storeage.*;
+import tp01.src.storeage.indexes.*;
+import tp01.src.storeage.structures.*;
 
 public class ArquivoSerie extends Arquivo<Serie> {
 
-    ArvoreBMais<ParTituloId> indiceIndiretoNome; // Indirect index for 'nome'
+    ArvoreBMais<ParNameID> indiceIndiretoNome; // Indirect index for 'nome'
 
     public ArquivoSerie() throws Exception {
 
         super("series", Serie.class.getConstructor());
 
         indiceIndiretoNome = new ArvoreBMais<>(
-                ParTituloId.class.getConstructor(), 5, "tp01/files/series/indiceTitulo.db");
+                ParNameID.class.getConstructor(), 5, "tp01/files/series/indiceTitulo.db");
     }
 
     @Override
     public int create(Serie s) throws Exception {
         int id = super.create(s);
-        indiceIndiretoNome.create(new ParTituloId(s.getName(), id));
+        indiceIndiretoNome.create(new ParNameID(s.getName(), id));
         return id;
     }
 
@@ -28,7 +29,7 @@ public class ArquivoSerie extends Arquivo<Serie> {
         if (nome.length() == 0)
             return null;
 
-        ArrayList<ParTituloId> pares = indiceIndiretoNome.read(new ParTituloId(nome, -1));
+        ArrayList<ParNameID> pares = indiceIndiretoNome.read(new ParNameID(nome, -1));
 
         if (pares.size() > 0) {
 
@@ -36,7 +37,7 @@ public class ArquivoSerie extends Arquivo<Serie> {
 
             int i = 0;
 
-            for (ParTituloId par : pares) {
+            for (ParNameID par : pares) {
 
                 series[i++] = read(par.getId());
 
@@ -56,7 +57,7 @@ public class ArquivoSerie extends Arquivo<Serie> {
         Serie s = super.read(id);
         if (s != null) {
             if (super.delete(id)) {
-                return indiceIndiretoNome.delete(new ParTituloId(s.getName(), id));
+                return indiceIndiretoNome.delete(new ParNameID(s.getName(), id));
             }
         }
         return false;
@@ -68,8 +69,8 @@ public class ArquivoSerie extends Arquivo<Serie> {
         if (s != null) {
             if (super.update(novaSerie)) {
                 if (!s.getName().equals(novaSerie.getName())) {
-                    indiceIndiretoNome.delete(new ParTituloId(s.getName(), s.getId()));
-                    indiceIndiretoNome.create(new ParTituloId(novaSerie.getName(), novaSerie.getId()));
+                    indiceIndiretoNome.delete(new ParNameID(s.getName(), s.getId()));
+                    indiceIndiretoNome.create(new ParNameID(novaSerie.getName(), novaSerie.getId()));
                 }
                 return true;
             }

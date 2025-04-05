@@ -1,7 +1,7 @@
 package tp01.src.models;
 
 import java.io.*;
-import tp01.src.storeage.*;
+import tp01.src.storeage.records.Registro;
 
 public class Serie implements Registro {
     private int id;

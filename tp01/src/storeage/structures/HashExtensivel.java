@@ -1,3 +1,4 @@
+
 /*
 TABELA HASH EXTENSÍVEL
 
@@ -12,8 +13,7 @@ disciplina:
 Implementado pelo Prof. Marcos Kutova
 v1.1 - 2021
 */
-package aeds3;
-
+package tp01.src.storeage.structures;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -21,9 +21,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+
+import tp01.src.storeage.records.RegistroHashExtensivel;
+
 import java.lang.reflect.Constructor;
 
-public class HashExtensivel<T extends RegistroHashExtensivel> {
+public class HashExtensivel<T extends RegistroHashExtensivel<T>> {
 
   String nomeArquivoDiretorio;
   String nomeArquivoCestos;
@@ -111,13 +114,13 @@ public class HashExtensivel<T extends RegistroHashExtensivel> {
     }
 
     // Buscar um elemento no cesto
-    public T read(int hashElem) {
+    public T read(int chave) {
       if (empty())
         return null;
       int i = 0;
-      while (i < quantidade && hashElem > elementos.get(i).hashCode())
+      while (i < quantidade && chave > elementos.get(i).hashCode())
         i++;
-      if (i < quantidade && hashElem == elementos.get(i).hashCode())
+      if (i < quantidade && chave == elementos.get(i).hashCode())
         return elementos.get(i);
       else
         return null;
@@ -138,13 +141,13 @@ public class HashExtensivel<T extends RegistroHashExtensivel> {
     }
 
     // pagar um elemento do cesto
-    public boolean delete(int hashElem) {
+    public boolean delete(int chave) {
       if (empty())
         return false;
       int i = 0;
-      while (i < quantidade && hashElem > elementos.get(i).hashCode())
+      while (i < quantidade && chave > elementos.get(i).hashCode())
         i++;
-      if (hashElem == elementos.get(i).hashCode()) {
+      if (chave == elementos.get(i).hashCode()) {
         elementos.remove(i);
         quantidade--;
         return true;
@@ -192,7 +195,7 @@ public class HashExtensivel<T extends RegistroHashExtensivel> {
     }
 
     public boolean atualizaEndereco(int p, long e) {
-      if (p<0 || p >= Math.pow(2, profundidadeGlobal))
+      if (p > Math.pow(2, profundidadeGlobal))
         return false;
       enderecos[p] = e;
       return true;
@@ -236,7 +239,7 @@ public class HashExtensivel<T extends RegistroHashExtensivel> {
     }
 
     protected long endereço(int p) {
-      if (p<0 || p >= Math.pow(2, profundidadeGlobal))
+      if (p > Math.pow(2, profundidadeGlobal))
         return -1;
       return enderecos[p];
     }
@@ -249,9 +252,12 @@ public class HashExtensivel<T extends RegistroHashExtensivel> {
       int q2 = (int) Math.pow(2, profundidadeGlobal);
       long[] novosEnderecos = new long[q2];
       int i = 0;
-      while (i < q1) { // copia o vetor anterior para as duas metades do novo vetor
+      while (i < q1) { // copia o vetor anterior para a primeiro metade do novo vetor
         novosEnderecos[i] = enderecos[i];
-        novosEnderecos[i+q1] = enderecos[i];
+        i++;
+      }
+      while (i < q2) { // copia o vetor anterior para a segunda metade do novo vetor
+        novosEnderecos[i] = enderecos[i - q1];
         i++;
       }
       enderecos = novosEnderecos;
@@ -347,7 +353,7 @@ public class HashExtensivel<T extends RegistroHashExtensivel> {
     arqCestos.seek(novoEndereco);
     arqCestos.write(c2.toByteArray());
 
-    // Atualiza os endereços no diretório
+    // Atualiza os dados no diretório
     int inicio = diretorio.hash2(elem.hashCode(), c.profundidadeLocal);
     int deslocamento = (int) Math.pow(2, pl);
     int max = (int) Math.pow(2, pg);
@@ -479,5 +485,10 @@ public class HashExtensivel<T extends RegistroHashExtensivel> {
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  public void close() throws Exception {
+    arqDiretorio.close();
+    arqCestos.close();
   }
 }

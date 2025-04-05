@@ -1,9 +1,11 @@
-package tp01.src.storeage;
+package tp01.src.storeage.indexes;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+
+import tp01.src.storeage.records.RegistroHashExtensivel;
 
 public class ParIDEndereco implements RegistroHashExtensivel<ParIDEndereco> {
     

@@ -2,7 +2,6 @@ package tp01.src.controller;
 
 import tp01.src.models.*;
 import tp01.src.data.ArquivoEpisodio;
-import tp01.src.data.ArquivoSerie;
 import tp01.src.view.ViewEpisodio;
 
 import java.time.LocalDate;
@@ -11,13 +10,11 @@ import java.util.Scanner;
 public class ControllerEpisodio {
 
     private ArquivoEpisodio arqEpisodios;
-    private ArquivoSerie arqSeries;
     private ViewEpisodio visao;
     private static final Scanner console = new Scanner(System.in);
 
     public ControllerEpisodio() throws Exception {
         arqEpisodios = new ArquivoEpisodio();
-        arqSeries = new ArquivoSerie();        
         visao = new ViewEpisodio();
     }
 
