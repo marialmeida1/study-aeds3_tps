@@ -16,10 +16,10 @@ public class Episodio implements Registro {
 
     public int id;
     public int fkSerie; // Salva o valor para busca futuras
-    public String nome;
-    public int temporada;
-    public LocalDate lancamento;
-    public int duracao;
+    public String name;
+    public int season;
+    public LocalDate release;
+    public int duration;
 
     public Episodio() {
         this(-1, -1, "", -1, LocalDate.now(), -1);
@@ -32,10 +32,10 @@ public class Episodio implements Registro {
     public Episodio(int i, int f, String n, int t, LocalDate l, int d) {
         this.id = i;
         this.fkSerie = f;
-        this.nome = n;
-        this.temporada = t;
-        this.lancamento = l;
-        this.duracao = d;
+        this.name = n;
+        this.season = t;
+        this.release = l;
+        this.duration = d;
     }
 
     public void setId(int id) {
@@ -57,10 +57,10 @@ public class Episodio implements Registro {
     public String toString() {
         return "\nID:.................." + this.id +
                 "\nFk Serie:................" + this.fkSerie +
-                "\nNome:................" + this.nome +
-                "\nTemporada:..........." + this.temporada +
-                "\nData Lançamento:....." + this.lancamento +
-                "\nDuração:............." + this.duracao;
+                "\nNome:................" + this.name +
+                "\nTemporada:..........." + this.season +
+                "\nData Lançamento:....." + this.release +
+                "\nDuração:............." + this.duration;
     }
 
     public byte[] toByteArray() throws IOException {
@@ -68,10 +68,10 @@ public class Episodio implements Registro {
         DataOutputStream dos = new DataOutputStream(baos);
         dos.writeInt(this.id);
         dos.writeInt(this.fkSerie);
-        dos.writeUTF(this.nome);
-        dos.writeInt(this.temporada);
-        dos.writeInt((int) this.lancamento.toEpochDay());
-        dos.writeInt(this.duracao);
+        dos.writeUTF(this.name);
+        dos.writeInt(this.season);
+        dos.writeInt((int) this.release.toEpochDay());
+        dos.writeInt(this.duration);
         return baos.toByteArray();
     }
 
@@ -81,9 +81,9 @@ public class Episodio implements Registro {
 
         this.id = dis.readInt();
         this.fkSerie = dis.readInt();
-        this.nome = dis.readUTF();
-        this.temporada = dis.readInt();
-        this.lancamento = LocalDate.ofEpochDay(dis.readInt());
-        this.duracao = dis.readInt();
+        this.name = dis.readUTF();
+        this.season = dis.readInt();
+        this.release = LocalDate.ofEpochDay(dis.readInt());
+        this.duration = dis.readInt();
     }
 }
