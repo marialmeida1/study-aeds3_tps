@@ -33,7 +33,7 @@ public class Serie implements Registro {
         this.episodes = e;
         this.releaseYear = d;
         this.streaming = st;
-        this.idCategoria = idCat;
+        this.idCategoria = idCat; // INUTIL --> REVISAR SE NÃO VALE A PENA REMOVER
     }
 
     public void setId(int id) {

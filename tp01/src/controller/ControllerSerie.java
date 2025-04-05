@@ -61,6 +61,7 @@ public class ControllerSerie {
         }
     }
 
+    // Funcionando
     private void incluirSerie() {
         String nome = visao.obterNome();
         if (nome == null) return;
@@ -70,8 +71,7 @@ public class ControllerSerie {
         short releaseYear = visao.obterAnoLancamento();
         String streaming = visao.obterStreaming();
 
-        System.out.print("\nConfirma a inclusão da série? (S/N) ");
-        if (visao.confirmarAlteracoes()) {
+        if (visao.confirmAction(1)) {
             try {
                 Serie serie = new Serie(nome, sinopse, episodes, releaseYear, streaming, -1);
                 arqSeries.create(serie);
@@ -103,7 +103,7 @@ public class ControllerSerie {
             String novoStreaming = visao.obterStreaming();
             if (novoStreaming != null) serie.streaming = novoStreaming;
 
-            if (visao.confirmarAlteracoes()) {
+            if (visao.confirmAction(2)) {
                 boolean alterado = arqSeries.update(serie);
                 if (alterado) {
                     System.out.println("Série alterada com sucesso.");
@@ -123,7 +123,7 @@ public class ControllerSerie {
         Serie serie = arqSeries.read(nome);
         if (serie != null) {
             visao.mostraSerie(serie);
-            if (visao.confirmarExclusao()) {
+            if (visao.confirmAction(3)) {
                 boolean excluido = arqSeries.delete(nome);
                 if (excluido) {
                     System.out.println("Série excluída com sucesso.");

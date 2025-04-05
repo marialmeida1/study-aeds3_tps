@@ -15,8 +15,8 @@ public class ArquivoSerie extends Arquivo<Serie> {
         indiceIndiretoNome = new HashExtensivel<>(
                 ParStringID.class.getConstructor(),
                 4,
-                "tp01/files/series/indiceNome.d.db", // Directory for the 'nome' index
-                "tp01/files/series/indiceNome.c.db"  // Buckets for the 'nome' index
+                "tp01/files/series/indiceNome.d.db", // Diretório para o índice de CPF
+                "tp01/files/series/indiceNome.c.db"  // Cestos para o índice de CPF
         );
     }
 

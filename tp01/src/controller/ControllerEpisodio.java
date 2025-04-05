@@ -88,10 +88,8 @@ public class ControllerEpisodio {
         LocalDate dataLancamento = visao.obterDataLancamento();
         int duracao = visao.obterDuracao();
 
-
         // Confirmar a inclusão
-        System.out.print("\nConfirma a inclusão do episodio? (S/N) ");
-        if (visao.confirmarAlteracoes()) {
+        if (visao.confirmAction(1)) {
             try {
                 Episodio episodio = new Episodio(serie.id, nome, temporada, dataLancamento, duracao);
                 arqEpisodios.create(episodio);
@@ -123,7 +121,7 @@ public class ControllerEpisodio {
             int novaDuracao = visao.obterDuracao();
             episodio.duracao = novaDuracao;
 
-            if (visao.confirmarAlteracoes()) {
+            if (visao.confirmAction(2)) {
                 boolean alterado = arqEpisodios.update(episodio);
                 if (alterado) {
                     System.out.println("Episódio alterado com sucesso.");
@@ -145,7 +143,7 @@ public class ControllerEpisodio {
         Episodio episodio = arqEpisodios.read(idEpisodio, fkSerie);
         if (episodio != null) {
             visao.mostraEpisodio(episodio);
-            if (visao.confirmarExclusao()) {
+            if (visao.confirmAction(3)) {
                 boolean excluido = arqEpisodios.delete(idEpisodio, fkSerie);
                 if (excluido) {
                     System.out.println("Episódio excluído com sucesso.");
