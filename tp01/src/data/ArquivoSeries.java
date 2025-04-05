@@ -2,8 +2,8 @@ package tp01.src.data;
 import java.util.ArrayList;
 
 import tp01.src.models.Series;
-import tp01.src.storeage.indexes.*;
-import tp01.src.storeage.structures.*;
+import tp01.src.storage.indexes.*;
+import tp01.src.storage.structures.*;
 
 public class ArquivoSeries extends Archive<Series> {
 

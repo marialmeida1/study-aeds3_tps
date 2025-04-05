@@ -1,10 +1,10 @@
-package tp01.src.storeage.structures;
+package tp01.src.storage.structures;
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 
-import tp01.src.storeage.indexes.PairIDAddress;
-import tp01.src.storeage.records.Register;
+import tp01.src.storage.indexes.PairIDAddress;
+import tp01.src.storage.records.Register;
 
 public class Archive<T extends Register> {
     final int TAM_CABECALHO = 12;

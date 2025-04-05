@@ -1,11 +1,11 @@
-package tp01.src.storeage.indexes;
+package tp01.src.storage.indexes;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import tp01.src.storeage.records.RegisterExtensibleHash;
+import tp01.src.storage.records.RegisterExtensibleHash;
 
 public class PairIDAddress implements RegisterExtensibleHash<PairIDAddress> {
     

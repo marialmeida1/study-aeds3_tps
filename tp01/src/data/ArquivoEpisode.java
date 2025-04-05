@@ -1,14 +1,15 @@
 package tp01.src.data;
+
 import java.util.ArrayList;
 
 import tp01.src.models.Episode;
-import tp01.src.storeage.indexes.*;
-import tp01.src.storeage.structures.*;
+import tp01.src.storage.indexes.*;
+import tp01.src.storage.structures.*;
 
 public class ArquivoEpisode extends Archive<Episode> {
 
     ArchiveTreeB<PairNameID> indiceIndiretoNome; // Indirect index for 'nome'
-    ArchiveTreeB<Par> indiceIndiretoNome; // Indirect index for 'nome'
+    ArchiveTreeB<PairIDFK> relacaoNN; // Indirect index for 'nome'
 
     public ArquivoEpisode() throws Exception {
 
@@ -16,16 +17,42 @@ public class ArquivoEpisode extends Archive<Episode> {
 
         indiceIndiretoNome = new ArchiveTreeB<>(
                 PairNameID.class.getConstructor(), 5, "tp01/files/episodios/indiceTitulo.db");
+
+        relacaoNN = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, "tp01/files/episodios/relacaoNN.db");
     }
 
     @Override
-    public int create(Episode s) throws Exception {
-        int id = super.create(s);
-        indiceIndiretoNome.create(new PairNameID(s.getName(), id));
+    public int create(Episode e) throws Exception {
+        int id = super.create(e);
+        indiceIndiretoNome.create(new PairNameID(e.getName(), id));
+        relacaoNN.create(new PairIDFK(e.getId(), e.getFkSerie()));
         return id;
     }
 
-    public Episode[] readNome(String nome) throws Exception {
+    public Episode[] readFkSerie(int fkSeries) throws Exception { // Faz a busca somente dentro de epsódios
+        ArrayList<PairIDFK> pares = relacaoNN.read(new PairIDFK(-1, fkSeries));
+
+        if (pares.size() > 0) {
+
+            Episode[] episodios = new Episode[pares.size()];
+
+            int i = 0;
+
+            for (PairIDFK par : pares) {
+
+                episodios[i++] = read(par.getId());
+
+            }
+
+            return episodios;
+
+        } else {
+            return null;
+        }
+
+    }
+
+    public Episode[] readNome(String nome) throws Exception { // Faz a busca somente dentro de epsódios
 
         if (nome.length() == 0)
             return null;
@@ -54,10 +81,10 @@ public class ArquivoEpisode extends Archive<Episode> {
 
     @Override
     public boolean delete(int id) throws Exception {
-        Episode s = super.read(id);
-        if (s != null) {
+        Episode e = super.read(id);
+        if (e != null) {
             if (super.delete(id)) {
-                return indiceIndiretoNome.delete(new PairNameID(s.getName(), id));
+                return indiceIndiretoNome.delete(new PairNameID(e.getName(), id)) && relacaoNN.delete(new PairIDFK(e.getId(), e.getFkSerie()));
             }
         }
         return false;
@@ -65,12 +92,14 @@ public class ArquivoEpisode extends Archive<Episode> {
 
     @Override
     public boolean update(Episode novaEpisodio) throws Exception {
-        Episode s = read(novaEpisodio.getId()); // na superclasse
-        if (s != null) {
+        Episode e = read(novaEpisodio.getId()); // na superclasse
+        if (e != null) {
             if (super.update(novaEpisodio)) {
-                if (!s.getName().equals(novaEpisodio.getName())) {
-                    indiceIndiretoNome.delete(new PairNameID(s.getName(), s.getId()));
+                if (!e.getName().equals(novaEpisodio.getName())) {
+                    indiceIndiretoNome.delete(new PairNameID(e.getName(), e.getId()));
+                    relacaoNN.delete(new PairIDFK(e.getId(), e.getFkSerie()));
                     indiceIndiretoNome.create(new PairNameID(novaEpisodio.getName(), novaEpisodio.getId()));
+                    relacaoNN.create(new PairIDFK(e.getId(), e.getFkSerie()));
                 }
                 return true;
             }
@@ -79,4 +108,3 @@ public class ArquivoEpisode extends Archive<Episode> {
     }
 
 }
-

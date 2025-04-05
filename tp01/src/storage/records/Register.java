@@ -1,4 +1,4 @@
-package tp01.src.storeage.records;
+package tp01.src.storage.records;
 import java.io.IOException;
 
 public interface Register {

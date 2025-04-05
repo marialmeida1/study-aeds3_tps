@@ -10,14 +10,14 @@ relacionamentos entre dois IDs de entidades quaisquer
 Implementado pelo Prof. Marcos Kutova
 v1.0 - 2021
 */
-package tp01.src.storeage.indexes;
+package tp01.src.storage.indexes;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import tp01.src.storeage.records.RegisterTreeB;
+import tp01.src.storage.records.RegisterTreeB;
 
 public class PairIDFK implements RegisterTreeB<PairIDFK> {
 

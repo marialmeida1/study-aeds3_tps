@@ -1,7 +1,8 @@
 package tp01.src.models;
 
 import java.io.*;
-import tp01.src.storeage.records.Register;
+
+import tp01.src.storage.records.Register;
 
 public class Series implements Register {
     private int id;

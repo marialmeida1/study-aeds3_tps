@@ -1,4 +1,4 @@
-package tp01.src.storeage.indexes;
+package tp01.src.storage.indexes;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
 
-import tp01.src.storeage.records.RegisterTreeB;
+import tp01.src.storage.records.RegisterTreeB;
 
 public class PairNameID implements RegisterTreeB<PairNameID> {
 

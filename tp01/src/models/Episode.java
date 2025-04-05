@@ -2,7 +2,7 @@ package tp01.src.models;
 
 import java.time.LocalDate;
 
-import tp01.src.storeage.records.Register;
+import tp01.src.storage.records.Register;
 
 import java.io.IOException;
 import java.io.ByteArrayOutputStream;
@@ -14,12 +14,12 @@ public class Episode implements Register {
 
     /* Estrutura básica de um episódio, no qual possuí um id estrangeiro da série correspondente */
 
-    public int id;
-    public int fkSerie; // Salva o valor para busca futuras
-    public String name;
-    public int season;
-    public LocalDate release;
-    public int duration;
+    private int id;
+    private int fkSerie; // Salva o valor para buscas futuras
+    private String name;
+    private int season;
+    private LocalDate release;
+    private int duration;
 
     public Episode() {
         this(-1, -1, "", -1, LocalDate.now(), -1);
@@ -38,31 +38,65 @@ public class Episode implements Register {
         this.duration = d;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getId() {
         return id;
     }
 
-    public void setFkSerie(int fkSerie) {
-        this.fkSerie = fkSerie;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getFkSerie() {
         return fkSerie;
     }
 
+    public void setFkSerie(int fkSerie) {
+        this.fkSerie = fkSerie;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getSeason() {
+        return season;
+    }
+
+    public void setSeason(int season) {
+        this.season = season;
+    }
+
+    public LocalDate getRelease() {
+        return release;
+    }
+
+    public void setRelease(LocalDate release) {
+        this.release = release;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    @Override
     public String toString() {
         return "\nID:.................." + this.id +
-                "\nFk Serie:................" + this.fkSerie +
+                "\nFk Serie:............" + this.fkSerie +
                 "\nNome:................" + this.name +
                 "\nTemporada:..........." + this.season +
                 "\nData Lançamento:....." + this.release +
                 "\nDuração:............." + this.duration;
     }
 
+    @Override
     public byte[] toByteArray() throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
@@ -75,6 +109,7 @@ public class Episode implements Register {
         return baos.toByteArray();
     }
 
+    @Override
     public void fromByteArray(byte[] b) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(b);
         DataInputStream dis = new DataInputStream(bais);
