@@ -10,15 +10,18 @@ public class ViewEpisodio {
     private static final Scanner console = new Scanner(System.in);
 
     public void exibirMenu() {
-        System.out.println("\n\nPUCFlix 1.0");
-        System.out.println("-------");
+        System.out.println("\n===============================");
+        System.out.println("          PUCFlix 1.0");
+        System.out.println("===============================");
         System.out.println("> Início > Episódio");
-        System.out.println("\n1 - Incluir");
+        System.out.println("-------------------------------");
+        System.out.println("1 - Incluir");
         System.out.println("2 - Buscar");
         System.out.println("3 - Alterar");
         System.out.println("4 - Excluir");
         System.out.println("0 - Retornar ao menu anterior");
-        System.out.print("\nOpção: ");
+        System.out.println("===============================");
+        System.out.print("Opção: ");
     }
 
     public int lerSerie() {
@@ -51,14 +54,15 @@ public class ViewEpisodio {
 
     public void mostraEpisodio(Episodio episodio) {
         if (episodio != null) {
-            System.out.println("\nDetalhes do episodio:");
-            System.out.println("----------------------");
+            System.out.println("\n\n===============================");
+            System.out.println("      Detalhes do episodio:");
+            System.out.println("===============================");
             System.out.printf("Nome:................ %s%n", episodio.nome);
             System.out.printf("Temporada:........... %d%n", episodio.temporada);
             System.out.printf("Data Lançamento:..... %s%n",
                     episodio.lancamento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             System.out.printf("Duração:............. %d%n", episodio.duracao);
-            System.out.println("----------------------");
+            System.out.println("===============================");
         } else {
             System.out.println("Episódio não encontrado.");
         }
@@ -149,16 +153,20 @@ public class ViewEpisodio {
 
         switch (actionNum) {
             case 1:
-                mensagem = "\nConfirma a inclusão? (S/N) ";
+                System.out.println("-------------------------------");
+                mensagem = "Confirma a inclusão? (S/N) ";
                 break;
             case 2:
-                mensagem = "\nConfirma as alterações? (S/N) ";
+                System.out.println("-------------------------------");
+                mensagem = "Confirma as alterações? (S/N) ";
                 break;
             case 3:
-                mensagem = "\nConfirma a exclusão da série? (S/N) "; // Corrigido para "série"
+                System.out.println("-------------------------------");
+                mensagem = "Confirma a exclusão do episódio? (S/N) "; // Corrigido para "série"
                 break;
             default:
-                mensagem = "\nConfirma a ação? (S/N) ";
+                System.out.println("-------------------------------");
+                mensagem = "Confirma a ação? (S/N) ";
                 break;
         }
 

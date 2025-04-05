@@ -8,35 +8,39 @@ public class ViewSerie {
     private static final Scanner console = new Scanner(System.in);
 
     public void exibirMenu() {
-        System.out.println("\n\nPUCFlix 1.0");
-        System.out.println("-------");
+        System.out.println("\n\n===============================");
+        System.out.println("          PUCFlix 1.0");
+        System.out.println("===============================");
         System.out.println("> Início > Séries");
-        System.out.println("\n1 - Incluir");
+        System.out.println("-------------------------------");
+        System.out.println("1 - Incluir");
         System.out.println("2 - Buscar");
         System.out.println("3 - Alterar");
         System.out.println("4 - Excluir");
         System.out.println("5 - Listas Episódios da Série");
         System.out.println("0 - Retornar ao menu anterior");
-        System.out.print("\nOpção: ");
+        System.out.println("===============================");
+        System.out.print("Opção: ");
     }
 
     public void mostraSerie(Serie serie) {
         if (serie != null) {
-            System.out.println("\nDetalhes da Série:");
-            System.out.println("----------------------");
+            System.out.println("\n\n===============================");
+            System.out.println("       Detalhes da Série:");
+            System.out.println("===============================");
             System.out.printf("Nome.................: %s%n", serie.getName());
             System.out.printf("Sinopse..............: %s%n", serie.getSynopsis());
             System.out.printf("Episódios............: %d%n", serie.getEpisodes());
             System.out.printf("Ano de Lançamento....: %d%n", serie.getReleaseYear());
             System.out.printf("Streaming............: %s%n", serie.getStreaming());
-            System.out.println("----------------------");
+            System.out.println("===============================");
         } else {
             System.out.println("Série não encontrada.");
         }
     }
 
     public String obterNome() {
-        System.out.print("\nNome da Série: ");
+        System.out.print("Nome da Série: ");
         return console.nextLine();
     }
 
@@ -47,12 +51,34 @@ public class ViewSerie {
 
     public int obterQuantidadeEpisodios() {
         System.out.print("Quantidade de Episódios: ");
-        return Integer.parseInt(console.nextLine());
+        String entrada = console.nextLine();
+
+        if (entrada.isEmpty()) {
+            return -1; // Retorna um valor que indica que o usuário não digitou nada
+        }
+
+        try {
+            return Integer.parseInt(entrada);
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida. Digite um número válido.");
+            return obterQuantidadeEpisodios(); // Pede a entrada novamente em caso de erro
+        }
     }
 
     public short obterAnoLancamento() {
         System.out.print("Ano de Lançamento: ");
-        return Short.parseShort(console.nextLine());
+        String entrada = console.nextLine();
+
+        if (entrada.isEmpty()) {
+            return -1; // Retorna um valor indicando que o usuário não digitou nada
+        }
+
+        try {
+            return Short.parseShort(entrada);
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida. Digite um ano válido.");
+            return obterAnoLancamento(); // Pede a entrada novamente em caso de erro
+        }
     }
 
     public String obterStreaming() {
@@ -65,16 +91,20 @@ public class ViewSerie {
 
         switch (actionNum) {
             case 1:
-                mensagem = "\nConfirma a inclusão? (S/N) ";
+                System.out.println("-------------------------------");
+                mensagem = "Confirma a inclusão? (S/N) ";
                 break;
             case 2:
-                mensagem = "\nConfirma as alterações? (S/N) ";
+                System.out.println("-------------------------------");
+                mensagem = "Confirma as alterações? (S/N) ";
                 break;
             case 3:
-                mensagem = "\nConfirma a exclusão da série? (S/N) ";
+                System.out.println("-------------------------------");
+                mensagem = "Confirma a exclusão da série? (S/N) "; // Corrigido para "série"
                 break;
             default:
-                mensagem = "\nConfirma a ação? (S/N) ";
+                System.out.println("-------------------------------");
+                mensagem = "Confirma a ação? (S/N) ";
                 break;
         }
 

@@ -46,7 +46,6 @@ public class ArquivoSerie extends Arquivo<Serie> {
             return series;
 
         } else {
-
             return null;
         }
 

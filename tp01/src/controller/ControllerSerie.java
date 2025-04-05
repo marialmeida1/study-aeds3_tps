@@ -46,8 +46,10 @@ public class ControllerSerie {
     }
 
     public void buscarSeriePorNome() {
-        System.out.println("\nBusca de série por nome");
-        System.out.print("\nNome: ");
+        System.out.println("\n\n===============================");
+        System.out.println("    Busca de série por nome");
+        System.out.println("===============================");
+        System.out.print("Nome: ");
         String name = console.nextLine();
 
         if (name.isEmpty())
@@ -55,36 +57,47 @@ public class ControllerSerie {
 
         try {
             Serie[] series = arqSeries.readNome(name);
-            if (series.length > 0) {
-                int n = 1;
-                for (Serie s : series) {
-                    System.out.println((n++) + ": " + s.getName());
-                }
-                System.out.print("Escolha a série: ");
-                int o;
-                do {
-                    try {
-                        o = Integer.valueOf(console.nextLine());
-                    } catch (NumberFormatException e) {
-                        o = -1;
-                    }
-                    if (o <= 0 || o > n - 1)
-                        System.out.println("Escolha um número entre 1 e " + (n - 1));
-                } while (o <= 0 || o > n - 1);
-                visao.mostraSerie(series[o - 1]);
-            } else {
-                System.out.println("Nenhuma série encontrada.");
-            }
-        } catch (Exception e) {
-            System.out.println("Erro do sistema. Não foi possível buscar as séries!");
-            e.printStackTrace();
 
+            if (series == null || series.length == 0) { // Verifica se é nulo ou vazio
+                System.out.println("-------------------------------");
+                System.out.println("Nenhuma série encontrada.");
+                System.out.println("===============================");
+                return; // Sai do método para evitar exceções
+            }
+
+            int n = 1;
+            System.out.println("-------------------------------");
+            for (Serie s : series) {
+                System.out.println((n++) + ": " + s.getName());
+            }
+
+            System.out.println("-------------------------------");
+            System.out.print("Escolha a Série: ");
+
+            int o;
+            do {
+                try {
+                    o = Integer.parseInt(console.nextLine());
+                } catch (NumberFormatException e) {
+                    o = -1;
+                }
+                if (o <= 0 || o > n - 1)
+                    System.out.println("Escolha um número entre 1 e " + (n - 1));
+            } while (o <= 0 || o > n - 1);
+
+            visao.mostraSerie(series[o - 1]);
+
+        } catch (Exception e) {
+            System.err.println("Erro do sistema. Não foi possível buscar as séries!");
+            e.printStackTrace();
         }
 
     }
 
     public void incluirSerie() {
-        System.out.println("\nInclusão de série");
+        System.out.println("\n\n===============================");
+        System.out.println("      Inclusão de série");
+        System.out.println("===============================");
 
         String name = visao.obterNome();
         if (name == null || name.isEmpty()) {
@@ -120,18 +133,25 @@ public class ControllerSerie {
             try {
                 Serie novaSerie = new Serie(name, synopsis, episodes, releaseYear, streaming);
                 arqSeries.create(novaSerie);
+                System.out.println("-------------------------------");
                 System.out.println("Série incluída com sucesso.");
+                System.out.println("===============================");
             } catch (Exception e) {
-                System.out.println("Erro do sistema. Não foi possível incluir a série!");
+                System.err.println("Erro do sistema. Não foi possível incluir a série!");
                 e.printStackTrace();
             }
         } else {
+            System.out.println("-------------------------------");
             System.out.println("Inclusão cancelada.");
+            System.out.println("===============================");
         }
     }
 
     private void alterarSerie() {
-        System.out.println("\nAlteração de série");
+        System.out.println("\n\n===============================");
+        System.out.println("      Alteração de Série");
+        System.out.println("===============================");
+
         String name = visao.obterNome();
         if (name == null || name.isEmpty())
             return;
@@ -140,9 +160,13 @@ public class ControllerSerie {
             Serie[] series = arqSeries.readNome(name);
             if (series.length > 0) {
                 int n = 1;
+
+                System.out.println("-------------------------------");
                 for (Serie s : series) {
                     System.out.println((n++) + ": " + s.getName());
                 }
+
+                System.out.println("-------------------------------");
                 System.out.print("Escolha a série: ");
                 int o;
                 do {
@@ -161,67 +185,90 @@ public class ControllerSerie {
                 String novoNome = visao.obterNome();
                 if (novoNome != null && !novoNome.isEmpty()) {
                     serie.setName(novoNome);
+                } else {
+                    novoNome = serie.getName(); // Mantém o nome antigo
                 }
 
                 String novaSinopse = visao.obterSinopse();
                 if (novaSinopse != null && !novaSinopse.isEmpty()) {
                     serie.setSynopsis(novaSinopse);
+                } else {
+                    novaSinopse = serie.getSynopsis();
                 }
 
                 int novosEpisodios = visao.obterQuantidadeEpisodios();
                 if (novosEpisodios > 0) {
                     serie.setEpisodes(novosEpisodios);
+                } else {
+                    novosEpisodios = serie.getEpisodes();
                 }
 
                 short novoAno = visao.obterAnoLancamento();
                 if (novoAno > 0) {
                     serie.setReleaseYear(novoAno);
+                } else {
+                    novoAno = serie.getReleaseYear();
                 }
 
                 String novoStreaming = visao.obterStreaming();
                 if (novoStreaming != null && !novoStreaming.isEmpty()) {
                     serie.setStreaming(novoStreaming);
+                } else {
+                    novoStreaming = serie.getStreaming();
                 }
 
                 if (visao.confirmAction(2)) {
                     boolean alterado = arqSeries.update(serie);
                     if (alterado) {
+                        System.out.println("-------------------------------");
                         System.out.println("Série alterada com sucesso.");
+                        System.out.println("===============================");
                     } else {
-                        System.out.println("Erro ao alterar a série.");
+                        System.err.println("Erro ao alterar a série.");
                     }
                 } else {
+                    System.out.println("-------------------------------");
                     System.out.println("Alteração cancelada.");
+                    System.out.println("===============================");
                 }
             } else {
+                System.out.println("-------------------------------");
                 System.out.println("Nenhuma série encontrada.");
+                System.out.println("===============================");
             }
         } catch (Exception e) {
-            System.out.println("Erro do sistema. Não foi possível alterar a série!");
+            System.err.println("Erro do sistema. Não foi possível alterar a série!");
             e.printStackTrace();
         }
     }
 
     private void excluirSerie() {
-        System.out.println("\nExclusão de série");
-        System.out.print("\nNome: ");
+        System.out.println("\n\n===============================");
+        System.out.println("      Exclusão de Série");
+        System.out.println("===============================");
+        System.out.print("Nome: ");
         String name = console.nextLine();
-    
-        if (name.isEmpty()) return;
-    
+
+        if (name.isEmpty())
+            return;
+
         try {
             Serie[] series = arqSeries.readNome(name);
             if (series.length == 0) {
+                System.out.println("-------------------------------");
                 System.out.println("Nenhuma série encontrada.");
+                System.out.println("===============================");
                 return;
             }
-    
+
+            System.out.println("-------------------------------");
             for (int i = 0; i < series.length; i++) {
                 System.out.println((i + 1) + ": " + series[i].getName());
             }
-    
+
             int escolha;
             do {
+                System.out.println("-------------------------------");
                 System.out.print("Escolha a série: ");
                 try {
                     escolha = Integer.parseInt(console.nextLine());
@@ -232,22 +279,27 @@ public class ControllerSerie {
                     System.out.println("Escolha um número entre 1 e " + series.length);
                 }
             } while (escolha < 1 || escolha > series.length);
-    
+
             Serie serie = series[escolha - 1];
             visao.mostraSerie(serie);
-    
+
             if (visao.confirmAction(3)) {
                 if (arqSeries.delete(serie.getId())) {
+                    System.out.println("-------------------------------");
                     System.out.println("Série excluída com sucesso.");
+                    System.out.println("===============================");
                 } else {
-                    System.out.println("Erro ao excluir a série.");
+                    System.err.println("Erro ao excluir a série.");
                 }
             } else {
+                System.out.println("-------------------------------");
                 System.out.println("Exclusão cancelada.");
+                System.out.println("===============================");
+
             }
         } catch (Exception e) {
-            System.out.println("Erro do sistema. Não foi possível excluir a série!");
+            System.err.println("Erro do sistema. Não foi possível excluir a série!");
             e.printStackTrace();
         }
-    }    
+    }
 }

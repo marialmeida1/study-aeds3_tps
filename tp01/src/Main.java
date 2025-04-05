@@ -14,14 +14,16 @@ public class Main {
             int opcao;
             do {
 
-                System.out.println("\n\nPUCFlix 1.0");
-                System.out.println("-------");
+                System.out.println("\n===============================");
+                System.out.println("          PUCFlix 1.0");
+                System.out.println("===============================");
                 System.out.println("> Início");
+                System.out.println("-------------------------------");
                 System.out.println("1 - Séries");
                 System.out.println("2 - Episódios");
                 System.out.println("0 - Sair");
-
-                System.out.print("\nOpção: ");
+                System.out.println("===============================");
+                System.out.print("Opção: ");
                 try {
                     opcao = Integer.valueOf(console.nextLine());
                 } catch (NumberFormatException e) {

@@ -60,7 +60,7 @@ public class ControllerEpisodio {
                 System.out.println("Episódio não encontrado.");
             }
         } catch (Exception e) {
-            System.out.println("Erro ao buscar o episódio!");
+            System.err.println("Erro ao buscar o episódio!");
             e.printStackTrace();
         }
     }
@@ -93,7 +93,7 @@ public class ControllerEpisodio {
                 arqEpisodios.create(episodio);
                 System.out.println("Episódio incluído com sucesso.");
             } catch (Exception e) {
-                System.out.println("Erro ao incluir o episódio!");
+                System.err.println("Erro ao incluir o episódio!");
             }
         }
     }*/
@@ -124,7 +124,7 @@ public class ControllerEpisodio {
                 if (alterado) {
                     System.out.println("Episódio alterado com sucesso.");
                 } else {
-                    System.out.println("Erro ao alterar o cliente.");
+                    System.err.println("Erro ao alterar o cliente.");
                 }
             } else {
                 System.out.println("Alterações canceladas.");
@@ -146,7 +146,7 @@ public class ControllerEpisodio {
                 if (excluido) {
                     System.out.println("Episódio excluído com sucesso.");
                 } else {
-                    System.out.println("Erro ao excluir o episódio.");
+                    System.err.println("Erro ao excluir o episódio.");
                 }
             } else {
                 System.out.println("Exclusão cancelada.");
