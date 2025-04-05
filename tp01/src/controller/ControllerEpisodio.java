@@ -72,7 +72,8 @@ public class ControllerEpisodio {
 
         // Lê o nome da série e retorna a série para pegar o id
         String nomeSerie = visao.obterNomeSerie();
-        Serie serie = arqSeries.read(nomeSerie);
+        Serie[] series = arqSeries.readNome(nomeSerie);
+        Serie serie = (series != null && series.length > 0) ? series[0] : null;
 
         if(serie == null) { // Verifica se encontrou
             System.out.println("Erro: Série não encontrada!");

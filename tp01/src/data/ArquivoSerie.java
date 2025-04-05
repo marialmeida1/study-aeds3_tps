@@ -2,66 +2,77 @@ package tp01.src.data;
 
 import tp01.src.models.Serie;
 import tp01.src.storeage.*;
+import java.util.ArrayList;
 
 public class ArquivoSerie extends Arquivo<Serie> {
 
-    HashExtensivel<ParStringID> indiceIndiretoNome; // Indirect index for 'nome'
+    ArvoreBMais<ParTituloId> indiceIndiretoNome; // Indirect index for 'nome'
 
     public ArquivoSerie() throws Exception {
-        // Initialize the parent class with "series" and the Serie constructor
+
         super("series", Serie.class.getConstructor());
 
-        // Create the indirect index for 'nome'
-        indiceIndiretoNome = new HashExtensivel<>(
-                ParStringID.class.getConstructor(),
-                4,
-                "tp01/files/series/indiceNome.d.db", // Diretório para o índice de CPF
-                "tp01/files/series/indiceNome.c.db"  // Cestos para o índice de CPF
-        );
+        indiceIndiretoNome = new ArvoreBMais<>(
+                ParTituloId.class.getConstructor(), 5, "tp01/files/series/indiceTitulo.db");
     }
 
     @Override
     public int create(Serie s) throws Exception {
         int id = super.create(s);
-        indiceIndiretoNome.create(new ParStringID(s.nome, id)); // Use 'nome' as the secondary key
+        indiceIndiretoNome.create(new ParTituloId(s.getNome(), id));
         return id;
     }
 
-    public Serie read(String nome) throws Exception {
-        ParStringID psi = indiceIndiretoNome.read(ParStringID.hash(nome));
-        System.out.println("Hash do nome buscado: " + ParStringID.hash(nome));
-        if (psi == null)
-            return null;
-        return read(psi.getId());
-    }
+    public Serie[] readNome(String nome) throws Exception {
 
-    public boolean delete(String nome) throws Exception {
-        ParStringID psi = indiceIndiretoNome.read(ParStringID.hash(nome));
-        if (psi != null)
-            if (delete(psi.getId()))
-                return indiceIndiretoNome.delete(ParStringID.hash(nome));
-        return false;
+        if (nome.length() == 0)
+            return null;
+
+        ArrayList<ParTituloId> pares = indiceIndiretoNome.read(new ParTituloId(nome, -1));
+
+        if (pares.size() > 0) {
+
+            Serie[] series = new Serie[pares.size()];
+
+            int i = 0;
+
+            for (ParTituloId par : pares) {
+
+                series[i++] = read(par.getId());
+
+            }
+
+            return series;
+
+        } else {
+
+            return null;
+        }
+
     }
 
     @Override
     public boolean delete(int id) throws Exception {
         Serie s = super.read(id);
         if (s != null) {
-            if (super.delete(id))
-                return indiceIndiretoNome.delete(ParStringID.hash(s.nome));
+            if (super.delete(id)) {
+                return indiceIndiretoNome.delete(new ParTituloId(s.getNome(), id));
+            }
         }
         return false;
     }
 
     @Override
     public boolean update(Serie novaSerie) throws Exception {
-        Serie serieVelha = read(novaSerie.nome);
-        if (super.update(novaSerie)) {
-            if (!novaSerie.nome.equals(serieVelha.nome)) {
-                indiceIndiretoNome.delete(ParStringID.hash(serieVelha.nome));
-                indiceIndiretoNome.create(new ParStringID(novaSerie.nome, novaSerie.getId()));
+        Serie s = read(novaSerie.getId()); // na superclasse
+        if (s != null) {
+            if (super.update(novaSerie)) {
+                if (!s.getNome().equals(novaSerie.getNome())) {
+                    indiceIndiretoNome.delete(new ParTituloId(s.getNome(), s.getId()));
+                    indiceIndiretoNome.create(new ParTituloId(novaSerie.getNome(), novaSerie.getId()));
+                }
+                return true;
             }
-            return true;
         }
         return false;
     }

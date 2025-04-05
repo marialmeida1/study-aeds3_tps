@@ -40,8 +40,32 @@ public class Serie implements Registro {
         this.id = id;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setSinopse(String sinopse) {
+        this.sinopse = sinopse;
+    }
+
+    public void setEpisodes(int episodes) {
+        this.episodes = episodes;
+    }
+
+    public void setReleaseYear(short releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+
+    public void setStreaming(String streaming) {
+        this.streaming = streaming;
+    }
+
     public int getId() {
         return id;
+    }
+
+    public String getNome(){
+        return nome;
     }
 
     public String getSinopse() {
