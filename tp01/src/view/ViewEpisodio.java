@@ -145,34 +145,34 @@ public class ViewEpisodio {
         }
     }
 
-    public boolean confirmarAlteracoes() {
-        String resposta;
-        while (true) {
-            System.out.print("\nConfirma as alterações? (S/N) ");
-            resposta = console.nextLine().trim();
+    public boolean confirmAction(int actionNum) {
+        String mensagem;
 
-            if (resposta.equalsIgnoreCase("S")) {
-                return true;
-            } else if (resposta.equalsIgnoreCase("N")) {
-                return false;
-            } else {
-                System.out.println("Resposta inválida! Por favor, digite 'S' para sim ou 'N' para não.");
-            }
+        switch (actionNum) {
+            case 1:
+                mensagem = "\nConfirma a inclusão? (S/N) ";
+                break;
+            case 2:
+                mensagem = "\nConfirma as alterações? (S/N) ";
+                break;
+            case 3:
+                mensagem = "\nConfirma a exclusão do episódio? (S/N) ";
+                break;
+            default:
+                mensagem = "\nConfirma a ação? (S/N) ";
+                break;
         }
-    }
 
-    public boolean confirmarExclusao() {
-        String resposta;
         while (true) {
-            System.out.print("\nConfirma a exclusão do episódio? (S/N) ");
-            resposta = console.nextLine().trim();
+            System.out.print(mensagem);
+            String resposta = console.nextLine().trim().toUpperCase();
 
             if (resposta.equalsIgnoreCase("S")) {
                 return true;
             } else if (resposta.equalsIgnoreCase("N")) {
                 return false;
             } else {
-                System.out.println("Resposta inválida! Por favor, digite 'S' para sim ou 'N' para não.");
+                System.out.println("Resposta inválida! Por favor, digite 'S' para Sim ou 'N' para Não.");
             }
         }
     }

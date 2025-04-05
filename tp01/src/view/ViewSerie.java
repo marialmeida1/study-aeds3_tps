@@ -60,16 +60,36 @@ public class ViewSerie {
         return console.nextLine();
     }
 
-    public boolean confirmarAlteracoes() {
-        System.out.print("\nConfirma as alterações? (S/N) ");
-        String resposta = console.nextLine().trim();
-        return resposta.equalsIgnoreCase("S");
-    }
+    public boolean confirmAction(int actionNum) {
+        String mensagem;
 
-    public boolean confirmarExclusao() {
-        System.out.print("\nConfirma a exclusão da série? (S/N) ");
-        String resposta = console.nextLine().trim();
-        return resposta.equalsIgnoreCase("S");
+        switch (actionNum) {
+            case 1:
+                mensagem = "\nConfirma a inclusão? (S/N) ";
+                break;
+            case 2:
+                mensagem = "\nConfirma as alterações? (S/N) ";
+                break;
+            case 3:
+                mensagem = "\nConfirma a exclusão da série? (S/N) ";
+                break;
+            default:
+                mensagem = "\nConfirma a ação? (S/N) ";
+                break;
+        }
+
+        while (true) {
+            System.out.print(mensagem);
+            String resposta = console.nextLine().trim().toUpperCase();
+
+            if (resposta.equalsIgnoreCase("S")) {
+                return true;
+            } else if (resposta.equalsIgnoreCase("N")) {
+                return false;
+            } else {
+                System.out.println("Resposta inválida! Por favor, digite 'S' para Sim ou 'N' para Não.");
+            }
+        }
     }
 
     public int lerSerie() {

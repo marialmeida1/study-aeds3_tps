@@ -72,7 +72,8 @@ public class ControllerEpisodio {
 
         // Lê o nome da série e retorna a série para pegar o id
         String nomeSerie = visao.obterNomeSerie();
-        Serie serie = arqSeries.read(nomeSerie);
+        Serie[] series = arqSeries.readNome(nomeSerie);
+        Serie serie = (series != null && series.length > 0) ? series[0] : null;
 
         if(serie == null) { // Verifica se encontrou
             System.out.println("Erro: Série não encontrada!");
@@ -88,10 +89,8 @@ public class ControllerEpisodio {
         LocalDate dataLancamento = visao.obterDataLancamento();
         int duracao = visao.obterDuracao();
 
-
         // Confirmar a inclusão
-        System.out.print("\nConfirma a inclusão do episodio? (S/N) ");
-        if (visao.confirmarAlteracoes()) {
+        if (visao.confirmAction(1)) {
             try {
                 Episodio episodio = new Episodio(serie.id, nome, temporada, dataLancamento, duracao);
                 arqEpisodios.create(episodio);
@@ -123,7 +122,7 @@ public class ControllerEpisodio {
             int novaDuracao = visao.obterDuracao();
             episodio.duracao = novaDuracao;
 
-            if (visao.confirmarAlteracoes()) {
+            if (visao.confirmAction(2)) {
                 boolean alterado = arqEpisodios.update(episodio);
                 if (alterado) {
                     System.out.println("Episódio alterado com sucesso.");
@@ -145,7 +144,7 @@ public class ControllerEpisodio {
         Episodio episodio = arqEpisodios.read(idEpisodio, fkSerie);
         if (episodio != null) {
             visao.mostraEpisodio(episodio);
-            if (visao.confirmarExclusao()) {
+            if (visao.confirmAction(3)) {
                 boolean excluido = arqEpisodios.delete(idEpisodio, fkSerie);
                 if (excluido) {
                     System.out.println("Episódio excluído com sucesso.");
