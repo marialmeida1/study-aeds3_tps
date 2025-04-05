@@ -22,11 +22,11 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
-import tp01.src.storeage.records.RegistroHashExtensivel;
+import tp01.src.storeage.records.RegisterExtensibleHash;
 
 import java.lang.reflect.Constructor;
 
-public class HashExtensivel<T extends RegistroHashExtensivel<T>> {
+public class ExtensibleHash<T extends RegisterExtensibleHash<T>> {
 
   String nomeArquivoDiretorio;
   String nomeArquivoCestos;
@@ -277,7 +277,7 @@ public class HashExtensivel<T extends RegistroHashExtensivel<T>> {
 
   }
 
-  public HashExtensivel(Constructor<T> ct, int n, String nd, String nc) throws Exception {
+  public ExtensibleHash(Constructor<T> ct, int n, String nd, String nc) throws Exception {
     construtor = ct;
     quantidadeDadosPorCesto = n;
     nomeArquivoDiretorio = nd;

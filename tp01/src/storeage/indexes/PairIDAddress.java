@@ -5,20 +5,20 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import tp01.src.storeage.records.RegistroHashExtensivel;
+import tp01.src.storeage.records.RegisterExtensibleHash;
 
-public class ParIDEndereco implements RegistroHashExtensivel<ParIDEndereco> {
+public class PairIDAddress implements RegisterExtensibleHash<PairIDAddress> {
     
     private int id;   // chave
     private long endereco;    // valor
     private final short TAMANHO = 12;  // tamanho em bytes
 
-    public ParIDEndereco() {
+    public PairIDAddress() {
         this.id = -1;
         this.endereco = -1;
     }
 
-    public ParIDEndereco(int id, long end) {
+    public PairIDAddress(int id, long end) {
         this.id = id;
         this.endereco = end;
     }

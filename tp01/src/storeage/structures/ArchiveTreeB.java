@@ -17,7 +17,7 @@ package tp01.src.storeage.structures;
 import java.io.*;
 import java.util.ArrayList;
 
-import tp01.src.storeage.records.RegistroArvoreBMais;
+import tp01.src.storeage.records.RegisterTreeB;
 
 import java.lang.reflect.Constructor;
 
@@ -26,7 +26,7 @@ import java.lang.reflect.Constructor;
 // isto é, quando a primeira chave de dois elementos for igual, a segunda chave,
 // deve ser necessariamente diferente.
 
-public class ArvoreBMais<T extends RegistroArvoreBMais<T>> {
+public class ArchiveTreeB<T extends RegisterTreeB<T>> {
 
     private int ordem; // Número máximo de filhos que uma página pode conter
     private int maxElementos; // Variável igual a ordem - 1 para facilitar a clareza do código
@@ -147,7 +147,7 @@ public class ArvoreBMais<T extends RegistroArvoreBMais<T>> {
 
     // ------------------------------------------------------------------------------
 
-    public ArvoreBMais(Constructor<T> c, int o, String na) throws Exception {
+    public ArchiveTreeB(Constructor<T> c, int o, String na) throws Exception {
 
         // Inicializa os atributos da árvore
         construtor = c;

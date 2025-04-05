@@ -12,7 +12,7 @@ v1.1 - 2021
 package tp01.src.storeage.records;
 import java.io.IOException;
 
-public interface RegistroHashExtensivel<T> {
+public interface RegisterExtensibleHash<T> {
 
   public int hashCode(); // chave numérica para ser usada no diretório
 

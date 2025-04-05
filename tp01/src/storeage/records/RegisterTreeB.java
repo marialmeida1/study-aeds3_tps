@@ -12,7 +12,7 @@ v1.0 - 2021
 package tp01.src.storeage.records;
 import java.io.IOException;
 
-public interface RegistroArvoreBMais<T> {
+public interface RegisterTreeB<T> {
 
   public short size(); // tamanho FIXO do registro
 

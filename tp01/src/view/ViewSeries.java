@@ -1,10 +1,10 @@
 package tp01.src.view;
 
-import tp01.src.models.Serie;
+import tp01.src.models.Series;
 
 import java.util.Scanner;
 
-public class ViewSerie {
+public class ViewSeries {
     private static final Scanner console = new Scanner(System.in);
 
     public void exibirMenu() {
@@ -23,7 +23,7 @@ public class ViewSerie {
         System.out.print("Opção: ");
     }
 
-    public void mostraSerie(Serie serie) {
+    public void mostraSerie(Series serie) {
         if (serie != null) {
             System.out.println("\n\n===============================");
             System.out.println("       Detalhes da Série:");

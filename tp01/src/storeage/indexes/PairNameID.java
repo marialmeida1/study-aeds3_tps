@@ -9,24 +9,24 @@ import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
 
-import tp01.src.storeage.records.RegistroArvoreBMais;
+import tp01.src.storeage.records.RegisterTreeB;
 
-public class ParNameID implements RegistroArvoreBMais<ParNameID> {
+public class PairNameID implements RegisterTreeB<PairNameID> {
 
   private String nome;
   private int id;
   private short TAMANHO = 34;
   private short TAMANHO_NOME = 30;
 
-  public ParNameID() throws Exception {
+  public PairNameID() throws Exception {
     this("", -1);
   }
 
-  public ParNameID(String n) throws Exception {
+  public PairNameID(String n) throws Exception {
     this(n, -1);
   }
 
-  public ParNameID(String t, int i) throws Exception {
+  public PairNameID(String t, int i) throws Exception {
 
     if(!t.isEmpty()) {
 
@@ -67,9 +67,9 @@ public class ParNameID implements RegistroArvoreBMais<ParNameID> {
   }
 
   @Override
-  public ParNameID clone() {
+  public PairNameID clone() {
     try {
-      return new ParNameID(this.nome, this.id);
+      return new PairNameID(this.nome, this.id);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -80,7 +80,7 @@ public class ParNameID implements RegistroArvoreBMais<ParNameID> {
     return this.TAMANHO;
   }
 
-  public int compareTo(ParNameID a) {
+  public int compareTo(PairNameID a) {
     String str1 = transforma(this.nome);
     String str2 = transforma(a.nome);
 

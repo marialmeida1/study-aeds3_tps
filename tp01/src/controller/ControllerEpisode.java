@@ -1,21 +1,21 @@
 package tp01.src.controller;
 
 import tp01.src.models.*;
-import tp01.src.data.ArquivoEpisodio;
-import tp01.src.view.ViewEpisodio;
+import tp01.src.data.ArquivoEpisode;
+import tp01.src.view.ViewEpisode;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class ControllerEpisodio {
+public class ControllerEpisode {
 
-    private ArquivoEpisodio arqEpisodios;
-    private ViewEpisodio visao;
+    private ArquivoEpisode arqEpisodios;
+    private ViewEpisode visao;
     private static final Scanner console = new Scanner(System.in);
 
-    public ControllerEpisodio() throws Exception {
-        arqEpisodios = new ArquivoEpisodio();
-        visao = new ViewEpisodio();
+    public ControllerEpisode() throws Exception {
+        arqEpisodios = new ArquivoEpisode();
+        visao = new ViewEpisode();
     }
 
     public void menu() throws Exception {
@@ -53,7 +53,7 @@ public class ControllerEpisodio {
         int idEpisodio = visao.lerEpisodio();
 
         try {
-            Episodio episodio = arqEpisodios.read(idEpisodio, fkSerie);
+            Episode episodio = arqEpisodios.read(idEpisodio, fkSerie);
             if (episodio != null) {
                 visao.mostraEpisodio(episodio);
             } else {
@@ -102,7 +102,7 @@ public class ControllerEpisodio {
         int fkSerie = visao.lerSerie();
         int idEpisodio = visao.lerEpisodio();
 
-        Episodio episodio = arqEpisodios.read(idEpisodio, fkSerie);
+        Episode episodio = arqEpisodios.read(idEpisodio, fkSerie);
         if (episodio != null) {
             visao.mostraEpisodio(episodio);
 
@@ -138,7 +138,7 @@ public class ControllerEpisodio {
         int fkSerie = visao.lerSerie();
         int idEpisodio = visao.lerEpisodio();
 
-        Episodio episodio = arqEpisodios.read(idEpisodio, fkSerie);
+        Episode episodio = arqEpisodios.read(idEpisodio, fkSerie);
         if (episodio != null) {
             visao.mostraEpisodio(episodio);
             if (visao.confirmAction(3)) {

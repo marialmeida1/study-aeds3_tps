@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-public class ViewEpisodio {
+public class ViewEpisode {
     private static final Scanner console = new Scanner(System.in);
 
     public void exibirMenu() {
@@ -52,7 +52,7 @@ public class ViewEpisodio {
         }
     }
 
-    public void mostraEpisodio(Episodio episodio) {
+    public void mostraEpisodio(Episode episodio) {
         if (episodio != null) {
             System.out.println("\n\n===============================");
             System.out.println("      Detalhes do episodio:");

@@ -1,20 +1,20 @@
 package tp01.src.controller;
 
-import tp01.src.models.Serie;
-import tp01.src.data.ArquivoSerie;
-import tp01.src.view.ViewSerie;
+import tp01.src.models.Series;
+import tp01.src.data.ArquivoSeries;
+import tp01.src.view.ViewSeries;
 
 import java.util.Scanner;
 
-public class ControllerSerie {
+public class ControllerSeries {
 
-    private ArquivoSerie arqSeries;
-    private ViewSerie visao;
+    private ArquivoSeries arqSeries;
+    private ViewSeries visao;
     private static final Scanner console = new Scanner(System.in);
 
-    public ControllerSerie() throws Exception {
-        arqSeries = new ArquivoSerie();
-        visao = new ViewSerie();
+    public ControllerSeries() throws Exception {
+        arqSeries = new ArquivoSeries();
+        visao = new ViewSeries();
     }
 
     public void menu() throws Exception {
@@ -56,7 +56,7 @@ public class ControllerSerie {
             return;
 
         try {
-            Serie[] series = arqSeries.readNome(name);
+            Series[] series = arqSeries.readNome(name);
 
             if (series == null || series.length == 0) { // Verifica se é nulo ou vazio
                 System.out.println("-------------------------------");
@@ -67,7 +67,7 @@ public class ControllerSerie {
 
             int n = 1;
             System.out.println("-------------------------------");
-            for (Serie s : series) {
+            for (Series s : series) {
                 System.out.println((n++) + ": " + s.getName());
             }
 
@@ -131,7 +131,7 @@ public class ControllerSerie {
 
         if (visao.confirmAction(1)) {
             try {
-                Serie novaSerie = new Serie(name, synopsis, episodes, releaseYear, streaming);
+                Series novaSerie = new Series(name, synopsis, episodes, releaseYear, streaming);
                 arqSeries.create(novaSerie);
                 System.out.println("-------------------------------");
                 System.out.println("Série incluída com sucesso.");
@@ -157,12 +157,12 @@ public class ControllerSerie {
             return;
 
         try {
-            Serie[] series = arqSeries.readNome(name);
+            Series[] series = arqSeries.readNome(name);
             if (series.length > 0) {
                 int n = 1;
 
                 System.out.println("-------------------------------");
-                for (Serie s : series) {
+                for (Series s : series) {
                     System.out.println((n++) + ": " + s.getName());
                 }
 
@@ -179,7 +179,7 @@ public class ControllerSerie {
                         System.out.println("Escolha um número entre 1 e " + (n - 1));
                 } while (o <= 0 || o > n - 1);
 
-                Serie serie = series[o - 1];
+                Series serie = series[o - 1];
                 visao.mostraSerie(serie);
 
                 String novoNome = visao.obterNome();
@@ -253,7 +253,7 @@ public class ControllerSerie {
             return;
 
         try {
-            Serie[] series = arqSeries.readNome(name);
+            Series[] series = arqSeries.readNome(name);
             if (series.length == 0) {
                 System.out.println("-------------------------------");
                 System.out.println("Nenhuma série encontrada.");
@@ -280,7 +280,7 @@ public class ControllerSerie {
                 }
             } while (escolha < 1 || escolha > series.length);
 
-            Serie serie = series[escolha - 1];
+            Series serie = series[escolha - 1];
             visao.mostraSerie(serie);
 
             if (visao.confirmAction(3)) {

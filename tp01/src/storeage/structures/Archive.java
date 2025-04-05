@@ -3,17 +3,17 @@ import java.io.File;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 
-import tp01.src.storeage.indexes.ParIDEndereco;
-import tp01.src.storeage.records.Registro;
+import tp01.src.storeage.indexes.PairIDAddress;
+import tp01.src.storeage.records.Register;
 
-public class Arquivo<T extends Registro> {
+public class Archive<T extends Register> {
     final int TAM_CABECALHO = 12;
     RandomAccessFile arquivo;
     String nomeArquivo;
     Constructor<T> construtor;
-    HashExtensivel<ParIDEndereco> indiceDireto;
+    ExtensibleHash<PairIDAddress> indiceDireto;
 
-    public Arquivo(String na, Constructor<T> c) throws Exception {
+    public Archive(String na, Constructor<T> c) throws Exception {
         // Define o diretório onde os dados serão armazenados (tp01/files)
         File d = new File("tp01/files");
         if (!d.exists()) {
@@ -38,8 +38,8 @@ public class Arquivo<T extends Registro> {
         }
     
         // Criação do índice direto utilizando a nova pasta
-        indiceDireto = new HashExtensivel<>(
-            ParIDEndereco.class.getConstructor(), 
+        indiceDireto = new ExtensibleHash<>(
+            PairIDAddress.class.getConstructor(), 
             4, 
             "tp01/files/" + na + "/" + na + ".d.db", // diretório
             "tp01/files/" + na + "/" + na + ".c.db"  // cestos
@@ -68,7 +68,7 @@ public class Arquivo<T extends Registro> {
             arquivo.write(b);              // vetor de bytes
         }
 
-        indiceDireto.create(new ParIDEndereco(proximoID, endereco));
+        indiceDireto.create(new PairIDAddress(proximoID, endereco));
         
         return obj.getId();
     }
@@ -79,7 +79,7 @@ public class Arquivo<T extends Registro> {
         byte[] b;
         byte lapide;
 
-        ParIDEndereco pid = indiceDireto.read(id);
+        PairIDAddress pid = indiceDireto.read(id);
         if(pid!=null) {
             arquivo.seek(pid.getEndereco());
             obj = construtor.newInstance();
@@ -102,7 +102,7 @@ public class Arquivo<T extends Registro> {
         byte[] b;
         byte lapide;
 
-        ParIDEndereco pie = indiceDireto.read(id);
+        PairIDAddress pie = indiceDireto.read(id);
         if(pie!=null) {
             arquivo.seek(pie.getEndereco());
             obj = construtor.newInstance();
@@ -130,7 +130,7 @@ public class Arquivo<T extends Registro> {
         short tam;
         byte[] b;
         byte lapide;
-        ParIDEndereco pie = indiceDireto.read(novoObj.getId());
+        PairIDAddress pie = indiceDireto.read(novoObj.getId());
         if(pie!=null) {
             arquivo.seek(pie.getEndereco());
             obj = construtor.newInstance();
@@ -174,7 +174,7 @@ public class Arquivo<T extends Registro> {
                         }
 
                         // atualiza o índice direto
-                        indiceDireto.update(new ParIDEndereco(novoObj.getId(), novoEndereco));
+                        indiceDireto.update(new PairIDAddress(novoObj.getId(), novoEndereco));
                     }
                     return true;
                 }

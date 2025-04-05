@@ -2,7 +2,7 @@ package tp01.src.models;
 
 import java.time.LocalDate;
 
-import tp01.src.storeage.records.Registro;
+import tp01.src.storeage.records.Register;
 
 import java.io.IOException;
 import java.io.ByteArrayOutputStream;
@@ -10,7 +10,7 @@ import java.io.DataOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
-public class Episodio implements Registro {
+public class Episode implements Register {
 
     /* Estrutura básica de um episódio, no qual possuí um id estrangeiro da série correspondente */
 
@@ -21,15 +21,15 @@ public class Episodio implements Registro {
     public LocalDate release;
     public int duration;
 
-    public Episodio() {
+    public Episode() {
         this(-1, -1, "", -1, LocalDate.now(), -1);
     }
 
-    public Episodio(int f, String n, int t, LocalDate l, int d) {
+    public Episode(int f, String n, int t, LocalDate l, int d) {
         this(-1, f, n, t, l, d);
     }
 
-    public Episodio(int i, int f, String n, int t, LocalDate l, int d) {
+    public Episode(int i, int f, String n, int t, LocalDate l, int d) {
         this.id = i;
         this.fkSerie = f;
         this.name = n;

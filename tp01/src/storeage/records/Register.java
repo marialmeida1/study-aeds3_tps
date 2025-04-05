@@ -1,7 +1,7 @@
 package tp01.src.storeage.records;
 import java.io.IOException;
 
-public interface Registro {
+public interface Register {
     public void setId(int i);
     public int getId();
     public byte[] toByteArray() throws IOException;

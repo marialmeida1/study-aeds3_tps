@@ -32,11 +32,11 @@ public class Main {
 
                 switch (opcao) {
                     case 1:
-                        (new ControllerSerie()).menu();
+                        (new ControllerSeries()).menu();
                         /* System.out. println("Menu Séries"); */
                         break;
                     case 2:
-                        (new ControllerEpisodio()).menu();
+                        (new ControllerEpisode()).menu();
                         /* System.out.println("Menu Episódios"); */
                         break;
                     case 0:

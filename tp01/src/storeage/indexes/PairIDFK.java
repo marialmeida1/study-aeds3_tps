@@ -17,23 +17,23 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import tp01.src.storeage.records.RegistroArvoreBMais;
+import tp01.src.storeage.records.RegisterTreeB;
 
-public class ParIDFK implements RegistroArvoreBMais<ParIDFK> {
+public class PairIDFK implements RegisterTreeB<PairIDFK> {
 
   private int id;
   private int fk;
   private short TAMANHO = 8;
 
-  public ParIDFK() {
+  public PairIDFK() {
     this(-1, -1);
   }
 
-  public ParIDFK(int n1) {
+  public PairIDFK(int n1) {
     this(n1, -1);
   }
 
-  public ParIDFK(int n1, int n2) {
+  public PairIDFK(int n1, int n2) {
     try {
       this.id = n1; // ID da tabela principal (N)
       this.fk = n2; // ID da tablea secundária (1)
@@ -51,15 +51,15 @@ public class ParIDFK implements RegistroArvoreBMais<ParIDFK> {
   }
 
   @Override
-  public ParIDFK clone() {
-    return new ParIDFK(this.id, this.fk);
+  public PairIDFK clone() {
+    return new PairIDFK(this.id, this.fk);
   }
 
   public short size() {
     return this.TAMANHO;
   }
 
-  public int compareTo(ParIDFK a) {
+  public int compareTo(PairIDFK a) {
     if (this.id != a.id)
       return this.id - a.id;
     else

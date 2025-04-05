@@ -1,9 +1,9 @@
 package tp01.src.models;
 
 import java.io.*;
-import tp01.src.storeage.records.Registro;
+import tp01.src.storeage.records.Register;
 
-public class Serie implements Registro {
+public class Series implements Register {
     private int id;
     private String name;
     private String synopsis;
@@ -11,15 +11,15 @@ public class Serie implements Registro {
     private short releaseYear; // Apenas o ano de lançamento
     private String streaming;
 
-    public Serie() {
+    public Series() {
         this(-1, "", "", 0, (short) 0, "");
     }
 
-    public Serie(String name, String synopsis, int episodes, short releaseYear, String streaming) {
+    public Series(String name, String synopsis, int episodes, short releaseYear, String streaming) {
         this(-1, name, synopsis, episodes, releaseYear, streaming);
     }
 
-    public Serie(int id, String name, String synopsis, int episodes, short releaseYear, String streaming) {
+    public Series(int id, String name, String synopsis, int episodes, short releaseYear, String streaming) {
         this.id = id;
         this.name = name;
         this.synopsis = synopsis;
