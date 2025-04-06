@@ -115,14 +115,14 @@ public class ControllerEpisode {
 
     public void incluirEpisodio() {
         System.out.println("\n\n===============================");
-        System.out.println("      Inclusão de episódio");
+        System.out.println("      Inclusão de Episódio");
         System.out.println("===============================");
 
         // Buscando qual série irá inserir
         Series serie = buscarSeriePorNome();
         int fkSerie = serie.getId();
         System.out.println("-------------------------------");
-        System.out.println("Nome da série: " + serie.getName());
+        System.out.println("Série: " + serie.getName());
 
         // Inserindo valores
         String name = visaoEpisodios.obterNome();
@@ -154,15 +154,15 @@ public class ControllerEpisode {
                 Episode novoEpisode = new Episode(fkSerie, name, season, release, duration);
                 arqEpisodios.create(novoEpisode);
                 System.out.println("-------------------------------");
-                System.out.println("Episódio incluída com sucesso.");
+                System.out.println("Episódio incluído com sucesso.");
                 System.out.println("===============================");
             } catch (Exception e) {
-                System.err.println("Erro do sistema. Não foi possível incluir a série!");
+                System.err.println("Erro do sistema. Não foi possível incluir o episódio!");
                 e.printStackTrace();
             }
         } else {
             System.out.println("-------------------------------");
-            System.out.println("Episódio cancelada.");
+            System.out.println("Inclusão de Episódio cancelada.");
             System.out.println("===============================");
         }
     }
@@ -186,21 +186,29 @@ public class ControllerEpisode {
             String novoNome = visaoEpisodios.obterNome();
             if (novoNome != null && !novoNome.isEmpty()) {
                 episode.setName(novoNome);
+            } else {
+                novoNome = episode.getName();
             }
     
             int novaTemporada = visaoEpisodios.obterTemporada();
             if (novaTemporada > 0) {
                 episode.setSeason(novaTemporada);
+            } else {
+                novaTemporada = episode.getSeason();
             }
     
             LocalDate novaData = visaoEpisodios.obterDataLancamento();
             if (novaData != null) {
                 episode.setRelease(novaData);
+            } else {
+                novaData = episode.getRelease();
             }
     
             int novaDuracao = visaoEpisodios.obterDuracao(); // Correção aqui
             if (novaDuracao > 0) {
                 episode.setDuration(novaDuracao);
+            } else {
+                novaDuracao = episode.getDuration();
             }
     
             if (visaoEpisodios.confirmAction(2)) {
