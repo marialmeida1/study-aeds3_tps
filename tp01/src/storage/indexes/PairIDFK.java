@@ -30,7 +30,7 @@ public class PairIDFK implements RegisterTreeB<PairIDFK> {
   }
 
   public PairIDFK(int n1) {
-    this(n1, -1);
+    this(-1, n1);
   }
 
   public PairIDFK(int n1, int n2) {

@@ -60,6 +60,8 @@ public class ControllerEpisode {
         
         int fkSerie = buscarSeriePorNome().getId();
         Episode[] episodios = arqEpisodios.readFkSerie(fkSerie);
+        System.out.println(episodios);
+
         try {
             if (episodios == null || episodios.length == 0) { // Verifica se é nulo ou vazio
                 System.out.println("-------------------------------");

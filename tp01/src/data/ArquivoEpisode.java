@@ -30,7 +30,8 @@ public class ArquivoEpisode extends Archive<Episode> {
     }
 
     public Episode[] readFkSerie(int fkSeries) throws Exception { // Faz a busca somente dentro de epsódios
-        ArrayList<PairIDFK> pares = relacaoNN.read(new PairIDFK(-1, fkSeries));
+        ArrayList<PairIDFK> pares = relacaoNN.read(new PairIDFK(fkSeries));
+        System.out.println(pares);
 
         if (pares.size() > 0) {
 
