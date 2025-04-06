@@ -125,6 +125,7 @@ public class ViewEpisode {
                 return dataLancamento;
             } catch (Exception e) {
                 System.out.println("Data inválida! O formato correto é DD/MM/AAAA.");
+                return null;
             }
         }
     }

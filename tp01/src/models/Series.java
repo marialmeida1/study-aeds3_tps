@@ -8,23 +8,21 @@ public class Series implements Register {
     private int id;
     private String name;
     private String synopsis;
-    private int episodes;      // Contador de episódios
     private short releaseYear; // Apenas o ano de lançamento
     private String streaming;
 
     public Series() {
-        this(-1, "", "", 0, (short) 0, "");
+        this(-1, "", "", (short) 0, "");
     }
 
-    public Series(String name, String synopsis, int episodes, short releaseYear, String streaming) {
-        this(-1, name, synopsis, episodes, releaseYear, streaming);
+    public Series(String name, String synopsis, short releaseYear, String streaming) {
+        this(-1, name, synopsis, releaseYear, streaming);
     }
 
-    public Series(int id, String name, String synopsis, int episodes, short releaseYear, String streaming) {
+    public Series(int id, String name, String synopsis, short releaseYear, String streaming) {
         this.id = id;
         this.name = name;
         this.synopsis = synopsis;
-        this.episodes = episodes;
         this.releaseYear = releaseYear;
         this.streaming = streaming;
     }
@@ -39,9 +37,6 @@ public class Series implements Register {
     public String getSynopsis() { return synopsis; }
     public void setSynopsis(String synopsis) { this.synopsis = synopsis; }
 
-    public int getEpisodes() { return episodes; }
-    public void setEpisodes(int episodes) { this.episodes = episodes; }
-
     public short getReleaseYear() { return releaseYear; }
     public void setReleaseYear(short releaseYear) { this.releaseYear = releaseYear; }
 
@@ -54,8 +49,7 @@ public class Series implements Register {
                "\nname.........................: " + this.name +
                "\nAno de Lançamento............: " + this.releaseYear +
                "\nsynopsis......................: " + this.synopsis +
-               "\nStreaming....................: " + this.streaming + 
-               "\nQuantidade de Episódios......: " + this.episodes;
+               "\nStreaming....................: " + this.streaming;
     }
 
     @Override
@@ -65,7 +59,6 @@ public class Series implements Register {
         dos.writeInt(this.id);
         dos.writeUTF(this.name);
         dos.writeUTF(this.synopsis);
-        dos.writeInt(this.episodes);
         dos.writeShort(this.releaseYear);
         dos.writeUTF(this.streaming);
         return baos.toByteArray();
@@ -79,7 +72,6 @@ public class Series implements Register {
         this.id = dis.readInt();
         this.name = dis.readUTF();
         this.synopsis = dis.readUTF();
-        this.episodes = dis.readInt();
         this.releaseYear = dis.readShort();
         this.streaming = dis.readUTF();
     }

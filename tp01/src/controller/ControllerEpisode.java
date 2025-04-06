@@ -85,7 +85,7 @@ public class ControllerEpisode {
                     o = -1;
                 }
                 if (o <= 0 || o > n - 1)
-                    System.out.println("Escolha um número entre 1 e " + (n - 1));
+                    System.out.print("Escolha um número entre 1 e " + (n - 1) + ": ");
             } while (o <= 0 || o > n - 1);
 
             visaoEpisodios.mostraEpisodio(episodios[o - 1]);
@@ -99,11 +99,14 @@ public class ControllerEpisode {
 
     public void incluirEpisodio() {
         System.out.println("\n\n===============================");
-        System.out.println("      Inclusão de série");
+        System.out.println("      Inclusão de episódio");
         System.out.println("===============================");
 
         // Buscando qual série irá inserir
-        int fkSerie = buscarSeriePorNome().getId();
+        Series serie = buscarSeriePorNome();
+        int fkSerie = serie.getId();
+        System.out.println("-------------------------------");
+        System.out.println("Nome da série: " + serie.getName());
 
         // Inserindo valores
         String name = visaoEpisodios.obterNome();
@@ -119,8 +122,12 @@ public class ControllerEpisode {
         }
 
         LocalDate release = visaoEpisodios.obterDataLancamento();
+        if (release == null) {
+            System.out.println("Data de lançamento inválida. Inclusão cancelada.");
+            return;
+        }
 
-        int duration = visaoEpisodios.obterTemporada();
+        int duration = visaoEpisodios.obterDuracao();
         if (duration <= 0) {
             System.out.println("Duração inválida. Inclusão cancelada.");
             return;
@@ -171,7 +178,7 @@ public class ControllerEpisode {
                         o = -1;
                     }
                     if (o <= 0 || o > n - 1)
-                        System.out.println("Escolha um número entre 1 e " + (n - 1));
+                        System.out.print("Escolha um número entre 1 e " + (n - 1) + ": ");
                 } while (o <= 0 || o > n - 1);
 
                 Episode episode = episodios[o - 1];
@@ -262,7 +269,7 @@ public class ControllerEpisode {
                     escolha = -1;
                 }
                 if (escolha < 1 || escolha > series.length) {
-                    System.out.println("Escolha um número entre 1 e " + series.length);
+                    System.out.print("Escolha um número entre 1 e " + series.length + ": ");
                 }
             } while (escolha < 1 || escolha > series.length);
 
@@ -291,9 +298,8 @@ public class ControllerEpisode {
 
     // Tratamento da Relação
     public Series buscarSeriePorNome() {
-        System.out.println("\n\n===============================");
-        System.out.println("    Busca de série por nome");
-        System.out.println("===============================");
+        System.out.println("    Buscar série por nome");
+        System.out.println("-------------------------------");
         System.out.print("Nome: ");
         String name = console.nextLine();
 
@@ -327,7 +333,7 @@ public class ControllerEpisode {
                     o = -1;
                 }
                 if (o <= 0 || o > n - 1)
-                    System.out.println("Escolha um número entre 1 e " + (n - 1));
+                    System.out.print("Escolha um número entre 1 e " + (n - 1) + ": ");
             } while (o <= 0 || o > n - 1);
 
             return series[o - 1];

@@ -31,7 +31,6 @@ public class ViewSeries {
             System.out.println("===============================");
             System.out.printf("Nome.................: %s%n", serie.getName());
             System.out.printf("Sinopse..............: %s%n", serie.getSynopsis());
-            System.out.printf("Episódios............: %d%n", serie.getEpisodes());
             System.out.printf("Ano de Lançamento....: %d%n", serie.getReleaseYear());
             System.out.printf("Streaming............: %s%n", serie.getStreaming());
             System.out.println("===============================");
@@ -48,22 +47,6 @@ public class ViewSeries {
     public String obterSinopse() {
         System.out.print("Sinopse: ");
         return console.nextLine();
-    }
-
-    public int obterQuantidadeEpisodios() {
-        System.out.print("Quantidade de Episódios: ");
-        String entrada = console.nextLine();
-
-        if (entrada.isEmpty()) {
-            return -1; // Retorna um valor que indica que o usuário não digitou nada
-        }
-
-        try {
-            return Integer.parseInt(entrada);
-        } catch (NumberFormatException e) {
-            System.out.println("Entrada inválida. Digite um número válido.");
-            return obterQuantidadeEpisodios(); // Pede a entrada novamente em caso de erro
-        }
     }
 
     public short obterAnoLancamento() {
@@ -122,19 +105,4 @@ public class ViewSeries {
             }
         }
     }
-
-    // Não está sendo utilizado, mas manter por enquanto
-    /* public int lerSerie() {
-        int idSerie;
-        while (true) {
-            System.out.print("ID do Série: ");
-            idSerie = console.nextInt();
-            if (idSerie > 0) {
-                console.nextLine();
-                return idSerie;
-            } else {
-                System.out.println("ID do Série inválido! O valor deve ser maior que zero.");
-            }
-        }
-    } */
 }
