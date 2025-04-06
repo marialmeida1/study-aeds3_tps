@@ -57,11 +57,11 @@ public class ViewEpisode {
             System.out.println("\n\n===============================");
             System.out.println("      Detalhes do episodio:");
             System.out.println("===============================");
-            System.out.printf("Nome:................ %s%n", episodio.nome);
-            System.out.printf("Temporada:........... %d%n", episodio.temporada);
+            System.out.printf("Nome:................ %s%n", episodio.getName());
+            System.out.printf("Temporada:........... %d%n", episodio.getSeason());
             System.out.printf("Data Lançamento:..... %s%n",
-                    episodio.lancamento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-            System.out.printf("Duração:............. %d%n", episodio.duracao);
+                    episodio.getRelease().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            System.out.printf("Duração:............. %d%n", episodio.getDuration());
             System.out.println("===============================");
         } else {
             System.out.println("Episódio não encontrado.");
@@ -170,13 +170,9 @@ public class ViewEpisode {
                 break;
         }
 
-        System.out.print(mensagem);
-
+        
         while (true) {
-            if (!console.hasNextLine()) {
-                continue; // Aguarda entrada do usuário
-            }
-
+            System.out.print(mensagem);
             String resposta = console.nextLine().trim().toUpperCase();
 
             if (resposta.equals("S")) {

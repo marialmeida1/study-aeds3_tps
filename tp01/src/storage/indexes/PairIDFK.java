@@ -36,7 +36,7 @@ public class PairIDFK implements RegisterTreeB<PairIDFK> {
   public PairIDFK(int n1, int n2) {
     try {
       this.id = n1; // ID da tabela principal (N)
-      this.fk = n2; // ID da tablea secundária (1)
+      this.fk = n2; // ID da tabela secundária (1)
     } catch (Exception ec) {
       ec.printStackTrace();
     }

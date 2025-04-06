@@ -57,9 +57,9 @@ public class ControllerEpisode {
         System.out.println("  Busca de episódio por nome");
         System.out.println("===============================");
 
+        
         int fkSerie = buscarSeriePorNome().getId();
         Episode[] episodios = arqEpisodios.readFkSerie(fkSerie);
-
         try {
             if (episodios == null || episodios.length == 0) { // Verifica se é nulo ou vazio
                 System.out.println("-------------------------------");
@@ -149,10 +149,10 @@ public class ControllerEpisode {
         System.out.println("      Alteração de Série");
         System.out.println("===============================");
 
-        int fkSerie = buscarSeriePorNome().getId();
-        Episode[] episodios = arqEpisodios.readFkSerie(fkSerie);
-
+        
         try {
+            int fkSerie = buscarSeriePorNome().getId();
+            Episode[] episodios = arqEpisodios.readFkSerie(fkSerie);
             if (episodios.length > 0) {
                 int n = 1;
 
@@ -239,7 +239,7 @@ public class ControllerEpisode {
             return;
 
         try {
-            Series[] series = arqEpisodios.readNome(name);
+            Episode[] series = arqEpisodios.readNome(name);
             if (series.length == 0) {
                 System.out.println("-------------------------------");
                 System.out.println("Nenhuma série encontrada.");
@@ -266,11 +266,11 @@ public class ControllerEpisode {
                 }
             } while (escolha < 1 || escolha > series.length);
 
-            Series serie = series[escolha - 1];
-            visaoEpisodios.mostraSerie(serie);
+            Episode episode = series[escolha - 1];
+            visaoEpisodios.mostraEpisodio(episode);
 
             if (visaoEpisodios.confirmAction(3)) {
-                if (arqEpisodios.delete(serie.getId())) {
+                if (arqEpisodios.delete(episode.getId())) {
                     System.out.println("-------------------------------");
                     System.out.println("Série excluída com sucesso.");
                     System.out.println("===============================");

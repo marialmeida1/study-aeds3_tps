@@ -17,7 +17,8 @@ public class ViewSeries {
         System.out.println("2 - Buscar");
         System.out.println("3 - Alterar");
         System.out.println("4 - Excluir");
-        System.out.println("5 - Listas Episódios da Série");
+        System.out.println("5 - Listar Episódios da Série");
+        System.out.println("6 - Listar Episódios por temporada da Série");
         System.out.println("0 - Retornar ao menu anterior");
         System.out.println("===============================");
         System.out.print("Opção: ");
@@ -122,7 +123,8 @@ public class ViewSeries {
         }
     }
 
-    public int lerSerie() {
+    // Não está sendo utilizado, mas manter por enquanto
+    /* public int lerSerie() {
         int idSerie;
         while (true) {
             System.out.print("ID do Série: ");
@@ -134,5 +136,5 @@ public class ViewSeries {
                 System.out.println("ID do Série inválido! O valor deve ser maior que zero.");
             }
         }
-    }
+    } */
 }

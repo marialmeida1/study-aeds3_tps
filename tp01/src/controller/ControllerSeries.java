@@ -302,4 +302,94 @@ public class ControllerSeries {
             e.printStackTrace();
         }
     }
+
+/*     public void listarEpisodiosPorSerie() {
+        System.out.println("\nListagem de episódios por série");
+        System.out.print("\nNome da série: ");
+        String nome = console.nextLine();
+
+        try {
+            Series[] series = arqSeries.readNome(nome);
+
+            if (series == null || series.length == 0) {
+                System.out.println("Série não encontrada.");
+                return;
+            }
+
+            Series s = series[0];
+            System.out.println("Série encontrada:");
+            visao.mostraSerie(s);
+
+            int idSerie = s.getId();
+            Episodio[] episodios = arqEpisodios.readPorSerie(idSerie);
+
+            if (episodios == null || episodios.length == 0) {
+                System.out.println("Nenhum episódio encontrado para esta série.");
+                return;
+            }
+
+            System.out.println("\nEpisódios da série:");
+            for (Episodio episodio : episodios) {
+                System.out.println("----------------------------");
+                System.out.println("Nome: " + episodio.getNome());
+                System.out.println("Temporada: " + episodio.getTemporada());
+                System.out.println("Duração: " + episodio.getDuracao() + " minutos");
+                System.out.println("Data de Lançamento: " + episodio.getLancamento());
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao listar episódios da série!");
+            e.printStackTrace();
+        }
+    }
+
+    public void listarEpisodiosPorTemporada() {
+        System.out.println("\nListagem de episódios por temporada");
+        System.out.print("\nNome da série: ");
+        String nomeSerie = console.nextLine();
+
+        try {
+            Series[] series = arqSeries.readNome(nomeSerie);
+
+            if (series == null || series.length == 0) {
+                System.out.println("Série não encontrada.");
+                return;
+            }
+
+            Series serie = series[0];
+            System.out.println("Série encontrada:");
+            visao.mostraSerie(serie);
+
+            System.out.print("\nDigite o número da temporada desejada: ");
+            int temporadaDesejada = Integer.parseInt(console.nextLine());
+
+            Episodio[] episodios = arqEpisodios.readPorSerie(serie.getId());
+
+            if (episodios == null || episodios.length == 0) {
+                System.out.println("Nenhum episódio encontrado para esta série.");
+                return;
+            }
+
+            System.out.println("\nEpisódios da temporada " + temporadaDesejada + ":");
+            boolean encontrouEpisodios = false;
+            for (Episodio episodio : episodios) {
+                if (episodio.getTemporada() == temporadaDesejada) {
+                    System.out.println("----------------------------");
+                    System.out.println("Nome: " + episodio.getNome());
+                    System.out.println("Temporada: " + episodio.getTemporada());
+                    System.out.println("Duração: " + episodio.getDuracao() + " minutos");
+                    System.out.println("Data de Lançamento: " + episodio.getLancamento());
+                    encontrouEpisodios = true;
+                }
+            }
+
+            if (!encontrouEpisodios) {
+                System.out.println("Nenhum episódio encontrado para a temporada " + temporadaDesejada + ".");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao listar episódios da temporada!");
+            e.printStackTrace();
+        }
+    } */
 }
