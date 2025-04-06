@@ -31,8 +31,7 @@ public class ArquivoEpisode extends Archive<Episode> {
 
     public Episode[] readFkSerie(int fkSeries) throws Exception { // Faz a busca somente dentro de epsódios
         ArrayList<PairIDFK> pares = relacaoNN.read(new PairIDFK(fkSeries));
-        System.out.println(pares);
-
+        
         if (pares.size() > 0) {
 
             Episode[] episodios = new Episode[pares.size()];
@@ -79,6 +78,31 @@ public class ArquivoEpisode extends Archive<Episode> {
         }
 
     }
+
+    public Episode[] readEpisodiosPorSerieENome(int fkSerie, String nome) throws Exception {
+        if (nome.length() == 0)
+            return null;
+
+        Episode[] episodiosDaSerie = readFkSerie(fkSerie);
+        if (episodiosDaSerie == null || episodiosDaSerie.length == 0)
+            return null;
+
+        ArrayList<PairNameID> paresNome = indiceIndiretoNome.read(new PairNameID(nome, -1));
+
+        ArrayList<Episode> episodiosFiltrados = new ArrayList<>();
+
+        for (PairNameID parNome : paresNome) {
+            for (Episode ep : episodiosDaSerie) {
+                if (ep.getId() == parNome.getId()) {
+                    episodiosFiltrados.add(ep);
+                    break; 
+                }
+            }
+        }
+
+        return episodiosFiltrados.isEmpty() ? null : episodiosFiltrados.toArray(new Episode[0]);
+    }
+
 
     @Override
     public boolean delete(int id) throws Exception {

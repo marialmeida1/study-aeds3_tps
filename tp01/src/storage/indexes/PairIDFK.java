@@ -60,13 +60,15 @@ public class PairIDFK implements RegisterTreeB<PairIDFK> {
   }
 
   public int compareTo(PairIDFK a) {
-    if (this.id != a.id)
-      return this.id - a.id;
-    else
-      // Só compara os valores de Num2, se o Num2 da busca for diferente de -1
-      // Isso é necessário para que seja possível a busca de lista
-      return this.fk == -1 ? 0 : this.fk - a.fk;
-  }
+    if (this.id == -1) {
+        return this.fk - a.fk;
+    }
+    if (this.id != a.id) {
+        return this.id - a.id;
+    }
+    return this.fk == -1 ? 0 : this.fk - a.fk;
+}
+
 
   public String toString() {
     return String.format("%3d", this.id) + ";" + String.format("%-3d", this.fk);

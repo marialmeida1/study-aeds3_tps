@@ -54,13 +54,23 @@ public class ControllerEpisode {
 
     public void buscarEpisodio() throws Exception {
         System.out.println("\n\n===============================");
-        System.out.println("  Busca de episódio por nome");
+        System.out.println("       Busca de episódio");
         System.out.println("===============================");
 
-        
-        int fkSerie = buscarSeriePorNome().getId();
-        Episode[] episodios = arqEpisodios.readFkSerie(fkSerie);
-        System.out.println(episodios);
+        Series serie = buscarSeriePorNome();
+
+        if (serie == null) {
+            return; 
+        }
+
+        int fkSerie = serie.getId();
+
+        System.out.println("===============================");
+        System.out.println("    Buscar episódio por nome");
+        System.out.println("-------------------------------");
+        System.out.print("Nome: ");
+        String name = console.nextLine();
+        Episode[] episodios = arqEpisodios.readEpisodiosPorSerieENome(fkSerie, name);
 
         try {
             if (episodios == null || episodios.length == 0) { // Verifica se é nulo ou vazio
@@ -96,7 +106,6 @@ public class ControllerEpisode {
             System.err.println("Erro do sistema. Não foi possível buscar as séries!");
             e.printStackTrace();
         }
-
     }
 
     public void incluirEpisodio() {
@@ -158,7 +167,6 @@ public class ControllerEpisode {
         System.out.println("      Alteração de Série");
         System.out.println("===============================");
 
-        
         try {
             int fkSerie = buscarSeriePorNome().getId();
             Episode[] episodios = arqEpisodios.readFkSerie(fkSerie);
