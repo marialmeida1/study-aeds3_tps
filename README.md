@@ -22,10 +22,10 @@ Cada pasta contém um README específico explicando os detalhes da implementaç�
 - Estruturas de dados aplicadas:  Árvore B+, Tabela Hash Extensível, etc
 
 ## Participantes
-- Mariana Almeida
-- Felipe Barros
-- Bruna Furtado
-- Gustavo Henrique
+- Mariana Almeida Mendonça    <br>                    [<img src = "https://img.shields.io/badge/github-black.svg?&style=for-the-badge&logo=github&logoColor=white">](https://github.com/marialmeida1)
+- Felipe Barros  <br>          [<img src = "https://img.shields.io/badge/github-black.svg?&style=for-the-badge&logo=github&logoColor=white">](https://github.com/nkdwon)
+- Bruna Furtado da Fonseca    <br>                    [<img src = "https://img.shields.io/badge/github-black.svg?&style=for-the-badge&logo=github&logoColor=white">](https://github.com/cestpassion)
+- Gustavo Henrique Rodrigues de Castro  <br>          [<img src = "https://img.shields.io/badge/github-black.svg?&style=for-the-badge&logo=github&logoColor=white">](https://github.com/GhrCastro)
 
 ## Como Executar
 1. Clone este repositório:
