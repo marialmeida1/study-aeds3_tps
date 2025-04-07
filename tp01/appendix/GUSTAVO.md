@@ -1,12 +1,15 @@
 # Apêndice
 
-## Gustavo Henrique Rodrigues de Castro
+#### Gustavo Henrique Rodrigues de Castro
 
 [<img src = "https://img.shields.io/badge/github-black.svg?&style=for-the-badge&logo=github&logoColor=white">](https://github.com/GhrCastro)
 
+<br>
+
+# Considerações
+
 Ao começar o trabalho, a primeira coisa que foi criada por mim foi um servidor do discord com canais destinados à divisão de tarefas e postagem do enunciado, links do git e códigos a serem compartilhados entre nós:
 
-<br>
 
  #### Canal de enunciados
 > ![Captura de tela 2025-04-07 194159](https://github.com/user-attachments/assets/b11e5db5-9bb3-44b4-bbdb-c3d38b1f8831)
