@@ -70,7 +70,27 @@ public class ControllerSeries {
                 return;
             }
 
-            Series serie = series[0]; // Assume the first match is the desired series
+            int n = 1;
+            System.out.println("-------------------------------");
+            for (Series s : series) {
+                System.out.println((n++) + ": " + s.getName());
+            }
+
+            System.out.println("-------------------------------");
+            System.out.print("Escolha a Série: ");
+
+            int escolha;
+            do {
+                try {
+                    escolha = Integer.parseInt(console.nextLine());
+                } catch (NumberFormatException e) {
+                    escolha = -1;
+                }
+                if (escolha <= 0 || escolha > n - 1)
+                    System.out.print("Escolha um número entre 1 e " + (n - 1) + ": ");
+            } while (escolha <= 0 || escolha > n - 1);
+
+            Series serie = series[escolha - 1]; // Use the selected series
             System.out.println("\n===============================");
             System.out.println("Série: " + serie.getName());
             System.out.println("===============================");
