@@ -126,7 +126,7 @@ public class ControllerSeries {
     public void listarEpisodiosPorTemporada() {
         System.out.println("\n\n===============================");
         System.out.println("Listagem de episódios por temporada da série");
-        System.out.println("===============================\n");
+        System.out.println("===============================");
         System.out.print("Digite o nome da série: ");
         String nomeSerie = console.nextLine();        
     
@@ -189,13 +189,15 @@ public class ControllerSeries {
                 if(temp < episodios[i].getSeason())
                     temp = episodios[i].getSeason();
             }
-            
-            System.out.println("\nTemporadas:");
+            System.out.println("\n===============================");
+            System.out.println("Temporadas:");
+            System.out.println("-------------------------------");
             for(int i = 1; i <= temp; i++){
-                System.out.println(i);
+                System.out.println(i + "ª");
             }
-
+            System.out.println("-------------------------------");
             System.out.print("Escolha a temporada: ");
+
             do {
                 try {
                     escolha = Integer.parseInt(console.nextLine());
@@ -208,17 +210,18 @@ public class ControllerSeries {
 
             System.out.println("\n===============================");
             System.out.println("Série: " + serie.getName());
+            System.out.println("===============================");
 
             // Filter episodes by the desired season
             System.out.println("Episódios da temporada " + escolha + ":");
             boolean encontrouEpisodios = false;
             for (Episode ep : episodios) {
                 if (ep.getSeason() == escolha) {
-                    System.out.println("----------------------------\n");
+                    System.out.println("----------------------------");
                     System.out.println("Nome: " + ep.getName());
                     System.out.println("Temporada: " + ep.getSeason());
                     System.out.println("Duração: " + ep.getDuration() + " minutos");
-                    System.out.println("Data de Lançamento: " + ep.getRelease() + "\n");
+                    System.out.println("Data de Lançamento: " + ep.getRelease());
                     encontrouEpisodios = true;
                 }
             }    
