@@ -52,6 +52,69 @@ public class ControllerSeries {
         } while (opcao != 0);
     }
 
+    public void listarEpisodiosPorSerie() {
+        System.out.println("\n\n===============================");
+        System.out.println("Listagem de episódios por série");
+        System.out.println("===============================");
+        System.out.print("Digite o nome da série: ");
+        String nomeSerie = console.nextLine();
+
+        if (nomeSerie.isEmpty()) {
+            System.out.println("Nome da série inválido.");
+            return;
+        }
+
+        try {
+            Series[] series = arqSeries.readNome(nomeSerie); // Fetch series by name
+            if (series == null || series.length == 0) {
+                System.out.println("Nenhuma série encontrada com o nome fornecido.");
+                return;
+            }
+
+            int n = 1;
+            System.out.println("-------------------------------");
+            for (Series s : series) {
+                System.out.println((n++) + ": " + s.getName());
+            }
+
+            System.out.println("-------------------------------");
+            System.out.print("Escolha a Série: ");
+
+            int escolha;
+            do {
+                try {
+                    escolha = Integer.parseInt(console.nextLine());
+                } catch (NumberFormatException e) {
+                    escolha = -1;
+                }
+                if (escolha <= 0 || escolha > n - 1)
+                    System.out.print("Escolha um número entre 1 e " + (n - 1) + ": ");
+            } while (escolha <= 0 || escolha > n - 1);
+
+            Series serie = series[escolha - 1]; // Use the selected series
+            System.out.println("\n===============================");
+            System.out.println("Série: " + serie.getName());
+
+            int idSerie = serie.getId();
+            Episode[] episodios = arqEpisodios.readFkSerie(idSerie); // Fetch episodes for the series
+
+            if (episodios == null || episodios.length == 0) {
+                System.out.println("Nenhum episódio encontrado para esta série.");
+            } else {
+                for (Episode episodio : episodios) {
+                    System.out.println("-------------------------------");
+                    System.out.println("Nome: " + episodio.getName());
+                    System.out.println("Temporada: " + episodio.getSeason());
+                    System.out.println("Duração: " + episodio.getDuration() + " minutos");
+                    System.out.println("Data de Lançamento: " + episodio.getRelease());
+                }
+                System.out.println("===============================");
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao listar episódios por série!");
+            e.printStackTrace();
+        }
+    }
 
     public void buscarSeriePorNome() {
         System.out.println("\n\n===============================");
