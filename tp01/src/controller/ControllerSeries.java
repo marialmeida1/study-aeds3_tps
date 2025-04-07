@@ -46,6 +46,8 @@ public class ControllerSeries {
                     break;
                 default:
                     System.out.println("Opção inválida!");
+                    System.out.println("\n>>> Pressione Enter para voltar.");
+                    console.nextLine();
                     break;
             }
         } while (opcao != 0);
@@ -60,6 +62,9 @@ public class ControllerSeries {
 
         if (nomeSerie.isEmpty()) {
             System.out.println("Nome da série inválido.");
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
+
             return;
         }
 
@@ -124,6 +129,9 @@ public class ControllerSeries {
     
         if (nomeSerie.isEmpty()) {
             System.out.println("Nome da série inválido.");
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
+
             return;
         }
 
@@ -131,6 +139,9 @@ public class ControllerSeries {
             Series[] series = arqSeries.readNome(nomeSerie); // Fetch series by name
             if (series == null || series.length == 0) {
                 System.out.println("Nenhuma série encontrada com o nome fornecido.");
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
+
                 return;
             }
 
@@ -161,6 +172,14 @@ public class ControllerSeries {
             int idSerie = serie.getId();
             visao.mostraSerie(serie);
             Episode[] episodios = arqEpisodios.readFkSerie(idSerie); // Fetch episodes for the series
+
+            if(episodios == null || episodios.length == 0){
+                System.out.println("\nNão há episódios nessa série.");
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
+
+                return;
+            }
             
             int temp = episodios[episodios.length - 1].getSeason();
             
@@ -202,6 +221,9 @@ public class ControllerSeries {
             if (!encontrouEpisodios) 
                 System.out.println("Nenhum episódio encontrado para a temporada " + temp + ".");
             
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
+            
         } catch (Exception e) {
             System.out.println("Erro ao listar episódios da temporada!");
             e.printStackTrace();
@@ -225,6 +247,9 @@ public class ControllerSeries {
                 System.out.println("-------------------------------");
                 System.out.println("Nenhuma série encontrada.");
                 System.out.println("===============================");
+
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
                 return; // Sai do método para evitar exceções
             }
 
@@ -250,6 +275,9 @@ public class ControllerSeries {
 
             visao.mostraSerie(series[o - 1]);
 
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
+
         } catch (Exception e) {
             System.err.println("Erro do sistema. Não foi possível buscar as séries!");
             e.printStackTrace();
@@ -271,18 +299,27 @@ public class ControllerSeries {
         String synopsis = visao.obterSinopse();
         if (synopsis == null || synopsis.isEmpty()) {
             System.out.println("Sinopse inválida. Inclusão cancelada.");
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
+
             return;
         }
 
         short releaseYear = visao.obterAnoLancamento();
         if (releaseYear <= 0) {
             System.out.println("Ano de lançamento inválido. Inclusão cancelada.");
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
+
             return;
         }
 
         String streaming = visao.obterStreaming();
         if (streaming == null || streaming.isEmpty()) {
             System.out.println("Plataforma de streaming inválida. Inclusão cancelada.");
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
+
             return;
         }
 
@@ -293,6 +330,10 @@ public class ControllerSeries {
                 System.out.println("-------------------------------");
                 System.out.println("Série incluída com sucesso.");
                 System.out.println("===============================");
+
+                visao.mostraSerie(novaSerie);
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
             } catch (Exception e) {
                 System.err.println("Erro do sistema. Não foi possível incluir a série!");
                 e.printStackTrace();
@@ -301,6 +342,9 @@ public class ControllerSeries {
             System.out.println("-------------------------------");
             System.out.println("Inclusão cancelada.");
             System.out.println("===============================");
+
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
         }
     }
 
@@ -373,6 +417,8 @@ public class ControllerSeries {
                         System.out.println("-------------------------------");
                         System.out.println("Série alterada com sucesso.");
                         System.out.println("===============================");
+                        System.out.println("\n>>> Pressione Enter para voltar.");
+                        console.nextLine();
                     } else {
                         System.err.println("Erro ao alterar a série.");
                     }
@@ -380,11 +426,15 @@ public class ControllerSeries {
                     System.out.println("-------------------------------");
                     System.out.println("Alteração cancelada.");
                     System.out.println("===============================");
+                    System.out.println("\n>>> Pressione Enter para voltar.");
+                    console.nextLine();
                 }
             } else {
                 System.out.println("-------------------------------");
                 System.out.println("Nenhuma série encontrada.");
                 System.out.println("===============================");
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
             }
         } catch (Exception e) {
             System.err.println("Erro do sistema. Não foi possível alterar a série!");
@@ -408,6 +458,8 @@ public class ControllerSeries {
                 System.out.println("-------------------------------");
                 System.out.println("Nenhuma série encontrada.");
                 System.out.println("===============================");
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
                 return;
             }
 
@@ -435,7 +487,11 @@ public class ControllerSeries {
             Episode[] epVinculados = arqEpisodios.readFkSerie(serie.getId());
 
             if (epVinculados != null || epVinculados.length != 0) {
-                System.out.println("Erro! Não foi possível excluir essa série, pois há episódios vinculados a ela.");
+                System.out.println("------------------------------------------");
+                System.out.println("Erro! Não foi possível excluir essa série, \npois há episódios vinculados a ela.");
+                System.out.println("===========================================");
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
                 return;
             }
 
@@ -444,6 +500,8 @@ public class ControllerSeries {
                     System.out.println("-------------------------------");
                     System.out.println("Série excluída com sucesso.");
                     System.out.println("===============================");
+                    System.out.println("\n>>> Pressione Enter para voltar.");
+                    console.nextLine();
                 } else {
                     System.err.println("Erro ao excluir a série.");
                 }
@@ -451,7 +509,8 @@ public class ControllerSeries {
                 System.out.println("-------------------------------");
                 System.out.println("Exclusão cancelada.");
                 System.out.println("===============================");
-
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
             }
         } catch (Exception e) {
             System.err.println("Erro do sistema. Não foi possível excluir a série!");

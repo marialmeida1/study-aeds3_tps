@@ -47,6 +47,8 @@ public class ControllerEpisode {
                     break;
                 default:
                     System.out.println("Opção inválida!");
+                    System.out.println("\n>>> Pressione Enter para voltar.");
+                    console.nextLine();
                     break;
             }
         } while (opcao != 0);
@@ -74,6 +76,8 @@ public class ControllerEpisode {
             System.out.println("-------------------------------");
             System.out.println("Nenhum episódio encontrado.");
             System.out.println("===============================");
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
             return null;
         }
     
@@ -128,24 +132,32 @@ public class ControllerEpisode {
         String name = visaoEpisodios.obterNome();
         if (name == null || name.isEmpty()) {
             System.out.println("Nome inválido. Inclusão cancelada.");
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
             return;
         }
 
         int season = visaoEpisodios.obterTemporada();
         if (season <= 0) {
             System.out.println("Temporada inválida. Inclusão cancelada.");
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
             return;
         }
 
         LocalDate release = visaoEpisodios.obterDataLancamento();
         if (release == null) {
             System.out.println("Data de lançamento inválida. Inclusão cancelada.");
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
             return;
         }
 
         int duration = visaoEpisodios.obterDuracao();
         if (duration <= 0) {
             System.out.println("Duração inválida. Inclusão cancelada.");
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
             return;
         }
 
@@ -164,6 +176,8 @@ public class ControllerEpisode {
             System.out.println("-------------------------------");
             System.out.println("Inclusão de Episódio cancelada.");
             System.out.println("===============================");
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
         }
     }
 
@@ -178,6 +192,8 @@ public class ControllerEpisode {
                 System.out.println("-------------------------------");
                 System.out.println("Nenhum episódio encontrado.");
                 System.out.println("===============================");
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
                 return;
             }
     
@@ -217,6 +233,8 @@ public class ControllerEpisode {
                     System.out.println("-------------------------------");
                     System.out.println("Episódio alterado com sucesso.");
                     System.out.println("===============================");
+                    System.out.println("\n>>> Pressione Enter para voltar.");
+                    console.nextLine();
                 } else {
                     System.err.println("Erro ao alterar o episódio.");
                 }
@@ -224,6 +242,8 @@ public class ControllerEpisode {
                 System.out.println("-------------------------------");
                 System.out.println("Alteração cancelada.");
                 System.out.println("===============================");
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
             }
         } catch (Exception e) {
             System.err.println("Erro do sistema. Não foi possível buscar o episódio!");
@@ -242,6 +262,8 @@ public class ControllerEpisode {
                 System.out.println("-------------------------------");
                 System.out.println("Nenhum episódio encontrado.");
                 System.out.println("===============================");
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
                 return;
             }
     
@@ -252,6 +274,8 @@ public class ControllerEpisode {
                     System.out.println("-------------------------------");
                     System.out.println("Episódio excluído com sucesso.");
                     System.out.println("===============================");
+                    System.out.println("\n>>> Pressione Enter para voltar.");
+                    console.nextLine();
                 } else {
                     System.err.println("Erro ao excluir o episódio.");
                 }
@@ -259,6 +283,8 @@ public class ControllerEpisode {
                 System.out.println("-------------------------------");
                 System.out.println("Exclusão cancelada.");
                 System.out.println("===============================");
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
             }
 
         } catch (Exception e) {
@@ -284,6 +310,8 @@ public class ControllerEpisode {
                 System.out.println("-------------------------------");
                 System.out.println("Nenhuma série encontrada.");
                 System.out.println("===============================");
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
                 return null; // Sai do método para evitar exceções
             }
 
