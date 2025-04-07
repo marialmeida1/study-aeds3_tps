@@ -4,7 +4,6 @@ import tp01.src.models.Series;
 import tp01.src.data.ArquivoSeries;
 import tp01.src.view.ViewSeries;
 import tp01.src.models.*;
-import tp01.src.data.*;
 import tp01.src.data.ArquivoEpisode;
 
 import java.util.Scanner;
@@ -54,7 +53,9 @@ public class ControllerSeries {
     }
 
     public void listarEpisodiosPorSerie() {
-        System.out.println("\nListagem de episódios por série");
+        System.out.println("\n\n===============================");
+        System.out.println("Listagem de episódios por série");
+        System.out.println("===============================");
         System.out.print("Digite o nome da série: ");
         String nomeSerie = console.nextLine();
 
@@ -93,7 +94,6 @@ public class ControllerSeries {
             Series serie = series[escolha - 1]; // Use the selected series
             System.out.println("\n===============================");
             System.out.println("Série: " + serie.getName());
-            System.out.println("===============================");
 
             int idSerie = serie.getId();
             Episode[] episodios = arqEpisodios.readFkSerie(idSerie); // Fetch episodes for the series
@@ -102,13 +102,13 @@ public class ControllerSeries {
                 System.out.println("Nenhum episódio encontrado para esta série.");
             } else {
                 for (Episode episodio : episodios) {
-                    System.out.println("----------------------------");
-                    System.out.println("ID do Episódio: " + episodio.getId());
+                    System.out.println("-------------------------------");
                     System.out.println("Nome: " + episodio.getName());
                     System.out.println("Temporada: " + episodio.getSeason());
                     System.out.println("Duração: " + episodio.getDuration() + " minutos");
                     System.out.println("Data de Lançamento: " + episodio.getRelease());
                 }
+                System.out.println("===============================");
             }
         } catch (Exception e) {
             System.out.println("Erro ao listar episódios por série!");
