@@ -32,6 +32,9 @@ A equipe está organizada por meio das seguintes ferramentas e metodologias:
 
 - **`tp01/files`**: Armazena os dados persistentes do sistema, como arquivos de clientes e índices.
 
+- **`tp01/appendix`**: Armazena os arquivos correspondentes ao relatos de cada aluno.
+
+
 Essa estrutura facilita a organização modular e futura expansão do projeto.
 
 
