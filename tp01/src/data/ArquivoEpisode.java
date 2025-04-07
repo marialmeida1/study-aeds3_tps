@@ -49,7 +49,6 @@ public class ArquivoEpisode extends Archive<Episode> {
         } else {
             return null;
         }
-
     }
 
     public Episode[] readNome(String nome) throws Exception { // Faz a busca somente dentro de epsódios
