@@ -76,8 +76,6 @@ public class ControllerEpisode {
             System.out.println("-------------------------------");
             System.out.println("Nenhum episódio encontrado.");
             System.out.println("===============================");
-            System.out.println("\n>>> Pressione Enter para voltar.");
-            console.nextLine();
             return null;
         }
     
@@ -109,6 +107,8 @@ public class ControllerEpisode {
             Episode episodio = buscarEpisodioPorNome();
             if (episodio != null) {
                 visaoEpisodios.mostraEpisodio(episodio);
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
             }
         } catch (Exception e) {
             System.err.println("Erro do sistema. Não foi possível buscar o episódio!");
@@ -124,6 +124,18 @@ public class ControllerEpisode {
 
         // Buscando qual série irá inserir
         Series serie = buscarSeriePorNome();
+
+        if(serie == null){
+            System.out.println("-------------------------------");
+            System.out.println("Nenhuma série encontrada! Não é possível adicionar episódios.");
+            System.out.println("===============================");
+            
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
+
+            return; // Sai do método para evitar exceções
+        }
+
         int fkSerie = serie.getId();
         System.out.println("-------------------------------");
         System.out.println("Série: " + serie.getName());

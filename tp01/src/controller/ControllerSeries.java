@@ -42,6 +42,9 @@ public class ControllerSeries {
                 case 5:
                     listarEpisodiosPorSerie();
                     break;
+                case 6:
+                    listarEpisodiosPorTemporada();;
+                    break;
                 case 0:
                     break;
                 default:
@@ -123,7 +126,7 @@ public class ControllerSeries {
     public void listarEpisodiosPorTemporada() {
         System.out.println("\n\n===============================");
         System.out.println("Listagem de episódios por temporada da série");
-        System.out.println("===============================");
+        System.out.println("===============================\n");
         System.out.print("Digite o nome da série: ");
         String nomeSerie = console.nextLine();        
     
@@ -173,7 +176,7 @@ public class ControllerSeries {
             visao.mostraSerie(serie);
             Episode[] episodios = arqEpisodios.readFkSerie(idSerie); // Fetch episodes for the series
 
-            if(episodios == null || episodios.length == 0){
+            if(episodios == null && episodios.length == 0){
                 System.out.println("\nNão há episódios nessa série.");
                 System.out.println("\n>>> Pressione Enter para voltar.");
                 console.nextLine();
@@ -181,13 +184,16 @@ public class ControllerSeries {
                 return;
             }
             
-            int temp = episodios[episodios.length - 1].getSeason();
+            int temp = 0;
+            for(int i = 0; i < episodios.length; i++ ){
+                if(temp < episodios[i].getSeason())
+                    temp = episodios[i].getSeason();
+            }
             
-            System.out.println("Temporadas:");
-            for(int i = 1; i <=temp; i++){
+            System.out.println("\nTemporadas:");
+            for(int i = 1; i <= temp; i++){
                 System.out.println(i);
             }
-            System.out.println();
 
             System.out.print("Escolha a temporada: ");
             do {
@@ -204,19 +210,19 @@ public class ControllerSeries {
             System.out.println("Série: " + serie.getName());
 
             // Filter episodes by the desired season
-            System.out.println("\nEpisódios da temporada " + escolha + ":\n");
+            System.out.println("Episódios da temporada " + escolha + ":");
             boolean encontrouEpisodios = false;
             for (Episode ep : episodios) {
                 if (ep.getSeason() == escolha) {
-                    System.out.println("----------------------------");
+                    System.out.println("----------------------------\n");
                     System.out.println("Nome: " + ep.getName());
                     System.out.println("Temporada: " + ep.getSeason());
                     System.out.println("Duração: " + ep.getDuration() + " minutos");
-                    System.out.println("Data de Lançamento: " + ep.getRelease());
+                    System.out.println("Data de Lançamento: " + ep.getRelease() + "\n");
                     encontrouEpisodios = true;
                 }
-                System.out.println("===============================");
-            }            
+            }    
+            System.out.println("===============================");        
 
             if (!encontrouEpisodios) 
                 System.out.println("Nenhum episódio encontrado para a temporada " + temp + ".");
@@ -234,7 +240,7 @@ public class ControllerSeries {
         System.out.println("\n\n===============================");
         System.out.println("    Busca de série por nome");
         System.out.println("===============================");
-        System.out.print("Nome: ");
+        System.out.print("Digite o nome da série: ");
         String name = console.nextLine();
 
         if (name.isEmpty())
@@ -247,7 +253,6 @@ public class ControllerSeries {
                 System.out.println("-------------------------------");
                 System.out.println("Nenhuma série encontrada.");
                 System.out.println("===============================");
-
                 System.out.println("\n>>> Pressione Enter para voltar.");
                 console.nextLine();
                 return; // Sai do método para evitar exceções
@@ -486,7 +491,7 @@ public class ControllerSeries {
             visao.mostraSerie(serie);
             Episode[] epVinculados = arqEpisodios.readFkSerie(serie.getId());
 
-            if (epVinculados != null || epVinculados.length != 0) {
+            if (epVinculados != null && epVinculados.length != 0) {
                 System.out.println("------------------------------------------");
                 System.out.println("Erro! Não foi possível excluir essa série, \npois há episódios vinculados a ela.");
                 System.out.println("===========================================");
