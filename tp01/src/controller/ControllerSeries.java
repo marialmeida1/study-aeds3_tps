@@ -159,6 +159,7 @@ public class ControllerSeries {
             System.out.println("Série: " + serie.getName());
 
             int idSerie = serie.getId();
+            visao.mostraSerie(serie);
             Episode[] episodios = arqEpisodios.readFkSerie(idSerie); // Fetch episodes for the series
             
             int temp = episodios[episodios.length - 1].getSeason();
@@ -184,10 +185,10 @@ public class ControllerSeries {
             System.out.println("Série: " + serie.getName());
 
             // Filter episodes by the desired season
-            System.out.println("\nEpisódios da temporada " + temp + ":\n");
+            System.out.println("\nEpisódios da temporada " + escolha + ":\n");
             boolean encontrouEpisodios = false;
             for (Episode ep : episodios) {
-                if (ep.getSeason() == temp) {
+                if (ep.getSeason() == escolha) {
                     System.out.println("----------------------------");
                     System.out.println("Nome: " + ep.getName());
                     System.out.println("Temporada: " + ep.getSeason());
@@ -395,7 +396,7 @@ public class ControllerSeries {
         System.out.println("\n\n===============================");
         System.out.println("      Exclusão de Série");
         System.out.println("===============================");
-        System.out.print("Nome: ");
+        System.out.print("Digite o nome da série: ");
         String name = console.nextLine();
 
         if (name.isEmpty())
@@ -431,6 +432,12 @@ public class ControllerSeries {
 
             Series serie = series[escolha - 1];
             visao.mostraSerie(serie);
+            Episode[] epVinculados = arqEpisodios.readFkSerie(serie.getId());
+
+            if (epVinculados != null || epVinculados.length != 0) {
+                System.out.println("Erro! Não foi possível excluir essa série, pois há episódios vinculados a ela.");
+                return;
+            }
 
             if (visao.confirmAction(3)) {
                 if (arqSeries.delete(serie.getId())) {
