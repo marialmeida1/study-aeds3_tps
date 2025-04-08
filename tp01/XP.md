@@ -61,7 +61,7 @@ Série: Friends
 
 Além dessas melhorias, Mariana também foi responsável por implementar o CRUD completo dos episódios, desenvolvendo todas as funcionalidades de cadastro, leitura, atualização e exclusão. E também colaborou com a escrita do README, juntamente com a Bruna,.
 
-Felipe, por sua vez, teve papel fundamental na fase de testes. Ele foi responsável por testar todas as operações implementadas, garantindo que o sistema estivesse funcionando corretamente em todas as frentes. Além disso, configurou os índices utilizando tanto **Tabela Hash Extensível** quanto **Árvore B+**, um desafio técnico importante que exigiu aprofundamento teórico (📌). Felipe também respondeu ao checklist final do professor, documentando os desafios enfrentados e assegurando que os critérios de avaliação fossem atendidos por completo (📑).
+Felipe, por sua vez, teve papel fundamental na fase de testes. Ele foi responsável por testar todas as operações implementadas, garantindo que o sistema estivesse funcionando corretamente em todas as frentes. Além disso, configurou os índices utilizando tanto **Tabela Hash Extensível** quanto **Árvore B+**, um desafio técnico importante que exigiu aprofundamento teórico (📌).
 
 Bruna também introduziu uma pausa interativa (“pressione Enter para voltar”) após a exibição das informações no terminal, evitando que os dados sumissem rapidamente da tela e proporcionando uma experiência de uso mais fluida. Além disso, para melhorar a legibilidade e facilitar a manutenção, ela adicionou JavaDocs em todo o código do projeto, documentando classes, métodos e estruturas com clareza.
 
