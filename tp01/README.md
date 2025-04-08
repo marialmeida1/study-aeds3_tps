@@ -127,84 +127,69 @@ A classe `Main` é o **ponto de entrada do sistema PUCFlix**, responsável por i
 ---
 
 ### `ControllerSeries.java`
-Responsável por orquestrar todas as operações relacionadas às **séries** no sistema.
+Controlador principal para manipulação de séries e episódios. Atua como intermediário entre a camada de visualização (ViewSeries) e a camada de dados (ArquivoSeries e ArquivoEpisode).
 
-**Principais responsabilidades:**
-- Exibição do menu principal (`menu()`).
-- Inclusão, alteração, busca e exclusão de séries.
-- Listagem de episódios por série ou temporada.
-- Validações de entrada e confirmações com o usuário.
-- Verificação de integridade antes da exclusão de séries.
-
-**Métodos principais:**
-- `menu()`
-- `incluirSerie()`
-- `alterarSerie()`
-- `excluirSerie()`
-- `buscarSeriePorNome()`
-- `listarEpisodiosPorSerie()`
-- `listarEpisodiosPorTemporada()`
+**Métodos:**
+- `menu()` : Exibe o menu principal com as opções de operações sobre séries e episódios.
+- `listarEpisodiosPorSerie()` : Lista os episódios vinculados a uma série específica, buscada pelo nome.
+- `listarEpisodiosPorTemporada()` : Lista episódios de uma temporada específica de uma série selecionada.
+- `buscarSeriePorNome()` : Permite buscar uma série pelo nome e exibe suas informações detalhadas.
+- `incluirSerie()` : Inclui uma nova série no sistema, coletando os dados por meio da interface de visualização.
+- `alterarSerie()` : Permite alterar os dados de uma série previamente cadastrada. Realiza verificação para manter valores antigos caso campos não sejam alterados.
+- `excluirSerie()` : Exclui uma série do sistema, desde que não haja episódios vinculados a ela.
 
 ---
 
 ### `ControllerEpisode.java`
-Gerencia todas as operações relacionadas aos **episódios**, conectando os dados e a interface com o usuário.
+Controlador responsável por gerenciar operações relacionadas aos episódios. Inclui funcionalidades de criação, busca, alteração e exclusão de episódios.
 
-**Principais métodos:**
-- `menu()`: Exibe o menu principal de episódios.
-- `incluirEpisodio()`: Coleta dados e cadastra um novo episódio.
-- `buscarEpisodio()` / `buscarEpisodioPorNome()`: Localizam episódios por nome.
-- `alterarEpisodio()`: Permite editar dados de um episódio.
-- `excluirEpisodio()`: Exclui logicamente um episódio.
-- `buscarSeriePorNome()`: Localiza a série à qual o episódio pertence.
-
-**Observação:** Conta com validações e confirmações interativas para garantir a integridade dos dados e melhorar a experiência de uso.
+**Métodos:**
+- `menu()`: Exibe o menu principal de opções e executa a operação escolhida pelo usuário.
+- `buscarEpisodioPorNome()` : Realiza a busca de um episódio por nome, dentro de uma série específica.
+- `buscarEpisodio()` : Busca e exibe um episódio selecionado pelo usuário.
+- `incluirEpisodio()` : Coleta os dados do usuário e realiza a inclusão de um novo episódio.
+- `alterarEpisodio()` : Altera os dados de um episódio já existente.
+- `excluirEpisodio()` : Exclui um episódio selecionado pelo usuário.
+- `buscarSeriePorNome()` : Realiza a busca de uma série pelo nome.
 
 ---
 
 ### `ArquivoSeries`
-Responsável pela persistência e manipulação de dados das séries.
+Classe responsável pela manipulação dos dados de séries, incluindo operações CRUD e indexação por nome.
 
 **Estrutura interna:**
 - `indiceIndiretoNome`: Índice que associa o nome da série ao seu ID.
 
 **Principais métodos:**
-- `create(Series s)`
-- `readNome(String nome)`
-- `delete(int id)`
-- `update(Series novaSerie)`
-
-Garante consistência entre os dados armazenados e os índices de busca, proporcionando eficiência nas operações.
+- `create(Series s)` : Cria uma nova série, armazenando-a no arquivo e no índice de nomes.
+- `readNome(String nome)` : Lê todas as séries com o nome especificado.
+- `delete(int id)` : Exclui uma série do arquivo e remove sua entrada do índice de nomes.
+- `update(Series novaSerie)` : Atualiza os dados de uma série, ajustando o índice de nomes se o nome tiver mudado.
 
 ---
 
 ### `ArquivoEpisode`
-Gerencia a persistência dos episódios e mantém índices auxiliares para facilitar as buscas.
+Classe responsável pela manipulação dos episódios, incluindo persistência, leitura e gerenciamento de índices.
 
 **Índices utilizados:**
 - `indiceIndiretoNome`: associa nome do episódio ao ID.
 - `relacaoNN`: associa ID do episódio ao ID da série.
 
-**Principais métodos:**
-- `create(Episode e)`
-- `readFkSerie(int fkSeries)`
-- `readNome(String nome)`
-- `readEpisodiosPorSerieENome(int fkSerie, String nome)`
-- `delete(int id)`
-- `update(Episode novaEpisodio)`
-
-Centraliza a lógica de leitura/escrita dos episódios e mantém integridade entre os dados e os índices.
+**Métodos:**
+- `create(Episode e)` : Cria um novo episódio, armazenando-o e atualizando os índices.
+- `readFkSerie(int fkSeries)` : Retorna todos os episódios associados a uma determinada série.
+- `readNome(String nome)` : Retorna os episódios com o nome especificado.
+- `readEpisodiosPorSerieENome(int fkSerie, String nome)` : Retorna os episódios que pertencem a uma série e possuem determinado nome.
+- `delete(int id)` : Exclui um episódio e atualiza os índices relacionados.
+- `update(Episode novaEpisodio)` : Atualiza um episódio existente, ajustando os índices caso o nome tenha sido alterado.
 
 ---
 
 ### `Series`
-Modelo de dados para representar uma **série**.
+Representa uma série de TV ou streaming com informações como nome, sinopse, ano de lançamento e plataforma de streaming. Implementa a interface `{@link Register}` para permitir a serialização e desserialização em formato binário.
 
 **Atributos principais:**
 - `id`, `name`, `synopsis`, `releaseYear`, `streaming`
-
-**Construtores:**
-- Padrão, sem ID (criação), e completo (reconstrução)
 
 **Métodos:**
 - `getters/setters`
@@ -214,13 +199,10 @@ Modelo de dados para representar uma **série**.
 ---
 
 ### `Episode`
-Modelo de dados que representa um **episódio** de uma série.
+Representa um episódio de uma série, contendo informações como nome, temporada, data de lançamento, duração e chave estrangeira para a série associada. Implementa a interface ```{@link Register}``` para permitir serialização binária.
 
 **Atributos principais:**
 - `id`, `fkSerie`, `name`, `season`, `release`, `duration`
-
-**Construtores:**
-- Padrão, com e sem ID
 
 **Métodos:**
 - `getters/setters`
@@ -247,19 +229,17 @@ Responsável pela interface com o usuário nas ações relacionadas a **séries*
 ---
 
 ### `ViewEpisode`
-Interface textual para as funcionalidades de **episódios**.
-
-**Responsabilidades principais:**
-- Mostrar menus e opções.
-- Coletar dados como nome, temporada, data de lançamento e duração.
-- Confirmar ações.
-- Exibir os detalhes de episódios.
+Classe responsável pela interação com o usuário para ações relacionadas a episódios. Fornece métodos para exibir menus, coletar dados e confirmar ações sobre episódios.
 
 **Métodos principais:**
-- `exibirMenu()`
-- `mostraEpisodio(Episode episodio)`
-- `obterNome()`, `obterNomeSerie()`, `obterTemporada()`, `obterDataLancamento()`, `obterDuracao()`
-- `confirmAction(int actionNum)`
+- `exibirMenu()` : Exibe o menu principal de ações disponíveis para episódios.
+- `mostraEpisodio(Episode episodio)` : Exibe os dados de um episódio.
+- `obterNome()` : Solicita ao usuário o nome do episódio.
+- `obterNomeSerie()` : Solicita ao usuário o nome da série associada ao episódio.
+- `obterTemporada()` : Solicita ao usuário a temporada do episódio.
+- `obterDataLancamento()` : Solicita ao usuário a data de lançamento do episódio.
+- `obterDuracao()` : Solicita ao usuário a duração do episódio.
+- `confirmAction(int actionNum)` : Confirma com o usuário se ele deseja prosseguir com determinada ação.
 
 ---
 
