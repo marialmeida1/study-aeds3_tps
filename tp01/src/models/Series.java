@@ -1,9 +1,15 @@
 package tp01.src.models;
 
 import java.io.*;
-
 import tp01.src.storage.records.Register;
 
+/**
+ * Representa uma série de TV ou streaming com informações como nome,
+ * sinopse, ano de lançamento e plataforma de streaming.
+ * 
+ * Implementa a interface {@link Register} para permitir a serialização e
+ * desserialização em formato binário.
+ */
 public class Series implements Register {
     private int id;
     private String name;
@@ -11,14 +17,34 @@ public class Series implements Register {
     private short releaseYear; // Apenas o ano de lançamento
     private String streaming;
 
+    /**
+     * Construtor padrão. Inicializa os campos com valores padrão.
+     */
     public Series() {
         this(-1, "", "", (short) 0, "");
     }
 
+    /**
+     * Construtor sem ID, utilizado para inserções iniciais.
+     *
+     * @param name Nome da série.
+     * @param synopsis Sinopse da série.
+     * @param releaseYear Ano de lançamento.
+     * @param streaming Plataforma de streaming onde a série está disponível.
+     */
     public Series(String name, String synopsis, short releaseYear, String streaming) {
         this(-1, name, synopsis, releaseYear, streaming);
     }
 
+    /**
+     * Construtor completo da classe.
+     *
+     * @param id Identificador único da série.
+     * @param name Nome da série.
+     * @param synopsis Sinopse da série.
+     * @param releaseYear Ano de lançamento.
+     * @param streaming Plataforma de streaming.
+     */
     public Series(int id, String name, String synopsis, short releaseYear, String streaming) {
         this.id = id;
         this.name = name;
@@ -43,6 +69,11 @@ public class Series implements Register {
     public String getStreaming() { return streaming; }
     public void setStreaming(String streaming) { this.streaming = streaming; }
 
+    /**
+     * Retorna uma representação textual da série.
+     *
+     * @return String contendo os dados da série.
+     */
     @Override
     public String toString() {
         return "\nID...........................: " + this.id +
@@ -52,6 +83,12 @@ public class Series implements Register {
                "\nStreaming....................: " + this.streaming;
     }
 
+    /**
+     * Serializa a série para um array de bytes.
+     *
+     * @return Array de bytes representando a série.
+     * @throws IOException Se ocorrer erro na escrita.
+     */
     @Override
     public byte[] toByteArray() throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -64,6 +101,12 @@ public class Series implements Register {
         return baos.toByteArray();
     }
 
+    /**
+     * Desserializa os dados da série a partir de um array de bytes.
+     *
+     * @param b Array de bytes com os dados serializados.
+     * @throws IOException Se ocorrer erro na leitura.
+     */
     @Override
     public void fromByteArray(byte[] b) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(b);

@@ -7,6 +7,11 @@ import tp01.src.data.ArquivoEpisode;
 
 import java.util.Scanner;
 
+/**
+ * Controlador principal para manipulação de séries e episódios.
+ * Atua como intermediário entre a camada de visualização (ViewSeries)
+ * e a camada de dados (ArquivoSeries e ArquivoEpisode).
+ */
 public class ControllerSeries {
 
     private ArquivoSeries arqSeries;
@@ -14,12 +19,20 @@ public class ControllerSeries {
     private ViewSeries visao;
     private static final Scanner console = new Scanner(System.in);
 
+    /**
+     * Construtor padrão que inicializa os arquivos e a interface de visualização.
+     * @throws Exception caso ocorra erro ao acessar os arquivos.
+     */
     public ControllerSeries() throws Exception {
         arqSeries = new ArquivoSeries();
         arqEpisodios = new ArquivoEpisode(); // Instantiate ArquivoEpisode
         visao = new ViewSeries();
     }
 
+    /**
+     * Exibe o menu principal com as opções de operações sobre séries e episódios.
+     * @throws Exception caso ocorra erro ao executar alguma operação.
+     */
     public void menu() throws Exception {
         int opcao;
         do {
@@ -56,6 +69,9 @@ public class ControllerSeries {
         } while (opcao != 0);
     }
 
+    /**
+     * Lista os episódios vinculados a uma série específica, buscada pelo nome.
+     */
     public void listarEpisodiosPorSerie() {
         System.out.println("\n\n===============================");
         System.out.println("Listagem de episódios por série");
@@ -123,6 +139,9 @@ public class ControllerSeries {
         }
     }
 
+    /**
+     * Lista episódios de uma temporada específica de uma série selecionada.
+     */
     public void listarEpisodiosPorTemporada() {
         System.out.println("\n\n===============================");
         System.out.println("Listagem de episódios por temporada da série");
@@ -176,7 +195,7 @@ public class ControllerSeries {
             visao.mostraSerie(serie);
             Episode[] episodios = arqEpisodios.readFkSerie(idSerie); // Fetch episodes for the series
 
-            if(episodios == null && episodios.length == 0){
+            if(episodios == null){
                 System.out.println("\nNão há episódios nessa série.");
                 System.out.println("\n>>> Pressione Enter para voltar.");
                 console.nextLine();
@@ -239,6 +258,9 @@ public class ControllerSeries {
         }
     }
 
+    /**
+     * Permite buscar uma série pelo nome e exibe suas informações detalhadas.
+     */
     public void buscarSeriePorNome() {
         System.out.println("\n\n===============================");
         System.out.println("    Busca de série por nome");
@@ -293,6 +315,9 @@ public class ControllerSeries {
 
     }
 
+    /**
+     * Inclui uma nova série no sistema, coletando os dados por meio da interface de visualização.
+     */
     public void incluirSerie() {
         System.out.println("\n\n===============================");
         System.out.println("      Inclusão de série");
@@ -356,6 +381,10 @@ public class ControllerSeries {
         }
     }
 
+    /**
+     * Permite alterar os dados de uma série previamente cadastrada.
+     * Realiza verificação para manter valores antigos caso campos não sejam alterados.
+     */
     private void alterarSerie() {
         System.out.println("\n\n===============================");
         System.out.println("      Alteração de Série");
@@ -450,6 +479,9 @@ public class ControllerSeries {
         }
     }
 
+    /**
+     * Exclui uma série do sistema, desde que não haja episódios vinculados a ela.
+     */
     private void excluirSerie() {
         System.out.println("\n\n===============================");
         System.out.println("      Exclusão de Série");

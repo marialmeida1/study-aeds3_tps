@@ -11,21 +11,46 @@ import java.util.regex.Pattern;
 
 import tp01.src.storage.records.RegisterTreeB;
 
+/**
+ * Classe que representa um par (nome, ID), usada em estruturas como Árvores B+.
+ * 
+ * O nome é armazenado com tamanho fixo de 30 bytes, truncado se necessário,
+ * garantindo compatibilidade com arquivos binários. O ID é um inteiro que serve como identificador único.
+ * 
+ */
 public class PairNameID implements RegisterTreeB<PairNameID> {
 
-  private String nome;
-  private int id;
-  private short TAMANHO = 34;
-  private short TAMANHO_NOME = 30;
+  private String nome; /** Nome (chave de busca). Limitado a 30 bytes. */
+  private int id; /** ID associado ao nome. */
+  private short TAMANHO = 34; /** Tamanho total da estrutura serializada (30 bytes do nome + 4 do ID). */
+  private short TAMANHO_NOME = 30; /** Tamanho máximo para o nome em bytes. */
 
+  /**
+   * Construtor padrão. Inicializa com nome vazio e ID -1.
+   * 
+   * @throws Exception Em caso de erro no processamento do nome.
+   */
   public PairNameID() throws Exception {
     this("", -1);
   }
 
+  /**
+   * Construtor com nome. O ID será -1.
+   * 
+   * @param n Nome a ser armazenado.
+   * @throws Exception Em caso de erro no processamento do nome.
+   */
   public PairNameID(String n) throws Exception {
     this(n, -1);
   }
 
+  /**
+   * Construtor com nome e ID. Trunca o nome caso exceda o tamanho máximo.
+   * 
+   * @param t Nome (chave de busca).
+   * @param i ID associado.
+   * @throws Exception Em caso de erro no processamento do nome.
+   */
   public PairNameID(String t, int i) throws Exception {
 
     if(!t.isEmpty()) {
@@ -58,14 +83,29 @@ public class PairNameID implements RegisterTreeB<PairNameID> {
     this.id = i; // ID da Pergunta
   }
   
+  /**
+   * Retorna o nome armazenado.
+   * 
+   * @return Nome.
+   */
   public String getNome() {
       return nome;
   }
 
+  /**
+   * Retorna o ID armazenado.
+   * 
+   * @return ID.
+   */
   public int getId() {
       return id;
   }
 
+  /**
+   * Cria uma cópia do objeto.
+   * 
+   * @return Novo objeto {@code PairNameID} com os mesmos dados.
+   */
   @Override
   public PairNameID clone() {
     try {
@@ -76,10 +116,22 @@ public class PairNameID implements RegisterTreeB<PairNameID> {
     return null;
   }
 
+  /**
+   * Retorna o tamanho da estrutura em bytes (nome + id).
+   * 
+   * @return Tamanho fixo (34 bytes).
+   */
   public short size() {
     return this.TAMANHO;
   }
 
+  /**
+   * Compara dois objetos {@code PairNameID}, ignorando acentuação e case.
+   * Se os nomes forem iguais, compara pelo ID.
+   * 
+   * @param a Objeto a ser comparado.
+   * @return Resultado da comparação (semelhante a {@code compareTo}).
+   */
   public int compareTo(PairNameID a) {
     String str1 = transforma(this.nome);
     String str2 = transforma(a.nome);
@@ -96,10 +148,21 @@ public class PairNameID implements RegisterTreeB<PairNameID> {
       return str1.compareTo(str2);
   }
 
+  /**
+   * Retorna representação textual do objeto.
+   * 
+   * @return String no formato "nome;id".
+   */
   public String toString() {
     return this.nome + ";" + String.format("%-3d", this.id);
   }
 
+  /**
+   * Serializa o objeto em um array de bytes.
+   * 
+   * @return Array de bytes contendo os dados do objeto.
+   * @throws IOException Em caso de erro na escrita.
+   */
   public byte[] toByteArray() throws IOException {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     DataOutputStream dos = new DataOutputStream(baos);
@@ -119,6 +182,12 @@ public class PairNameID implements RegisterTreeB<PairNameID> {
     return baos.toByteArray();
   }
 
+  /**
+   * Desserializa um array de bytes preenchendo os campos do objeto.
+   * 
+   * @param ba Array de bytes.
+   * @throws IOException Em caso de erro na leitura.
+   */
   public void fromByteArray(byte[] ba) throws IOException {
     ByteArrayInputStream bais = new ByteArrayInputStream(ba);
     DataInputStream dis = new DataInputStream(bais);
@@ -128,6 +197,12 @@ public class PairNameID implements RegisterTreeB<PairNameID> {
     this.id = dis.readInt();
   }
 
+  /**
+   * Remove acentos e converte a string para minúsculas para facilitar comparações.
+   * 
+   * @param str String a ser transformada.
+   * @return String normalizada (sem acentos e em minúsculas).
+   */
   public static String transforma(String str) {
     String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
     Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");

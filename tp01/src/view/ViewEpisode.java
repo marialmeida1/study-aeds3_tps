@@ -6,9 +6,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+
+/**
+ * Classe responsável pela interação com o usuário para ações relacionadas a episódios.
+ * 
+ * Fornece métodos para exibir menus, coletar dados e confirmar ações sobre episódios.
+ */
 public class ViewEpisode {
     private static final Scanner console = new Scanner(System.in);
 
+    /**
+     * Exibe o menu principal de ações disponíveis para episódios.
+     */
     public void exibirMenu() {
         System.out.println("\n===============================");
         System.out.println("          PUCFlix 1.0");
@@ -24,6 +33,11 @@ public class ViewEpisode {
         System.out.print("Opção: ");
     }
 
+    /**
+     * Exibe os dados de um episódio.
+     * 
+     * @param episodio Episódio a ser exibido.
+     */
     public void mostraEpisodio(Episode episodio) {
         if (episodio != null) {
             System.out.println("\n\n===============================");
@@ -40,6 +54,11 @@ public class ViewEpisode {
         }
     }
 
+    /**
+     * Solicita ao usuário o nome do episódio.
+     * 
+     * @return Nome do episódio, ou {@code null} se a entrada for vazia.
+     */
     public String obterNome() {
         String nome;
         while (true) {
@@ -54,6 +73,11 @@ public class ViewEpisode {
         }
     }
 
+    /**
+     * Solicita ao usuário o nome da série associada ao episódio.
+     * 
+     * @return Nome da série, ou {@code null} se a entrada for vazia.
+     */
     public String obterNomeSerie() {
         String nome;
         while (true) {
@@ -68,6 +92,11 @@ public class ViewEpisode {
         }
     }
 
+    /**
+     * Solicita ao usuário a temporada do episódio.
+     * 
+     * @return Número da temporada, ou -1 se a entrada for vazia.
+     */
     public int obterTemporada() {
         int temporada;
         while (true) {
@@ -89,6 +118,11 @@ public class ViewEpisode {
         }
     }
 
+    /**
+     * Solicita ao usuário a data de lançamento do episódio.
+     * 
+     * @return Data de lançamento em {@link LocalDate}, ou {@code null} se a entrada for vazia.
+     */
     public LocalDate obterDataLancamento() {
         while (true) {
             System.out.print("Data de lançamento (DD/MM/AAAA): ");
@@ -104,6 +138,11 @@ public class ViewEpisode {
         }
     }
 
+    /**
+     * Solicita ao usuário a duração do episódio.
+     * 
+     * @return Duração em minutos, ou -1 se a entrada for vazia.
+     */
     public int obterDuracao() {
         int duracao;
         while (true) {
@@ -125,6 +164,12 @@ public class ViewEpisode {
         }
     }
 
+    /**
+     * Confirma com o usuário se ele deseja prosseguir com determinada ação.
+     * 
+     * @param actionNum Número da ação (1-incluir, 2-alterar, 3-excluir, outros).
+     * @return {@code true} se o usuário confirmar com 'S', {@code false} se confirmar com 'N'.
+     */
     public boolean confirmAction(int actionNum) {
         String mensagem;
 

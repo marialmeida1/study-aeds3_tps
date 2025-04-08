@@ -4,9 +4,17 @@ import tp01.src.models.Series;
 
 import java.util.Scanner;
 
+/**
+ * Classe responsável pela interação com o usuário para operações relacionadas a séries.
+ * 
+ * Permite exibir menus, capturar dados de entrada e confirmar ações relacionadas a séries.
+ */
 public class ViewSeries {
     private static final Scanner console = new Scanner(System.in);
 
+    /**
+     * Exibe o menu principal de opções para manipulação de séries.
+     */
     public void exibirMenu() {
         System.out.println("\n\n===============================");
         System.out.println("          PUCFlix 1.0");
@@ -24,6 +32,11 @@ public class ViewSeries {
         System.out.print("Opção: ");
     }
 
+    /**
+     * Exibe os detalhes de uma série na tela.
+     *
+     * @param serie Objeto da série a ser exibido.
+     */
     public void mostraSerie(Series serie) {
         if (serie != null) {
             System.out.println("\n\n===============================");
@@ -39,16 +52,31 @@ public class ViewSeries {
         }
     }
 
+    /**
+     * Solicita ao usuário o nome da série.
+     *
+     * @return Nome da série informado.
+     */
     public String obterNome() {
         System.out.print("Nome da Série: ");
         return console.nextLine();
     }
 
+    /**
+     * Solicita ao usuário a sinopse da série.
+     *
+     * @return Sinopse informada.
+     */
     public String obterSinopse() {
         System.out.print("Sinopse: ");
         return console.nextLine();
     }
 
+    /**
+     * Solicita ao usuário o ano de lançamento da série.
+     *
+     * @return Ano de lançamento como short, ou -1 se a entrada estiver vazia.
+     */
     public short obterAnoLancamento() {
         System.out.print("Ano de Lançamento: ");
         String entrada = console.nextLine();
@@ -65,11 +93,22 @@ public class ViewSeries {
         }
     }
 
+    /**
+     * Solicita ao usuário o serviço de streaming da série.
+     *
+     * @return Nome do serviço de streaming informado.
+     */
     public String obterStreaming() {
         System.out.print("Streaming: ");
         return console.nextLine();
     }
 
+    /**
+     * Solicita a confirmação do usuário antes de realizar uma ação.
+     *
+     * @param actionNum Código da ação: 1 - Incluir, 2 - Alterar, 3 - Excluir, outros - genérico.
+     * @return {@code true} se o usuário confirmar com 'S', {@code false} se responder 'N'.
+     */
     public boolean confirmAction(int actionNum) {
         String mensagem;
 

@@ -10,25 +10,51 @@ import java.io.DataOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
+/**
+ * Representa um episódio de uma série, contendo informações como nome, temporada,
+ * data de lançamento, duração e chave estrangeira para a série associada.
+ * 
+ * Implementa a interface {@link Register} para permitir serialização binária.
+ */
 public class Episode implements Register {
 
-    /* Estrutura básica de um episódio, no qual possuí um id estrangeiro da série correspondente */
-
     private int id;
-    private int fkSerie; // Salva o valor para buscas futuras
+    private int fkSerie; // Chave estrangeira que relaciona o episódio a uma série
     private String name;
     private int season;
     private LocalDate release;
     private int duration;
 
+    /**
+     * Construtor padrão. Inicializa os campos com valores padrão.
+     */
     public Episode() {
         this(-1, -1, "", -1, LocalDate.now(), -1);
     }
 
+    /**
+     * Construtor utilizado para criar um episódio sem ID.
+     * 
+     * @param f ID da série (chave estrangeira).
+     * @param n Nome do episódio.
+     * @param t Temporada do episódio.
+     * @param l Data de lançamento.
+     * @param d Duração em minutos.
+     */
     public Episode(int f, String n, int t, LocalDate l, int d) {
         this(-1, f, n, t, l, d);
     }
 
+    /**
+     * Construtor completo utilizado para instanciar todos os campos.
+     * 
+     * @param i ID do episódio.
+     * @param f ID da série (chave estrangeira).
+     * @param n Nome do episódio.
+     * @param t Temporada do episódio.
+     * @param l Data de lançamento.
+     * @param d Duração em minutos.
+     */
     public Episode(int i, int f, String n, int t, LocalDate l, int d) {
         this.id = i;
         this.fkSerie = f;
@@ -86,6 +112,11 @@ public class Episode implements Register {
         this.duration = duration;
     }
 
+    /**
+     * Retorna uma representação textual do episódio.
+     * 
+     * @return String formatada com os dados do episódio.
+     */
     @Override
     public String toString() {
         return "\nID:.................." + this.id +
@@ -96,6 +127,12 @@ public class Episode implements Register {
                 "\nDuração:............." + this.duration;
     }
 
+    /**
+     * Serializa o episódio em um vetor de bytes.
+     * 
+     * @return Array de bytes representando o episódio.
+     * @throws IOException Se ocorrer erro durante a escrita.
+     */
     @Override
     public byte[] toByteArray() throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -109,6 +146,12 @@ public class Episode implements Register {
         return baos.toByteArray();
     }
 
+    /**
+     * Desserializa os dados de um vetor de bytes e os atribui ao episódio atual.
+     * 
+     * @param b Array de bytes contendo os dados do episódio.
+     * @throws IOException Se ocorrer erro durante a leitura.
+     */
     @Override
     public void fromByteArray(byte[] b) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(b);

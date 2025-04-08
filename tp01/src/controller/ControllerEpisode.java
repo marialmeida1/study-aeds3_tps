@@ -9,21 +9,34 @@ import tp01.src.view.ViewEpisode;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+/**
+ * Controlador responsável por gerenciar operações relacionadas aos episódios.
+ * Inclui funcionalidades de criação, busca, alteração e exclusão de episódios.
+ */
 public class ControllerEpisode {
 
     // Arquivos das Classes
     private ArquivoEpisode arqEpisodios;
     private ArquivoSeries arqSeries;
-
     private ViewEpisode visaoEpisodios;
     private static final Scanner console = new Scanner(System.in);
 
+    /**
+     * Construtor da classe. Inicializa os arquivos de dados e a visão.
+     * 
+     * @throws Exception caso ocorra erro na inicialização dos arquivos.
+     */
     public ControllerEpisode() throws Exception {
         arqEpisodios = new ArquivoEpisode();
         arqSeries = new ArquivoSeries();
         visaoEpisodios = new ViewEpisode();
     }
 
+    /**
+     * Exibe o menu principal de opções e executa a operação escolhida pelo usuário.
+     * 
+     * @throws Exception caso ocorra erro durante a execução das operações.
+     */
     public void menu() throws Exception {
         int opcao;
         do {
@@ -54,6 +67,12 @@ public class ControllerEpisode {
         } while (opcao != 0);
     }
 
+    /**
+     * Realiza a busca de um episódio por nome, dentro de uma série específica.
+     * 
+     * @return o episódio encontrado ou {@code null} se não encontrado.
+     * @throws Exception caso ocorra erro na busca.
+     */
     public Episode buscarEpisodioPorNome() throws Exception {
         System.out.println("\n\n===============================");
         System.out.println("       Busca de episódio");
@@ -102,6 +121,11 @@ public class ControllerEpisode {
         return episodios[o - 1]; // Retorna o episódio escolhido
     }
 
+    /**
+     * Busca e exibe um episódio selecionado pelo usuário.
+     * 
+     * @throws Exception caso ocorra erro na busca.
+     */
     public void buscarEpisodio() throws Exception {
         try {
             Episode episodio = buscarEpisodioPorNome();
@@ -117,6 +141,9 @@ public class ControllerEpisode {
     }    
     
 
+    /**
+     * Coleta os dados do usuário e realiza a inclusão de um novo episódio.
+     */
     public void incluirEpisodio() {
         System.out.println("\n\n===============================");
         System.out.println("      Inclusão de Episódio");
@@ -193,6 +220,9 @@ public class ControllerEpisode {
         }
     }
 
+    /**
+     * Altera os dados de um episódio já existente.
+     */
     private void alterarEpisodio() {
         System.out.println("\n\n===============================");
         System.out.println("      Alteração de Episódio");
@@ -263,6 +293,9 @@ public class ControllerEpisode {
         }
     }    
 
+    /**
+     * Exclui um episódio selecionado pelo usuário.
+     */
     private void excluirEpisodio() {
         System.out.println("\n\n===============================");
         System.out.println("      Exclusão de Episódio");
@@ -305,7 +338,11 @@ public class ControllerEpisode {
         }
     }    
 
-    // Tratamento da Relação
+    /**
+     * Realiza a busca de uma série pelo nome.
+     * 
+     * @return a série encontrada ou {@code null} se não encontrada.
+     */
     public Series buscarSeriePorNome() {
         System.out.println("    Buscar série por nome");
         System.out.println("-------------------------------");
