@@ -13,7 +13,7 @@ disciplina:
 Implementado pelo Prof. Marcos Kutova
 v1.1 - 2021
 */
-package tp01.src.storage.structures;
+package tp02.src.storage.structures;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
-import tp01.src.storage.records.RegisterExtensibleHash;
+import tp02.src.storage.records.RegisterExtensibleHash;
 
 import java.lang.reflect.Constructor;
 

@@ -1,9 +1,9 @@
-package tp01.src.data;
+package tp02.src.data;
 import java.util.ArrayList;
 
-import tp01.src.models.Series;
-import tp01.src.storage.indexes.*;
-import tp01.src.storage.structures.*;
+import tp02.src.models.Series;
+import tp02.src.storage.indexes.*;
+import tp02.src.storage.structures.*;
 
 /**
  * Classe responsável pela manipulação dos dados de séries,
@@ -24,7 +24,7 @@ public class ArquivoSeries extends Archive<Series> {
         super("series", Series.class.getConstructor());
 
         indiceIndiretoNome = new ArchiveTreeB<>(
-                PairNameID.class.getConstructor(), 5, "tp01/files/series/indiceTitulo.db");
+                PairNameID.class.getConstructor(), 5, "tp02/files/series/indiceTitulo.db");
     }
 
     /**

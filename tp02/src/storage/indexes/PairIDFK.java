@@ -9,7 +9,7 @@
  * Implementado pelo Prof. Marcos Kutova
  * v1.0 - 2021
  */
-package tp01.src.storage.indexes;
+package tp02.src.storage.indexes;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -17,7 +17,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import tp01.src.storage.records.RegisterTreeB;
+import tp02.src.storage.records.RegisterTreeB;
 
 /**
  * Classe que representa um par de IDs para ser armazenado em uma estrutura de

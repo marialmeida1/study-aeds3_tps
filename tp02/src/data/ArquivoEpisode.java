@@ -1,10 +1,10 @@
-package tp01.src.data;
+package tp02.src.data;
 
 import java.util.ArrayList;
 
-import tp01.src.models.Episode;
-import tp01.src.storage.indexes.*;
-import tp01.src.storage.structures.*;
+import tp02.src.models.Episode;
+import tp02.src.storage.indexes.*;
+import tp02.src.storage.structures.*;
 
 /**
  * Classe responsável pela manipulação dos episódios,
@@ -28,9 +28,9 @@ public class ArquivoEpisode extends Archive<Episode> {
         super("episodios", Episode.class.getConstructor());
 
         indiceIndiretoNome = new ArchiveTreeB<>(
-                PairNameID.class.getConstructor(), 5, "tp01/files/episodios/indiceTitulo.db");
+                PairNameID.class.getConstructor(), 5, "tp02/files/episodios/indiceTitulo.db");
 
-        relacaoNN = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, "tp01/files/episodios/relacaoNN.db");
+        relacaoNN = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, "tp02/files/episodios/relacaoNN.db");
     }
 
     /**

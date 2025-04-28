@@ -1,11 +1,11 @@
-package tp01.src.storage.indexes;
+package tp02.src.storage.indexes;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import tp01.src.storage.records.RegisterExtensibleHash;
+import tp02.src.storage.records.RegisterExtensibleHash;
 
 /**
  * Representa um par (chave, valor) para uso em hashing extensível,

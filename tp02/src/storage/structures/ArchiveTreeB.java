@@ -13,11 +13,11 @@
  * v2.0 - 2021
  */
 
-package tp01.src.storage.structures;
+package tp02.src.storage.structures;
 import java.io.*;
 import java.util.ArrayList;
 
-import tp01.src.storage.records.RegisterTreeB;
+import tp02.src.storage.records.RegisterTreeB;
 
 import java.lang.reflect.Constructor;
 

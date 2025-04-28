@@ -1,9 +1,9 @@
-package tp01.src.controller;
+package tp02.src.controller;
 
-import tp01.src.data.ArquivoSeries;
-import tp01.src.view.ViewSeries;
-import tp01.src.models.*;
-import tp01.src.data.ArquivoEpisode;
+import tp02.src.data.ArquivoSeries;
+import tp02.src.view.ViewSeries;
+import tp02.src.models.*;
+import tp02.src.data.ArquivoEpisode;
 
 import java.util.Scanner;
 
