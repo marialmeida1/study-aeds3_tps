@@ -24,12 +24,8 @@ public class ArchiveRelationNN {
      * @throws Exception caso ocorra falha na criação dos arquivos ou índices.
      */
     public ArchiveRelationNN() throws Exception {
-        // Caminhos dos arquivos de controle
-        String pathActorSerie = "tp02/files/relations/actor_serie.db";
-        String pathSerieActor = "tp02/files/relations/serie_actor.db";
-
-        actorSerie = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, pathActorSerie);
-        serieActor = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, pathSerieActor);
+        actorSerie = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, "tp02/files/actor_serie.db");
+        serieActor = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, "tp02/files/serie_actor.db");
     }
 
     /**

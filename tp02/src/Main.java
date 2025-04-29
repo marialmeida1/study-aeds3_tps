@@ -2,6 +2,7 @@ package tp02.src;
 
 import java.util.Scanner;
 import tp02.src.controller.*;
+
 /**
  * Classe principal do sistema PUCFlix.
  * 
@@ -13,8 +14,10 @@ public class Main {
     /**
      * Método principal da aplicação.
      * 
-     * Exibe um menu de opções para o usuário e redireciona para os controladores de séries ou episódios
-     * conforme a escolha do usuário. O programa continua em execução até que a opção de saída seja escolhida.
+     * Exibe um menu de opções para o usuário e redireciona para os controladores de
+     * séries ou episódios
+     * conforme a escolha do usuário. O programa continua em execução até que a
+     * opção de saída seja escolhida.
      *
      * @param args Argumentos passados por linha de comando (não utilizados).
      */

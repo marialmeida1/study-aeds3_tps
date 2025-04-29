@@ -4,6 +4,7 @@ import tp02.src.data.ArchiveSeries;
 import tp02.src.view.ViewSeries;
 import tp02.src.models.*;
 import tp02.src.data.ArchiveEpisode;
+import tp02.src.data.ArchiveRelationNN;
 
 import java.util.Scanner;
 
@@ -15,7 +16,8 @@ import java.util.Scanner;
 public class ControllerSeries {
 
     private ArchiveSeries arqSeries;
-    private ArchiveEpisode arqEpisodios; // Added ArquivoEpisode instance
+    private ArchiveEpisode arqEpisodios;
+    private ArchiveRelationNN arqRelationNN;
     private ViewSeries visao;
     private static final Scanner console = new Scanner(System.in);
 
@@ -27,6 +29,7 @@ public class ControllerSeries {
         arqSeries = new ArchiveSeries();
         arqEpisodios = new ArchiveEpisode(); // Instantiate ArquivoEpisode
         visao = new ViewSeries();
+        arqRelationNN = new ArchiveRelationNN();
     }
 
     /**
@@ -363,6 +366,13 @@ public class ControllerSeries {
                 System.out.println("-------------------------------");
                 System.out.println("Série incluída com sucesso.");
                 System.out.println("===============================");
+
+
+                // Testando relação NN
+                System.out.println("Ator ID: " + 1);
+                System.out.println("Série ID: " + novaSerie.getId());
+                novaSerie.toString();
+                arqRelationNN.createRelation(1, novaSerie.getId());
 
                 visao.mostraSerie(novaSerie);
                 System.out.println("\n>>> Pressione Enter para voltar.");
