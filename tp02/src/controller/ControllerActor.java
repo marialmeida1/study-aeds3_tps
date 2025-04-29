@@ -67,7 +67,7 @@ public class ControllerActor {
         System.out.println("\n\n===============================");
         System.out.println("    Busca de ator por nome");
         System.out.println("===============================");
-        System.out.print("Digite o nome da ator: ");
+        System.out.print("Digite o nome do ator: ");
         String name = console.nextLine();
 
         if (name.isEmpty())
