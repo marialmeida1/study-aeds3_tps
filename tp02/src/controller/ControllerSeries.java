@@ -1,9 +1,9 @@
 package tp02.src.controller;
 
-import tp02.src.data.ArquivoSeries;
+import tp02.src.data.ArchiveSeries;
 import tp02.src.view.ViewSeries;
 import tp02.src.models.*;
-import tp02.src.data.ArquivoEpisode;
+import tp02.src.data.ArchiveEpisode;
 
 import java.util.Scanner;
 
@@ -14,8 +14,8 @@ import java.util.Scanner;
  */
 public class ControllerSeries {
 
-    private ArquivoSeries arqSeries;
-    private ArquivoEpisode arqEpisodios; // Added ArquivoEpisode instance
+    private ArchiveSeries arqSeries;
+    private ArchiveEpisode arqEpisodios; // Added ArquivoEpisode instance
     private ViewSeries visao;
     private static final Scanner console = new Scanner(System.in);
 
@@ -24,8 +24,8 @@ public class ControllerSeries {
      * @throws Exception caso ocorra erro ao acessar os arquivos.
      */
     public ControllerSeries() throws Exception {
-        arqSeries = new ArquivoSeries();
-        arqEpisodios = new ArquivoEpisode(); // Instantiate ArquivoEpisode
+        arqSeries = new ArchiveSeries();
+        arqEpisodios = new ArchiveEpisode(); // Instantiate ArquivoEpisode
         visao = new ViewSeries();
     }
 

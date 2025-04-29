@@ -10,7 +10,7 @@ import tp02.src.storage.structures.*;
  * Classe responsável pela manipulação dos episódios,
  * incluindo persistência, leitura e gerenciamento de índices.
  */
-public class ArquivoEpisode extends Archive<Episode> {
+public class ArchiveEpisode extends Archive<Episode> {
 
     /** Índice indireto baseado no nome do episódio. */
     ArchiveTreeB<PairNameID> indiceIndiretoNome;
@@ -23,7 +23,7 @@ public class ArquivoEpisode extends Archive<Episode> {
      * 
      * @throws Exception caso ocorra falha na criação dos arquivos ou índices.
      */
-    public ArquivoEpisode() throws Exception {
+    public ArchiveEpisode() throws Exception {
 
         super("episodios", Episode.class.getConstructor());
 

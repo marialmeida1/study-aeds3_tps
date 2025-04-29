@@ -9,7 +9,7 @@ import tp02.src.storage.structures.*;
  * Classe responsável pela manipulação dos dados de séries,
  * incluindo operações CRUD e indexação por nome.
  */
-public class ArquivoSeries extends Archive<Series> {
+public class ArchiveSeries extends Archive<Series> {
 
     /** Índice indireto baseado no nome da série. */
     ArchiveTreeB<PairNameID> indiceIndiretoNome;
@@ -19,7 +19,7 @@ public class ArquivoSeries extends Archive<Series> {
      * 
      * @throws Exception se ocorrer erro durante a criação do arquivo ou índice.
      */
-    public ArquivoSeries() throws Exception {
+    public ArchiveSeries() throws Exception {
 
         super("series", Series.class.getConstructor());
 
