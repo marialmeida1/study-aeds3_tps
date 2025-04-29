@@ -17,12 +17,11 @@ public class Actor implements Register {
         this(-1, "");
     }
 
-    /**
-     * Construtor utilizado para criar um episódio sem ID.
-     * 
-     * @param i ID da série (chave estrangeira).
-     * @param n Nome do episódio.
-     */
+    public Actor(String n) {
+        this.id = -1;     // usa o valor recebido
+        this.name = n;   // usa o valor recebido
+    } 
+
     public Actor(int i, String n) {
         this.id = i;     // usa o valor recebido
         this.name = n;   // usa o valor recebido

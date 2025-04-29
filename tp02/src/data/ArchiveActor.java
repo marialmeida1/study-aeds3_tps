@@ -11,7 +11,7 @@ import tp02.src.storage.structures.*;
  */
 public class ArchiveActor extends Archive<Actor> {
 
-    /** Índice indireto baseado no nome da série. */
+    /** Índice indireto baseado no nome da ator. */
     ArchiveTreeB<PairNameID> indiceIndiretoNome;
 
     /**
@@ -28,24 +28,24 @@ public class ArchiveActor extends Archive<Actor> {
     }
 
     /**
-     * Cria uma nova série, armazenando-a no arquivo e no índice de nomes.
+     * Cria uma nova ator, armazenando-a no arquivo e no índice de nomes.
      * 
-     * @param s a série a ser criada.
-     * @return o ID gerado para a série.
+     * @param s a ator a ser criada.
+     * @return o ID gerado para a ator.
      * @throws Exception se ocorrer erro durante o armazenamento.
      */
     @Override
-    public int create(Actor s) throws Exception {
-        int id = super.create(s);
-        indiceIndiretoNome.create(new PairNameID(s.getName(), id));
+    public int create(Actor a) throws Exception {
+        int id = super.create(a);
+        indiceIndiretoNome.create(new PairNameID(a.getName(), id));
         return id;
     }
 
     /**
-     * Lê todas as séries com o nome especificado.
+     * Lê todas as ators com o nome especificado.
      * 
-     * @param nome o nome da série.
-     * @return array de séries com o nome correspondente, ou {@code null} se não houver.
+     * @param nome o nome da ator.
+     * @return array de ators com o nome correspondente, ou {@code null} se não houver.
      * @throws Exception se ocorrer erro durante a leitura.
      */
     public Actor[] readNome(String nome) throws Exception {
@@ -76,38 +76,38 @@ public class ArchiveActor extends Archive<Actor> {
     }
 
     /**
-     * Exclui uma série do arquivo e remove sua entrada do índice de nomes.
+     * Exclui uma ator do arquivo e remove sua entrada do índice de nomes.
      * 
-     * @param id o identificador da série a ser removida.
-     * @return {@code true} se a série for removida com sucesso, {@code false} caso contrário.
+     * @param id o identificador da ator a ser removida.
+     * @return {@code true} se a ator for removida com sucesso, {@code false} caso contrário.
      * @throws Exception se ocorrer erro durante a exclusão.
      */
     @Override
     public boolean delete(int id) throws Exception {
-        Actor s = super.read(id);
-        if (s != null) {
+        Actor a = super.read(id);
+        if (a != null) {
             if (super.delete(id)) {
-                return indiceIndiretoNome.delete(new PairNameID(s.getName(), id));
+                return indiceIndiretoNome.delete(new PairNameID(a.getName(), id));
             }
         }
         return false;
     }
 
     /**
-     * Atualiza os dados de uma série, ajustando o índice de nomes se o nome tiver mudado.
+     * Atualiza os dados de uma ator, ajustando o índice de nomes se o nome tiver mudado.
      * 
-     * @param novaSerie o novo objeto contendo os dados atualizados da série.
+     * @param novoAtor o novo objeto contendo os dados atualizados da ator.
      * @return {@code true} se a atualização for bem-sucedida, {@code false} caso contrário.
      * @throws Exception se ocorrer erro durante a atualização.
      */
     @Override
-    public boolean update(Actor novaSerie) throws Exception {
-        Actor s = read(novaSerie.getId()); // na superclasse
-        if (s != null) {
-            if (super.update(novaSerie)) {
-                if (!s.getName().equals(novaSerie.getName())) {
-                    indiceIndiretoNome.delete(new PairNameID(s.getName(), s.getId()));
-                    indiceIndiretoNome.create(new PairNameID(novaSerie.getName(), novaSerie.getId()));
+    public boolean update(Actor novoAtor) throws Exception {
+        Actor a = read(novoAtor.getId()); // na superclasse
+        if (a != null) {
+            if (super.update(novoAtor)) {
+                if (!a.getName().equals(novoAtor.getName())) {
+                    indiceIndiretoNome.delete(new PairNameID(a.getName(), a.getId()));
+                    indiceIndiretoNome.create(new PairNameID(novoAtor.getName(), novoAtor.getId()));
                 }
                 return true;
             }
