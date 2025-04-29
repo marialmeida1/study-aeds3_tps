@@ -28,7 +28,7 @@ public class ArchiveEpisode extends Archive<Episode> {
         super("episodios", Episode.class.getConstructor());
 
         indiceIndiretoNome = new ArchiveTreeB<>(
-                PairNameID.class.getConstructor(), 5, "tp02/files/episodios/indiceTitulo.db");
+                PairNameID.class.getConstructor(), 5, "tp02/files/episodios/indiceNome.db");
 
         relacaoNN = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, "tp02/files/episodios/relacaoNN.db");
     }

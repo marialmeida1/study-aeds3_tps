@@ -24,7 +24,7 @@ public class ArchiveSeries extends Archive<Series> {
         super("series", Series.class.getConstructor());
 
         indiceIndiretoNome = new ArchiveTreeB<>(
-                PairNameID.class.getConstructor(), 5, "tp02/files/series/indiceTitulo.db");
+                PairNameID.class.getConstructor(), 5, "tp02/files/series/indiceNome.db");
     }
 
     /**
