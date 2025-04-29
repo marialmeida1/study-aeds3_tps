@@ -19,20 +19,20 @@ A equipe está organizada por meio das seguintes ferramentas e metodologias:
 
 ## Organização de Pastas do Projeto
 
-- **`tp01/base_code`**: Armazena implementações de código base, como árvores B+, tabelas hash extensíveis e operações CRUD, ainda não utilizadas no projeto, mas fundamentais para futuras expansões.
+- **`tp02/base_code`**: Armazena implementações de código base, como árvores B+, tabelas hash extensíveis e operações CRUD, ainda não utilizadas no projeto, mas fundamentais para futuras expansões.
 
-- **`tp01/bin`**: Contém os arquivos `.class` compilados do código-fonte, organizados conforme a estrutura de pacotes de `src`. São usados para rodar a aplicação.
+- **`tp02/bin`**: Contém os arquivos `.class` compilados do código-fonte, organizados conforme a estrutura de pacotes de `src`. São usados para rodar a aplicação.
 
-- **`tp01/src`**: Contém o código-fonte da aplicação, organizado em subpastas:
+- **`tp02/src`**: Contém o código-fonte da aplicação, organizado em subpastas:
   - **data**: Manipulação e leitura de dados (ex: `ArquivoCliente`).
   - **models**: Representação das entidades do sistema (ex: `Cliente`, `Serie`).
   - **storeage**: Lógica de armazenamento e persistência de dados (ex: `HashExtensivel`).
   - **util**: Funções auxiliares e utilitárias (ex: `ParCPFID`).
   - **view**: Interfaces e interação com o usuário (ex: `MenuEpisodios`, `MenuSeries`).
 
-- **`tp01/files`**: Armazena os dados persistentes do sistema, como arquivos de clientes e índices.
+- **`tp02/files`**: Armazena os dados persistentes do sistema, como arquivos de clientes e índices.
 
-- **`tp01/appendix`**: Armazena os arquivos correspondentes ao relatos de cada aluno.
+- **`tp02/appendix`**: Armazena os arquivos correspondentes ao relatos de cada aluno.
 
 
 Essa estrutura facilita a organização modular e futura expansão do projeto.
@@ -93,13 +93,13 @@ Essa estrutura facilita a organização modular e futura expansão do projeto.
 **Compilando o código:**
 
 ```bash
-javac -d tp01/bin tp01/src/**/*.java 
+javac -d tp02/bin tp02/src/**/*.java 
 ```
 
 **Rodando o código:**
 
 ```bash
-java -cp tp01/bin tp01.src.Main                                    
+java -cp tp02/bin tp02.src.Main                                    
 ```
 
 ---
