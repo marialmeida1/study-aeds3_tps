@@ -106,8 +106,8 @@ public class PairIDFK implements RegisterTreeB<PairIDFK> {
    * @return Valor negativo, zero ou positivo conforme a ordenação.
    */
   public int compareTo(PairIDFK a) {
-    if (this.id == -1) {
-        return this.fk - a.fk;
+    if (this.fk == -1) {
+        return this.id - a.id;
     }
     if (this.id != a.id) {
         return this.id - a.id;

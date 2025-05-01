@@ -178,7 +178,7 @@ public class ArchiveEpisode extends Archive<Episode> {
                     indiceIndiretoNome.delete(new PairNameID(e.getName(), e.getId()));
                     relacao1N.delete(new PairIDFK(e.getId(), e.getFkSerie()));
                     indiceIndiretoNome.create(new PairNameID(novaEpisodio.getName(), novaEpisodio.getId()));
-                    relacao1N.create(new PairIDFK(e.getId(), e.getFkSerie()));
+                    relacao1N.create(new PairIDFK(e.getFkSerie(), e.getId()));
                 }
                 return true;
             }
