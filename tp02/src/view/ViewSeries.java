@@ -25,8 +25,9 @@ public class ViewSeries {
         System.out.println("2 - Buscar");
         System.out.println("3 - Alterar");
         System.out.println("4 - Excluir");
-        System.out.println("5 - Listar Episódios da série");
-        System.out.println("6 - Listar Episódios por temporada da série");
+        System.out.println("5 - Listar Episódios da Série");
+        System.out.println("6 - Listar Episódios por temporada da Série");
+        System.out.println("7 - Listar Atores/Atrizes da Série");
         System.out.println("0 - Retornar ao menu anterior");
         System.out.println("===============================");
         System.out.print("Opção: ");

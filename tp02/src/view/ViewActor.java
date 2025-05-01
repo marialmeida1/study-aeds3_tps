@@ -25,6 +25,7 @@ public class ViewActor {
         System.out.println("2 - Buscar");
         System.out.println("3 - Alterar");
         System.out.println("4 - Excluir");
+        System.out.println("5 - Listar Séries de um Ator/Atriz");
         System.out.println("0 - Retornar ao menu anterior");
         System.out.println("===============================");
         System.out.print("Opção: ");
@@ -38,12 +39,12 @@ public class ViewActor {
     public void mostraAtor(Actor ator) {
         if (ator != null) {
             System.out.println("\n\n===============================");
-            System.out.println("       Detalhes de Ator:");
+            System.out.println("       Detalhes do Ator/Atriz:");
             System.out.println("===============================");
             System.out.printf("Nome.................: %s%n", ator.getName());
             System.out.println("===============================");
         } else {
-            System.out.println("Ator não encontrada.");
+            System.out.println("Ator/Atriz não encontrado(a).");
         }
     }
 
@@ -53,7 +54,7 @@ public class ViewActor {
      * @return Nome da ator informado.
      */
     public String obterNome() {
-        System.out.print("Nome da Ator: ");
+        System.out.print("Nome do Ator/Atriz: ");
         return console.nextLine();
     }
 

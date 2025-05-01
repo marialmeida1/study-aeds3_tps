@@ -1,10 +1,15 @@
 package tp02.src.controller;
 
 import tp02.src.data.ArchiveActor;
+import tp02.src.data.ArchiveRelationNN;
+import tp02.src.data.ArchiveSeries;
 import tp02.src.view.ViewActor;
 import tp02.src.models.*;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import tp02.src.storage.indexes.PairIDFK;
 
 /**
  * Controlador principal para manipulação de ator.
@@ -14,11 +19,14 @@ import java.util.Scanner;
 public class ControllerActor {
 
     private ArchiveActor arqAtor;
+    private ArchiveRelationNN arqRelationNN;
+    private ArchiveSeries arqSeries;
     private ViewActor visao;
     private static final Scanner console = new Scanner(System.in);
 
     /**
      * Construtor padrão que inicializa os arquivos e a interface de visualização.
+     * 
      * @throws Exception caso ocorra erro ao acessar os arquivos.
      */
     public ControllerActor() throws Exception {
@@ -28,6 +36,7 @@ public class ControllerActor {
 
     /**
      * Exibe o menu principal com as opções de operações sobre ators e episódios.
+     * 
      * @throws Exception caso ocorra erro ao executar alguma operação.
      */
     public void menu() throws Exception {
@@ -48,6 +57,9 @@ public class ControllerActor {
                     break;
                 case 4:
                     excluirAtor();
+                    break;
+                case 5:
+                    listSeriesByActor();
                     break;
                 case 0:
                     break;
@@ -118,7 +130,8 @@ public class ControllerActor {
     }
 
     /**
-     * Inclui uma nova ator no sistema, coletando os dados por meio da interface de visualização.
+     * Inclui uma nova ator no sistema, coletando os dados por meio da interface
+     * de visualização.
      */
     public void incluirAtor() {
         System.out.println("\n\n===============================");
@@ -158,7 +171,8 @@ public class ControllerActor {
 
     /**
      * Permite alterar os dados de uma ator previamente cadastrada.
-     * Realiza verificação para manter valores antigos caso campos não sejam alterados.
+     * Realiza verificação para manter valores antigos caso campos não sejam
+     * alterados.
      */
     private void alterarAtor() {
         System.out.println("\n\n===============================");
@@ -234,7 +248,8 @@ public class ControllerActor {
     }
 
     /**
-     * Exclui uma ator do sistema, desde que não haja episódios vinculados a ela.
+     * Exclui um Ator/Atriz do sistema, desde que não haja séries vinculados a
+     * ele(a).
      */
     private void excluirAtor() {
         System.out.println("\n\n===============================");
@@ -298,6 +313,82 @@ public class ControllerActor {
             }
         } catch (Exception e) {
             System.err.println("Erro do sistema. Não foi possível excluir a ator!");
+            e.printStackTrace();
+        }
+    }
+
+    private void listSeriesByActor() {
+        System.out.println("\n\n===============================");
+        System.out.println("Participações em Séries");
+        System.out.println("===============================");
+
+        String nomeAtor = visao.obterNome();
+
+        if (nomeAtor.isEmpty()) {
+            System.out.println("Nome do Ator/Atriz inválido(a).");
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
+
+            return;
+        }
+
+        try {
+            Actor[] actors = arqAtor.readNome(nomeAtor); // Fetch actor by name
+            if (actors == null || actors.length == 0) {
+                System.out.println("Nenhum Ator/Atriz encontrado(a) com o nome fornecido.");
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
+                return;
+            }
+
+            int n = 1;
+            System.out.println("-------------------------------");
+            for (Actor a : actors) {
+                System.out.println((n++) + ": " + a.getName());
+            }
+
+            System.out.println("-------------------------------");
+            System.out.print("Escolha o Ator/Atriz: ");
+
+            int escolha;
+            do {
+                try {
+                    escolha = Integer.parseInt(console.nextLine());
+                } catch (NumberFormatException e) {
+                    escolha = -1;
+                }
+                if (escolha <= 0 || escolha > n - 1)
+                    System.out.print("Escolha um número entre 1 e " + (n - 1) + ": ");
+            } while (escolha <= 0 || escolha > n - 1);
+
+            Actor actor = actors[escolha - 1]; // Use the selected actors
+            System.out.println("\n===============================");
+            System.out.println("Ator/Atriz: " + actor.getName());
+
+            int idActor = actor.getId();
+
+            // AJUSTAR
+            ArrayList<PairIDFK> relations = arqRelationNN.readSeriesByActor(idActor); // Fetch series for the actor
+
+            if (relations == null || relations.isEmpty()) {
+                System.out.println("Nenhuma série encontrada para este Ator/Atriz.");
+            } else {
+                System.out.println("\nSéries relacionadas:");
+                for (PairIDFK relation : relations) {
+                    int idSerie = relation.getFk(); // acredito eu que esteja errado, e se estiver, é getId
+                    Series serie = arqSeries.read(idSerie);
+                    if (serie != null) {
+                        System.out.println("-------------------------------");
+                        System.out.println("Nome: " + serie.getName());
+                        System.out.println("Sinopse: " + serie.getSynopsis());
+                        System.out.println("Ano de lançamento: " + serie.getReleaseYear());
+                        System.out.println("Streaming: " + serie.getStreaming());
+                    }
+                }
+                System.out.println("===============================");
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao listar Séries que o(a) Ator/Atriz fez!");
             e.printStackTrace();
         }
     }
