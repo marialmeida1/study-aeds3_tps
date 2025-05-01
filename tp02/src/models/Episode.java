@@ -1,8 +1,8 @@
-package tp01.src.models;
+package tp02.src.models;
 
 import java.time.LocalDate;
 
-import tp01.src.storage.records.Register;
+import tp02.src.storage.records.Register;
 
 import java.io.IOException;
 import java.io.ByteArrayOutputStream;

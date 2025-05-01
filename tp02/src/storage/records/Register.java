@@ -1,4 +1,4 @@
-package tp01.src.storage.records;
+package tp02.src.storage.records;
 import java.io.IOException;
 
 /**

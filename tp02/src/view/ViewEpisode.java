@@ -1,6 +1,6 @@
-package tp01.src.view;
+package tp02.src.view;
 
-import tp01.src.models.*;
+import tp02.src.models.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

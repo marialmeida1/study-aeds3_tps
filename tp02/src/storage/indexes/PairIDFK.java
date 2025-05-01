@@ -9,7 +9,7 @@
  * Implementado pelo Prof. Marcos Kutova
  * v1.0 - 2021
  */
-package tp01.src.storage.indexes;
+package tp02.src.storage.indexes;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -17,7 +17,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import tp01.src.storage.records.RegisterTreeB;
+import tp02.src.storage.records.RegisterTreeB;
 
 /**
  * Classe que representa um par de IDs para ser armazenado em uma estrutura de
@@ -43,7 +43,7 @@ public class PairIDFK implements RegisterTreeB<PairIDFK> {
    * @param n1 Valor da chave estrangeira.
    */
   public PairIDFK(int n1) {
-    this(n1, -1);
+    this(-1, n1);
   }
 
   /**
@@ -106,8 +106,8 @@ public class PairIDFK implements RegisterTreeB<PairIDFK> {
    * @return Valor negativo, zero ou positivo conforme a ordenação.
    */
   public int compareTo(PairIDFK a) {
-    if (this.fk == -1) {
-        return this.id - a.id;
+    if (this.id == -1) {
+        return this.fk - a.fk;
     }
     if (this.id != a.id) {
         return this.id - a.id;

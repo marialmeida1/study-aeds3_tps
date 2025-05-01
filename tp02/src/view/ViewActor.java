@@ -1,105 +1,60 @@
-package tp01.src.view;
+package tp02.src.view;
 
-import tp01.src.models.Series;
+import tp02.src.models.Actor;
 
 import java.util.Scanner;
 
 /**
- * Classe responsável pela interação com o usuário para operações relacionadas a séries.
+ * Classe responsável pela interação com o usuário para operações relacionadas a atores.
  * 
- * Permite exibir menus, capturar dados de entrada e confirmar ações relacionadas a séries.
+ * Permite exibir menus, capturar dados de entrada e confirmar ações relacionadas a atores.
  */
-public class ViewSeries {
+public class ViewActor {
     private static final Scanner console = new Scanner(System.in);
 
     /**
-     * Exibe o menu principal de opções para manipulação de séries.
+     * Exibe o menu principal de opções para manipulação de atores.
      */
     public void exibirMenu() {
         System.out.println("\n\n===============================");
         System.out.println("          PUCFlix 1.0");
         System.out.println("===============================");
-        System.out.println("> Início > Séries");
+        System.out.println("> Início > Atores");
         System.out.println("-------------------------------");
         System.out.println("1 - Incluir");
         System.out.println("2 - Buscar");
         System.out.println("3 - Alterar");
         System.out.println("4 - Excluir");
-        System.out.println("5 - Listar Episódios da série");
-        System.out.println("6 - Listar Episódios por temporada da série");
+        System.out.println("5 - Listar Séries de um Ator/Atriz");
         System.out.println("0 - Retornar ao menu anterior");
         System.out.println("===============================");
         System.out.print("Opção: ");
     }
 
     /**
-     * Exibe os detalhes de uma série na tela.
+     * Exibe os detalhes de uma ator na tela.
      *
-     * @param serie Objeto da série a ser exibido.
+     * @param ator Objeto da ator a ser exibido.
      */
-    public void mostraSerie(Series serie) {
-        if (serie != null) {
+    public void mostraAtor(Actor ator) {
+        if (ator != null) {
             System.out.println("\n\n===============================");
-            System.out.println("       Detalhes da Série:");
+            System.out.println("       Detalhes do Ator/Atriz:");
             System.out.println("===============================");
-            System.out.printf("Nome.................: %s%n", serie.getName());
-            System.out.printf("Sinopse..............: %s%n", serie.getSynopsis());
-            System.out.printf("Ano de Lançamento....: %d%n", serie.getReleaseYear());
-            System.out.printf("Streaming............: %s%n", serie.getStreaming());
+            System.out.printf("Nome.................: %s%n", ator.getName());
             System.out.println("===============================");
         } else {
-            System.out.println("Série não encontrada.");
+            System.out.println("Ator/Atriz não encontrado(a).");
         }
     }
 
     /**
-     * Solicita ao usuário o nome da série.
+     * Solicita ao usuário o nome da ator.
      *
-     * @return Nome da série informado.
+     * @return Nome da ator informado.
      */
     public String obterNome() {
-        System.out.print("Nome da Série: ");
-        return console.nextLine();
-    }
-
-    /**
-     * Solicita ao usuário a sinopse da série.
-     *
-     * @return Sinopse informada.
-     */
-    public String obterSinopse() {
-        System.out.print("Sinopse: ");
-        return console.nextLine();
-    }
-
-    /**
-     * Solicita ao usuário o ano de lançamento da série.
-     *
-     * @return Ano de lançamento como short, ou -1 se a entrada estiver vazia.
-     */
-    public short obterAnoLancamento() {
-        System.out.print("Ano de Lançamento: ");
-        String entrada = console.nextLine();
-
-        if (entrada.isEmpty()) {
-            return -1; // Retorna um valor indicando que o usuário não digitou nada
-        }
-
-        try {
-            return Short.parseShort(entrada);
-        } catch (NumberFormatException e) {
-            System.out.println("Entrada inválida. Digite um ano válido.");
-            return obterAnoLancamento(); // Pede a entrada novamente em caso de erro
-        }
-    }
-
-    /**
-     * Solicita ao usuário o serviço de streaming da série.
-     *
-     * @return Nome do serviço de streaming informado.
-     */
-    public String obterStreaming() {
-        System.out.print("Streaming: ");
+        System.out.print("Nome do Ator/Atriz: ");
         return console.nextLine();
     }
 
@@ -123,7 +78,7 @@ public class ViewSeries {
                 break;
             case 3:
                 System.out.println("-------------------------------");
-                mensagem = "Confirma a exclusão da série? (S/N) "; // Corrigido para "série"
+                mensagem = "Confirma a exclusão de ator? (S/N) "; // Corrigido para "ator"
                 break;
             default:
                 System.out.println("-------------------------------");

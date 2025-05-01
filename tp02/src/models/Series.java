@@ -1,7 +1,7 @@
-package tp01.src.models;
+package tp02.src.models;
 
 import java.io.*;
-import tp01.src.storage.records.Register;
+import tp02.src.storage.records.Register;
 
 /**
  * Representa uma série de TV ou streaming com informações como nome,

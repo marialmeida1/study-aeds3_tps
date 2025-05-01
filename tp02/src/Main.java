@@ -1,7 +1,7 @@
-package tp01.src;
+package tp02.src;
 
 import java.util.Scanner;
-import tp01.src.controller.*;
+import tp02.src.controller.*;
 
 /**
  * Classe principal do sistema PUCFlix.
@@ -14,8 +14,10 @@ public class Main {
     /**
      * Método principal da aplicação.
      * 
-     * Exibe um menu de opções para o usuário e redireciona para os controladores de séries ou episódios
-     * conforme a escolha do usuário. O programa continua em execução até que a opção de saída seja escolhida.
+     * Exibe um menu de opções para o usuário e redireciona para os controladores de
+     * séries ou episódios
+     * conforme a escolha do usuário. O programa continua em execução até que a
+     * opção de saída seja escolhida.
      *
      * @param args Argumentos passados por linha de comando (não utilizados).
      */
@@ -35,6 +37,7 @@ public class Main {
                 System.out.println("-------------------------------");
                 System.out.println("1 - Séries");
                 System.out.println("2 - Episódios");
+                System.out.println("3 - Ator");
                 System.out.println("0 - Sair");
                 System.out.println("===============================");
                 System.out.print("Opção: ");
@@ -47,11 +50,12 @@ public class Main {
                 switch (opcao) {
                     case 1:
                         (new ControllerSeries()).menu();
-                        /* System.out. println("Menu Séries"); */
                         break;
                     case 2:
                         (new ControllerEpisode()).menu();
-                        /* System.out.println("Menu Episódios"); */
+                        break;
+                    case 3:
+                        (new ControllerActor()).menu();
                         break;
                     case 0:
                         break;

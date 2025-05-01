@@ -1,10 +1,10 @@
-package tp01.src.controller;
+package tp02.src.controller;
 
-import tp01.src.models.Episode;
-import tp01.src.models.Series;
-import tp01.src.data.ArquivoEpisode;
-import tp01.src.data.ArquivoSeries;
-import tp01.src.view.ViewEpisode;
+import tp02.src.models.Episode;
+import tp02.src.models.Series;
+import tp02.src.data.ArchiveEpisode;
+import tp02.src.data.ArchiveSeries;
+import tp02.src.view.ViewEpisode;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -16,8 +16,8 @@ import java.util.Scanner;
 public class ControllerEpisode {
 
     // Arquivos das Classes
-    private ArquivoEpisode arqEpisodios;
-    private ArquivoSeries arqSeries;
+    private ArchiveEpisode arqEpisodios;
+    private ArchiveSeries arqSeries;
     private ViewEpisode visaoEpisodios;
     private static final Scanner console = new Scanner(System.in);
 
@@ -27,8 +27,8 @@ public class ControllerEpisode {
      * @throws Exception caso ocorra erro na inicialização dos arquivos.
      */
     public ControllerEpisode() throws Exception {
-        arqEpisodios = new ArquivoEpisode();
-        arqSeries = new ArquivoSeries();
+        arqEpisodios = new ArchiveEpisode();
+        arqSeries = new ArchiveSeries();
         visaoEpisodios = new ViewEpisode();
     }
 
@@ -165,7 +165,7 @@ public class ControllerEpisode {
 
         int fkSerie = serie.getId();
         System.out.println("-------------------------------");
-        System.out.println("Nome da série: " + serie.getName());
+        System.out.println("Série: " + serie.getName());
 
         // Inserindo valores
         String name = visaoEpisodios.obterNome();
@@ -232,70 +232,60 @@ public class ControllerEpisode {
             Episode episode = buscarEpisodioPorNome();
             if (episode == null) {
                 System.out.println("-------------------------------");
-                for (Episode s : episodios) {
-                    System.out.println((n++) + ": " + s.getName());
-                }
-
-                System.out.println("-------------------------------");
-                System.out.print("Escolha o episodio: ");
-                int o;
-                do {
-                    try {
-                        o = Integer.valueOf(console.nextLine());
-                    } catch (NumberFormatException e) {
-                        o = -1;
-                    }
-                    if (o <= 0 || o > n - 1)
-                        System.out.print("Escolha um número entre 1 e " + (n - 1) + ": ");
-                } while (o <= 0 || o > n - 1);
-
-                Episode episode = episodios[o - 1];
-                visaoEpisodios.mostraEpisodio(episode);
-
-                String novoNome = visaoEpisodios.obterNome();
-                if (novoNome != null && !novoNome.isEmpty()) {
-                    episode.setName(novoNome);
-                } else {
-                    novoNome = episode.getName(); // Mantém o nome antigo
-                }
-
-                int novaTemporada = visaoEpisodios.obterTemporada();
-                if (novaTemporada > 0) {
-                    episode.setSeason(novaTemporada);
-                } else {
-                    novaTemporada = episode.getSeason();
-                }
-
-                LocalDate novaData = visaoEpisodios.obterDataLancamento();
-                if (novaData != null) {
-                    episode.setRelease(novaData);
-                }
-
-                int novaDuracao = visaoEpisodios.obterTemporada();
-                if (novaDuracao > 0) {
-                    episode.setSeason(novaDuracao);
-                } else {
-                    novaDuracao = episode.getSeason();
-                }
-
-                if (visaoEpisodios.confirmAction(2)) {
-                    boolean alterado = arqEpisodios.update(episode);
-                    if (alterado) {
-                        System.out.println("-------------------------------");
-                        System.out.println("Episódio alterado com sucesso.");
-                        System.out.println("===============================");
-                    } else {
-                        System.err.println("Erro ao alterar o episódio.");
-                    }
-                } else {
+                System.out.println("Nenhum episódio encontrado.");
+                System.out.println("===============================");
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
+                return;
+            }
+    
+            visaoEpisodios.mostraEpisodio(episode);
+    
+            String novoNome = visaoEpisodios.obterNome();
+            if (novoNome != null && !novoNome.isEmpty()) {
+                episode.setName(novoNome);
+            } else {
+                novoNome = episode.getName();
+            }
+    
+            int novaTemporada = visaoEpisodios.obterTemporada();
+            if (novaTemporada > 0) {
+                episode.setSeason(novaTemporada);
+            } else {
+                novaTemporada = episode.getSeason();
+            }
+    
+            LocalDate novaData = visaoEpisodios.obterDataLancamento();
+            if (novaData != null) {
+                episode.setRelease(novaData);
+            } else {
+                novaData = episode.getRelease();
+            }
+    
+            int novaDuracao = visaoEpisodios.obterDuracao(); // Correção aqui
+            if (novaDuracao > 0) {
+                episode.setDuration(novaDuracao);
+            } else {
+                novaDuracao = episode.getDuration();
+            }
+    
+            if (visaoEpisodios.confirmAction(2)) {
+                boolean alterado = arqEpisodios.update(episode);
+                if (alterado) {
                     System.out.println("-------------------------------");
-                    System.out.println("Alteração cancelada.");
+                    System.out.println("Episódio alterado com sucesso.");
                     System.out.println("===============================");
+                    System.out.println("\n>>> Pressione Enter para voltar.");
+                    console.nextLine();
+                } else {
+                    System.err.println("Erro ao alterar o episódio.");
                 }
             } else {
                 System.out.println("-------------------------------");
-                System.out.println("Nenhum episódio encontrada.");
+                System.out.println("Alteração cancelada.");
                 System.out.println("===============================");
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
             }
         } catch (Exception e) {
             System.err.println("Erro do sistema. Não foi possível buscar o episódio!");
@@ -321,29 +311,8 @@ public class ControllerEpisode {
                 console.nextLine();
                 return;
             }
-
-            System.out.println("-------------------------------");
-            for (int i = 0; i < series.length; i++) {
-                System.out.println((i + 1) + ": " + series[i].getName());
-            }
-
-            int escolha;
-            do {
-                System.out.println("-------------------------------");
-                System.out.print("Escolha a série: ");
-                try {
-                    escolha = Integer.parseInt(console.nextLine());
-                } catch (NumberFormatException e) {
-                    escolha = -1;
-                }
-                if (escolha < 1 || escolha > series.length) {
-                    System.out.print("Escolha um número entre 1 e " + series.length + ": ");
-                }
-            } while (escolha < 1 || escolha > series.length);
-
-            Episode episode = series[escolha - 1];
-            visaoEpisodios.mostraEpisodio(episode);
-
+    
+            
             if (visaoEpisodios.confirmAction(3)) {
                 boolean deletado = arqEpisodios.delete(episode.getId());
                 if (deletado) {

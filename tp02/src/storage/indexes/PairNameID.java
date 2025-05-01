@@ -1,4 +1,4 @@
-package tp01.src.storage.indexes;
+package tp02.src.storage.indexes;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
 
-import tp01.src.storage.records.RegisterTreeB;
+import tp02.src.storage.records.RegisterTreeB;
 
 /**
  * Classe que representa um par (nome, ID), usada em estruturas como Árvores B+.
