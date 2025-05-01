@@ -43,7 +43,7 @@ public class PairIDFK implements RegisterTreeB<PairIDFK> {
    * @param n1 Valor da chave estrangeira.
    */
   public PairIDFK(int n1) {
-    this(-1, n1);
+    this(n1, -1);
   }
 
   /**

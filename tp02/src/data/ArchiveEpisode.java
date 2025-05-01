@@ -16,7 +16,7 @@ public class ArchiveEpisode extends Archive<Episode> {
     ArchiveTreeB<PairNameID> indiceIndiretoNome;
 
     /** Índice indireto relacionando o ID do episódio com o ID da série (chave estrangeira). */
-    ArchiveTreeB<PairIDFK> relacaoNN;
+    ArchiveTreeB<PairIDFK> relacao1N;
 
     /**
      * Construtor padrão que inicializa os arquivos de episódios e os índices auxiliares.
@@ -30,7 +30,7 @@ public class ArchiveEpisode extends Archive<Episode> {
         indiceIndiretoNome = new ArchiveTreeB<>(
                 PairNameID.class.getConstructor(), 5, "tp02/files/episodios/indiceNome.db");
 
-        relacaoNN = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, "tp02/files/episodios/relacaoNN.db");
+        relacao1N = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, "tp02/files/episodios/relacao1N.db");
     }
 
     /**
@@ -44,7 +44,7 @@ public class ArchiveEpisode extends Archive<Episode> {
     public int create(Episode e) throws Exception {
         int id = super.create(e);
         indiceIndiretoNome.create(new PairNameID(e.getName(), id));
-        relacaoNN.create(new PairIDFK(e.getId(), e.getFkSerie()));
+        relacao1N.create(new PairIDFK(e.getFkSerie(), e.getId()));
         return id;
     }
 
@@ -56,7 +56,7 @@ public class ArchiveEpisode extends Archive<Episode> {
      * @throws Exception caso ocorra erro durante a leitura.
      */
     public Episode[] readFkSerie(int fkSeries) throws Exception { // Faz a busca somente dentro de epsódios
-        ArrayList<PairIDFK> pares = relacaoNN.read(new PairIDFK(fkSeries));
+        ArrayList<PairIDFK> pares = relacao1N.read(new PairIDFK(fkSeries));
         
         if (pares.size() > 0) {
 
@@ -156,7 +156,7 @@ public class ArchiveEpisode extends Archive<Episode> {
         Episode e = super.read(id);
         if (e != null) {
             if (super.delete(id)) {
-                return indiceIndiretoNome.delete(new PairNameID(e.getName(), id)) && relacaoNN.delete(new PairIDFK(e.getId(), e.getFkSerie()));
+                return indiceIndiretoNome.delete(new PairNameID(e.getName(), id)) && relacao1N.delete(new PairIDFK(e.getId(), e.getFkSerie()));
             }
         }
         return false;
@@ -176,9 +176,9 @@ public class ArchiveEpisode extends Archive<Episode> {
             if (super.update(novaEpisodio)) {
                 if (!e.getName().equals(novaEpisodio.getName())) {
                     indiceIndiretoNome.delete(new PairNameID(e.getName(), e.getId()));
-                    relacaoNN.delete(new PairIDFK(e.getId(), e.getFkSerie()));
+                    relacao1N.delete(new PairIDFK(e.getId(), e.getFkSerie()));
                     indiceIndiretoNome.create(new PairNameID(novaEpisodio.getName(), novaEpisodio.getId()));
-                    relacaoNN.create(new PairIDFK(e.getId(), e.getFkSerie()));
+                    relacao1N.create(new PairIDFK(e.getId(), e.getFkSerie()));
                 }
                 return true;
             }
