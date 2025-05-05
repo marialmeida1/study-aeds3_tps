@@ -36,6 +36,11 @@ public class ArchiveSeries extends Archive<Series> {
      */
     @Override
     public int create(Series s) throws Exception {
+        // Check if a series with the same name already exists
+        Series[] existingSeries = readNome(s.getName());
+        if (existingSeries != null && existingSeries.length > 0) {
+            throw new Exception("Série com o mesmo nome já existe.");
+        }
         int id = super.create(s);
         indiceIndiretoNome.create(new PairNameID(s.getName(), id));
         return id;

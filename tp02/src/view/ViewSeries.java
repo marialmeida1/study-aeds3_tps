@@ -25,8 +25,10 @@ public class ViewSeries {
         System.out.println("2 - Buscar");
         System.out.println("3 - Alterar");
         System.out.println("4 - Excluir");
-        System.out.println("5 - Listar Episódios da série");
-        System.out.println("6 - Listar Episódios por temporada da série");
+        System.out.println("5 - Listar Episódios da Série");
+        System.out.println("6 - Listar Episódios por temporada da Série");
+        System.out.println("7 - Listar Atores/Atrizes da Série");
+        System.out.println("8 - Vincular Ator à Série");
         System.out.println("0 - Retornar ao menu anterior");
         System.out.println("===============================");
         System.out.print("Opção: ");
@@ -101,6 +103,21 @@ public class ViewSeries {
     public String obterStreaming() {
         System.out.print("Streaming: ");
         return console.nextLine();
+    }
+
+    /**
+     * Solicita ao usuário o ID do ator para vinculação.
+     *
+     * @return ID do ator informado.
+     */
+    public int obterIdAtor() {
+        System.out.print("ID do Ator: ");
+        try {
+            return Integer.parseInt(console.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida. Digite um número válido.");
+            return obterIdAtor();
+        }
     }
 
     /**

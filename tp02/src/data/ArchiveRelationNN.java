@@ -36,8 +36,51 @@ public class ArchiveRelationNN {
      * @throws Exception caso ocorra erro durante a criação das relações.
      */
     public void createRelation(int idActor, int idSerie) throws Exception {
-        actorSerie.create(new PairIDFK(idActor, idSerie));
-        serieActor.create(new PairIDFK(idSerie, idActor));
+        if (idActor > 0 && idSerie > 0) { // Validate IDs to avoid unintended relationships
+            // Check if the relationship already exists in actorSerie
+            ArrayList<PairIDFK> existingActorRelations = actorSerie.read(new PairIDFK(idActor, -1));
+            for (PairIDFK relation : existingActorRelations) {
+                if (relation.getFk() == idSerie) {
+                    System.out.println("Relação já existente: Ator ID " + idActor + " -> Série ID " + idSerie);
+                    return; // Skip creating duplicate relationship
+                }
+            }
+
+            // Check if the relationship already exists in serieActor
+            ArrayList<PairIDFK> existingSerieRelations = serieActor.read(new PairIDFK(idSerie, -1));
+            for (PairIDFK relation : existingSerieRelations) {
+                if (relation.getFk() == idActor) {
+                    System.out.println("Relação já existente: Série ID " + idSerie + " -> Ator ID " + idActor);
+                    return; // Skip creating duplicate relationship
+                }
+            }
+
+            // Create the relationship if it does not already exist
+            actorSerie.create(new PairIDFK(idActor, idSerie)); // Store actor -> series relationship
+            serieActor.create(new PairIDFK(idSerie, idActor)); // Store series -> actor relationship
+            System.out.println("Relação criada: Ator ID " + idActor + " -> Série ID " + idSerie);
+            System.out.println("Debug: Dados armazenados em actorSerie e serieActor:");
+            System.out.println("actorSerie: " + actorSerie.read(new PairIDFK(idActor, -1))); // Debug actorSerie
+            System.out.println("serieActor: " + serieActor.read(new PairIDFK(idSerie, -1))); // Debug serieActor
+        } else {
+            System.err.println("Erro: IDs inválidos fornecidos para criar relação. Ator ID: " + idActor + ", Série ID: " + idSerie);
+        }
+    }
+
+    /**
+     * Lê todas os atores associados a uma série.
+     * 
+     * @param idSerie ID da série.
+     * @return lista de relações série -> ator.
+     * @throws Exception caso ocorra erro durante a leitura.
+     */
+    public ArrayList<PairIDFK> readActorsBySerie(int idSerie) throws Exception {
+        ArrayList<PairIDFK> relations = serieActor.read(new PairIDFK(idSerie, -1)); // Retrieve series -> actor relationships
+        System.out.println("Relações encontradas para Série ID " + idSerie + ": " + (relations != null ? relations.size() : 0));
+        for (PairIDFK relation : relations) {
+            System.out.println("Relacionamento encontrado: Série ID " + idSerie + " -> Ator ID " + relation.getFk()); // Debug statement
+        }
+        return relations;
     }
 
     /**
@@ -48,18 +91,12 @@ public class ArchiveRelationNN {
      * @throws Exception caso ocorra erro durante a leitura.
      */
     public ArrayList<PairIDFK> readSeriesByActor(int idActor) throws Exception {
-        return actorSerie.read(new PairIDFK(idActor));
-    }
-
-    /**
-     * Lê todos os atores associados a uma série.
-     * 
-     * @param idSerie ID da série.
-     * @return lista de relações série -> ator.
-     * @throws Exception caso ocorra erro durante a leitura.
-     */
-    public ArrayList<PairIDFK> readActorsBySerie(int idSerie) throws Exception {
-        return serieActor.read(new PairIDFK(idSerie));
+        ArrayList<PairIDFK> relations = actorSerie.read(new PairIDFK(idActor, -1)); // Ensure the correct key is used
+        System.out.println("Relações encontradas para Ator ID " + idActor + ": " + (relations != null ? relations.size() : 0)); // Debug statement
+        for (PairIDFK relation : relations) {
+            System.out.println("Relacionamento encontrado: Ator ID " + idActor + " -> Série ID " + relation.getFk()); // Debug statement
+        }
+        return relations;
     }
 
     /**
