@@ -33,8 +33,9 @@ public class ControllerSeries {
     public ControllerSeries() throws Exception {
         arqSeries = new ArchiveSeries();
         arqEpisodios = new ArchiveEpisode(); // Instantiate ArquivoEpisode
-        visao = new ViewSeries();
         arqRelationNN = new ArchiveRelationNN();
+        arqActor = new ArchiveActor(); // Initialize arqActor
+        visao = new ViewSeries();
     }
 
     /**
@@ -70,6 +71,9 @@ public class ControllerSeries {
                 case 7:
                     listActorsBySerie();
                     break;
+                case 8:
+                    vincularAtorASerie();
+                    break;
                 case 0:
                     break;
                 default:
@@ -101,7 +105,6 @@ public class ControllerSeries {
             System.out.println("Sinopse inválida. Inclusão cancelada.");
             System.out.println("\n>>> Pressione Enter para voltar.");
             console.nextLine();
-
             return;
         }
 
@@ -110,7 +113,6 @@ public class ControllerSeries {
             System.out.println("Ano de lançamento inválido. Inclusão cancelada.");
             System.out.println("\n>>> Pressione Enter para voltar.");
             console.nextLine();
-
             return;
         }
 
@@ -119,7 +121,6 @@ public class ControllerSeries {
             System.out.println("Plataforma de streaming inválida. Inclusão cancelada.");
             System.out.println("\n>>> Pressione Enter para voltar.");
             console.nextLine();
-
             return;
         }
 
@@ -130,13 +131,6 @@ public class ControllerSeries {
                 System.out.println("-------------------------------");
                 System.out.println("Série incluída com sucesso.");
                 System.out.println("===============================");
-
-                // TIRAR
-                // Testando relação NN
-                System.out.println("Ator ID: " + 1);
-                System.out.println("Série ID: " + novaSerie.getId());
-                novaSerie.toString();
-                arqRelationNN.createRelation(1, novaSerie.getId());
 
                 visao.mostraSerie(novaSerie);
                 System.out.println("\n>>> Pressione Enter para voltar.");
@@ -590,7 +584,6 @@ public class ControllerSeries {
             System.out.println("Nome da série inválido.");
             System.out.println("\n>>> Pressione Enter para voltar.");
             console.nextLine();
-
             return;
         }
 
@@ -600,7 +593,6 @@ public class ControllerSeries {
                 System.out.println("Nenhuma série encontrada com o nome fornecido.");
                 System.out.println("\n>>> Pressione Enter para voltar.");
                 console.nextLine();
-
                 return;
             }
 
@@ -630,25 +622,70 @@ public class ControllerSeries {
 
             int idSerie = serie.getId();
 
-            // AJUSTAR
-            ArrayList<PairIDFK> relations = arqRelationNN.readActorsBySerie(idSerie); // Fetch actors for the serie
+            ArrayList<PairIDFK> relations = arqRelationNN.readActorsBySerie(idSerie); // Fetch actors for the series
 
             if (relations == null || relations.isEmpty()) {
-                System.out.println("Nenhuma série encontrada para este Ator/Atriz.");
+                System.out.println("Nenhum ator encontrado para esta série.");
             } else {
-                System.out.println("\nSéries relacionadas:");
+                System.out.println("\nAtores relacionados:");
                 for (PairIDFK relation : relations) {
-                    int idActor = relation.getFk(); // acredito eu que esteja errado, e se estiver, é getId
+                    int idActor = relation.getFk(); // Fetch actor ID
                     Actor actor = arqActor.read(idActor);
                     if (actor != null) {
                         System.out.println("-------------------------------");
                         System.out.println("Nome: " + actor.getName());
+                        System.out.println("ID: " + actor.getId());
+                    } else {
+                        System.out.println("Erro: Ator com ID " + idActor + " não encontrado."); // Debug statement
                     }
                 }
                 System.out.println("===============================");
             }
         } catch (Exception e) {
             System.out.println("Erro ao listar Atores/Atrizes da Série!");
+            e.printStackTrace();
+        }
+    }
+
+    private void vincularAtorASerie() {
+        System.out.println("\n\n===============================");
+        System.out.println("      Vinculação de Ator à Série");
+        System.out.println("===============================");
+
+        String nomeSerie = visao.obterNome();
+        if (nomeSerie.isEmpty()) {
+            System.out.println("Nome da série inválido.");
+            return;
+        }
+
+        try {
+            Series[] series = arqSeries.readNome(nomeSerie);
+            if (series == null || series.length == 0) {
+                System.out.println("Nenhuma série encontrada.");
+                return;
+            }
+
+            int n = 1;
+            System.out.println("-------------------------------");
+            for (Series s : series) {
+                System.out.println((n++) + ": " + s.getName());
+            }
+
+            System.out.print("Escolha a Série: ");
+            int escolha = Integer.parseInt(console.nextLine());
+            Series serie = series[escolha - 1];
+
+            int idAtor = visao.obterIdAtor();
+            Actor ator = arqActor.read(idAtor);
+            if (ator == null) {
+                System.out.println("Ator não encontrado.");
+                return;
+            }
+
+            arqRelationNN.createRelation(idAtor, serie.getId());
+            System.out.println("Ator vinculado à série com sucesso.");
+        } catch (Exception e) {
+            System.err.println("Erro ao vincular ator à série.");
             e.printStackTrace();
         }
     }

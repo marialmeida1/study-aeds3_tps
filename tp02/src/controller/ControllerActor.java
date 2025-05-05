@@ -31,6 +31,8 @@ public class ControllerActor {
      */
     public ControllerActor() throws Exception {
         arqAtor = new ArchiveActor();
+        arqRelationNN = new ArchiveRelationNN();
+        arqSeries = new ArchiveSeries(); // Initialize arqSeries
         visao = new ViewActor();
     }
 
@@ -100,7 +102,7 @@ public class ControllerActor {
             int n = 1;
             System.out.println("-------------------------------");
             for (Actor a : atores) {
-                System.out.println((n++) + ": " + a.getName());
+                System.out.println((n++) + ": " + a.getName() + " (ID: " + a.getId() + ")"); // Display actor name and ID
             }
 
             System.out.println("-------------------------------");
@@ -264,11 +266,7 @@ public class ControllerActor {
         try {
             Actor[] atores = arqAtor.readNome(name);
             if (atores.length == 0) {
-                System.out.println("-------------------------------");
                 System.out.println("Nenhum ator encontrado.");
-                System.out.println("===============================");
-                System.out.println("\n>>> Pressione Enter para voltar.");
-                console.nextLine();
                 return;
             }
 
@@ -277,42 +275,27 @@ public class ControllerActor {
                 System.out.println((i + 1) + ": " + atores[i].getName());
             }
 
-            int escolha;
-            do {
-                System.out.println("-------------------------------");
-                System.out.print("Escolha a ator: ");
-                try {
-                    escolha = Integer.parseInt(console.nextLine());
-                } catch (NumberFormatException e) {
-                    escolha = -1;
-                }
-                if (escolha < 1 || escolha > atores.length) {
-                    System.out.print("Escolha um número entre 1 e " + atores.length + ": ");
-                }
-            } while (escolha < 1 || escolha > atores.length);
+            System.out.print("Escolha o Ator: ");
+            int escolha = Integer.parseInt(console.nextLine());
+            Actor ator = atores[escolha - 1];
 
-            Actor serie = atores[escolha - 1];
-            visao.mostraAtor(serie);
+            ArrayList<PairIDFK> relations = arqRelationNN.readSeriesByActor(ator.getId());
+            if (relations != null && !relations.isEmpty()) {
+                System.out.println("Erro! Não é possível excluir o ator, pois ele está vinculado a uma ou mais séries.");
+                return;
+            }
 
             if (visao.confirmAction(3)) {
-                if (arqAtor.delete(serie.getId())) {
-                    System.out.println("-------------------------------");
-                    System.out.println("Ator excluída com sucesso.");
-                    System.out.println("===============================");
-                    System.out.println("\n>>> Pressione Enter para voltar.");
-                    console.nextLine();
+                if (arqAtor.delete(ator.getId())) {
+                    System.out.println("Ator excluído com sucesso.");
                 } else {
-                    System.err.println("Erro ao excluir a ator.");
+                    System.err.println("Erro ao excluir o ator.");
                 }
             } else {
-                System.out.println("-------------------------------");
                 System.out.println("Exclusão cancelada.");
-                System.out.println("===============================");
-                System.out.println("\n>>> Pressione Enter para voltar.");
-                console.nextLine();
             }
         } catch (Exception e) {
-            System.err.println("Erro do sistema. Não foi possível excluir a ator!");
+            System.err.println("Erro ao excluir o ator.");
             e.printStackTrace();
         }
     }
@@ -328,7 +311,6 @@ public class ControllerActor {
             System.out.println("Nome do Ator/Atriz inválido(a).");
             System.out.println("\n>>> Pressione Enter para voltar.");
             console.nextLine();
-
             return;
         }
 
@@ -361,13 +343,12 @@ public class ControllerActor {
                     System.out.print("Escolha um número entre 1 e " + (n - 1) + ": ");
             } while (escolha <= 0 || escolha > n - 1);
 
-            Actor actor = actors[escolha - 1]; // Use the selected actors
+            Actor actor = actors[escolha - 1]; // Use the selected actor
             System.out.println("\n===============================");
             System.out.println("Ator/Atriz: " + actor.getName());
 
             int idActor = actor.getId();
 
-            // AJUSTAR
             ArrayList<PairIDFK> relations = arqRelationNN.readSeriesByActor(idActor); // Fetch series for the actor
 
             if (relations == null || relations.isEmpty()) {
@@ -375,7 +356,7 @@ public class ControllerActor {
             } else {
                 System.out.println("\nSéries relacionadas:");
                 for (PairIDFK relation : relations) {
-                    int idSerie = relation.getFk(); // acredito eu que esteja errado, e se estiver, é getId
+                    int idSerie = relation.getFk(); // Fetch series ID
                     Series serie = arqSeries.read(idSerie);
                     if (serie != null) {
                         System.out.println("-------------------------------");
@@ -383,6 +364,8 @@ public class ControllerActor {
                         System.out.println("Sinopse: " + serie.getSynopsis());
                         System.out.println("Ano de lançamento: " + serie.getReleaseYear());
                         System.out.println("Streaming: " + serie.getStreaming());
+                    } else {
+                        System.out.println("Erro: Série com ID " + idSerie + " não encontrada."); // Debug statement
                     }
                 }
                 System.out.println("===============================");
