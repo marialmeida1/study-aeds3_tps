@@ -118,6 +118,7 @@ A classe `Main` é o **ponto de entrada do sistema PUCFlix**, responsável por i
 - Redirecionar o fluxo para os controladores:
   - `ControllerSeries`
   - `ControllerEpisode`
+  - `ControllerActor`
 
 **Estrutura de execução:**
 - Utiliza um loop `do...while` para manter a aplicação ativa até a opção de saída (`0`).
@@ -154,7 +155,22 @@ Controlador responsável por gerenciar operações relacionadas aos episódios. 
 
 ---
 
-### `ArquivoSeries`
+### `ControllerActor.java`
+
+Controlador responsável por gerenciar operações relacionadas aos atores e suas relações com séries. Atua como intermediário entre a interface de visualização e os arquivos de dados, permitindo ações como criação, busca, alteração e exclusão de atores, além de listar séries associadas a eles.
+
+**Métodos:**
+
+* `menu()`: Exibe o menu principal de opções e executa a operação escolhida pelo usuário.
+* `incluirAtor()`: Coleta os dados do usuário e realiza a inclusão de um novo ator/atriz no sistema.
+* `buscarAtor()`: Busca e exibe informações detalhadas de um ator/atriz a partir do nome informado.
+* `alterarAtor()`: Permite atualizar os dados de um ator/atriz existente, mantendo campos inalterados caso o usuário opte por não modificá-los.
+* `excluirAtor()`: Exclui um ator/atriz, desde que não esteja vinculado(a) a nenhuma série.
+* `listSeriesByActor()`: Lista todas as séries em que o ator/atriz selecionado(a) está relacionado(a).
+
+---
+
+### `ArchiveSeries`
 Classe responsável pela manipulação dos dados de séries, incluindo operações CRUD e indexação por nome.
 
 **Estrutura interna:**
@@ -168,7 +184,7 @@ Classe responsável pela manipulação dos dados de séries, incluindo operaçõ
 
 ---
 
-### `ArquivoEpisode`
+### `ArchiveEpisode`
 Classe responsável pela manipulação dos episódios, incluindo persistência, leitura e gerenciamento de índices.
 
 **Índices utilizados:**
@@ -182,6 +198,56 @@ Classe responsável pela manipulação dos episódios, incluindo persistência, 
 - `readEpisodiosPorSerieENome(int fkSerie, String nome)` : Retorna os episódios que pertencem a uma série e possuem determinado nome.
 - `delete(int id)` : Exclui um episódio e atualiza os índices relacionados.
 - `update(Episode novaEpisodio)` : Atualiza um episódio existente, ajustando os índices caso o nome tenha sido alterado.
+
+---
+
+### `ArchiveSeries`
+
+Classe responsável pela manipulação das séries, incluindo persistência, leitura e gerenciamento de índice por nome.
+
+**Índice utilizado:**
+
+* `indiceIndiretoNome`: associa nome da série ao seu ID.
+
+**Métodos:**
+
+* `create(Series s)` : Cria uma nova série, garantindo que o nome seja único, armazenando-a e atualizando o índice de nomes.
+* `readNome(String nome)` : Retorna todas as séries com o nome especificado, consultando o índice.
+* `delete(int id)` : Exclui uma série e remove sua entrada do índice de nomes.
+* `update(Series novaSerie)` : Atualiza uma série existente, ajustando o índice caso o nome tenha sido alterado.
+
+---
+
+### `ArchiveRelationNN`
+
+Responsável por gerenciar as relações **n\:n (muitos-para-muitos)** entre entidades do sistema, como **atores e séries**. Utiliza duas estruturas de índice B-tree para manter a integridade e a eficiência das buscas em ambas as direções: ator → série e série → ator.
+
+#### Principais Responsabilidades:
+
+* Criar, ler e excluir relações entre atores e séries.
+* Garantir que não haja duplicidade nas relações.
+* Fornecer métodos para leitura de todos os atores de uma série e todas as séries de um ator.
+* Excluir todas as relações associadas a uma determinada série.
+
+#### Atributos:
+
+* `actorSerie`: índice B-tree que armazena relações do tipo ator → série.
+* `serieActor`: índice B-tree que armazena relações do tipo série → ator.
+
+#### Métodos principais:
+
+* `createRelation(int idActor, int idSerie)`: cria uma nova relação entre ator e série, se ela ainda não existir.
+* `readActorsBySerie(int idSerie)`: retorna todos os atores associados a uma série.
+* `readSeriesByActor(int idActor)`: retorna todas as séries associadas a um ator.
+* `deleteRelation(int idActor, int idSerie)`: exclui uma relação específica entre um ator e uma série.
+* `deleteAllRelations(int idSerie)`: remove todas as relações entre uma série e seus atores associados.
+
+#### Observações:
+
+* As relações são armazenadas em dois arquivos distintos, permitindo consultas bidirecionais com alta performance.
+* Utiliza a classe `PairIDFK` para representar pares de IDs relacionados.
+* Verificações de existência são realizadas antes da criação de relações para evitar redundância.
+* Debugs e logs são impressos no console durante a criação e leitura, facilitando o acompanhamento da lógica durante testes.
 
 ---
 
@@ -208,6 +274,22 @@ Representa um episódio de uma série, contendo informações como nome, tempora
 - `getters/setters`
 - `toString()`
 - `toByteArray()` / `fromByteArray(byte[])`
+
+---
+
+### `Actor`
+
+Representa um ator cadastrado no sistema, contendo um identificador único e um nome. Implementa a interface `{@link Register}` para permitir serialização binária, possibilitando seu armazenamento em arquivos.
+
+**Atributos principais:**
+
+* `id`, `name`
+
+**Métodos:**
+
+* `getters/setters`
+* `toString()`
+* `toByteArray()` / `fromByteArray(byte[])`
 
 ---
 
@@ -243,6 +325,26 @@ Classe responsável pela interação com o usuário para ações relacionadas a 
 
 ---
 
+### `ViewActor`
+
+Responsável pela interface com o usuário nas ações relacionadas a **atores e atrizes**.
+
+**Funções principais:**
+
+* Exibir menus e opções.
+* Coletar dados como nome do ator/atriz.
+* Confirmar ações como inclusão, alteração e exclusão.
+* Exibir detalhes de um ator/atriz.
+
+**Métodos principais:**
+
+* `exibirMenu()`
+* `mostraAtor(Actor ator)`
+* `obterNome()`
+* `confirmAction(int actionNum)`
+
+---
+
 ## Experiência dos Integrantes do Trabalho
 
 Cada integrante do grupo compartilhou, em primeira pessoa, um breve relato sobre sua experiência ao longo do desenvolvimento deste projeto. Esses relatos refletem os aprendizados, desafios enfrentados e contribuições individuais. A leitura desses textos complementa a visão técnica do projeto com uma perspectiva mais pessoal e colaborativa.
@@ -253,16 +355,14 @@ Cada integrante do grupo compartilhou, em primeira pessoa, um breve relato sobre
 
 ## Checklist Final do Relatório
 
-Para concluir, seguem abaixo as respostas ao checklist solicitado pelo professor. Todas as funcionalidades foram implementadas e testadas com sucesso durante o desenvolvimento do projeto.
+- As operações de inclusão, busca, alteração e exclusão de atores estão implementadas e funcionando corretamente? **- SIM**
+- O relacionamento entre séries e atores foi implementado com árvores B+ e funciona corretamente, assegurando a consistência entre as duas entidades? **- SIM**
+- É possível consultar quais são os atores de uma série? **- SIM**
+- É posssível consultar quais são as séries de um ator? **- SIM**
+- A remoção de séries remove os seus vínculos de atores? **- SIM**
+- A inclusão de um ator em uma série em um episódio se limita aos atores existentes? **- SIM**
+- A remoção de um ator checa se há alguma série vinculado a ele? **- SIM**
+- O trabalho está funcionando corretamente? **- SIM**
+- O trabalho está completo? **- SIM**
+- O trabalho é original e não a cópia de um trabalho de outro grupo? **- SIM**
 
-- As operações de inclusão, busca, alteração e exclusão de séries estão implementadas e funcionando corretamente? **Sim**
-- As operações de inclusão, busca, alteração e exclusão de episódios, por série, estão implementadas e funcionando corretamente? **Sim**
-- Essas operações usam a classe CRUD genérica para a construção do arquivo e as classes Tabela Hash Extensível e Árvore B+ como índices diretos e indiretos? **Sim**
-- O atributo de ID de série, como chave estrangeira, foi criado na classe de episódios? **Sim**
-- Há uma árvore B+ que registre o relacionamento 1:N entre episódios e séries? **Sim**
-- Há uma visualização das séries que mostre os episódios por temporada? **Sim**
-- A remoção de séries checa se há algum episódio vinculado a ela? **Sim**
-- A inclusão da série em um episódio se limita às séries existentes? **Sim**
-- O trabalho está funcionando corretamente? **Sim**
-- O trabalho está completo? **Sim**
-- O trabalho é original e não a cópia de um trabalho de outro grupo? **Sim**
