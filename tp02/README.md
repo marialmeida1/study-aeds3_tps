@@ -355,6 +355,8 @@ Cada integrante do grupo compartilhou, em primeira pessoa, um breve relato sobre
 
 ## Checklist Final do Relatório
 
+Para concluir, seguem abaixo as respostas ao checklist solicitado pelo professor. Todas as funcionalidades foram implementadas e testadas com sucesso durante o desenvolvimento do projeto.
+
 - As operações de inclusão, busca, alteração e exclusão de atores estão implementadas e funcionando corretamente? **- SIM**
 - O relacionamento entre séries e atores foi implementado com árvores B+ e funciona corretamente, assegurando a consistência entre as duas entidades? **- SIM**
 - É possível consultar quais são os atores de uma série? **- SIM**
@@ -365,4 +367,3 @@ Cada integrante do grupo compartilhou, em primeira pessoa, um breve relato sobre
 - O trabalho está funcionando corretamente? **- SIM**
 - O trabalho está completo? **- SIM**
 - O trabalho é original e não a cópia de um trabalho de outro grupo? **- SIM**
-
