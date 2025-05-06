@@ -38,7 +38,7 @@ public class ArchiveRelationNN {
     public void createRelation(int idActor, int idSerie) throws Exception {
         if (idActor > 0 && idSerie > 0) { // Validate IDs to avoid unintended relationships
             // Check if the relationship already exists in actorSerie
-            ArrayList<PairIDFK> existingActorRelations = actorSerie.read(new PairIDFK(idActor, -1));
+            ArrayList<PairIDFK> existingActorRelations = actorSerie.read(new PairIDFK(idActor, -1)); // Busca todas as séries associadas ao ator (fk = -1 indica qualquer série)
             for (PairIDFK relation : existingActorRelations) {
                 if (relation.getFk() == idSerie) {
                     System.out.println("Relação já existente: Ator ID " + idActor + " -> Série ID " + idSerie);
@@ -47,7 +47,7 @@ public class ArchiveRelationNN {
             }
 
             // Check if the relationship already exists in serieActor
-            ArrayList<PairIDFK> existingSerieRelations = serieActor.read(new PairIDFK(idSerie, -1));
+            ArrayList<PairIDFK> existingSerieRelations = serieActor.read(new PairIDFK(idSerie, -1)); // Busca todas os atores associados à série (fk = -1 indica qualquer ator)
             for (PairIDFK relation : existingSerieRelations) {
                 if (relation.getFk() == idActor) {
                     System.out.println("Relação já existente: Série ID " + idSerie + " -> Ator ID " + idActor);
@@ -111,5 +111,28 @@ public class ArchiveRelationNN {
         boolean deletedActorSerie = actorSerie.delete(new PairIDFK(idActor, idSerie));
         boolean deletedSerieActor = serieActor.delete(new PairIDFK(idSerie, idActor));
         return deletedActorSerie && deletedSerieActor;
+    }
+
+    /**
+     * Exclui todas as relações entre uma série e os atores associados a ela.
+     *
+     * @param idSerie O ID da série cujas relações com atores devem ser excluídas.
+     * @return Um valor booleano que indica se todas as exclusões foram realizadas
+     *         com sucesso (`true`) ou se houve falha em alguma exclusão (`false`).
+     * @throws Exception Se ocorrer um erro durante a operação de leitura ou exclusão.
+     */
+    public boolean deleteAllRelations(int idSerie) throws Exception {
+        boolean allDeleted = true;
+        
+        // Remove todas as relações da série com atores nas estruturas actorSerie e serieActor
+        ArrayList<PairIDFK> existingSerieRelations = serieActor.read(new PairIDFK(idSerie, -1));
+        if (existingSerieRelations != null && !existingSerieRelations.isEmpty()) {
+            for (PairIDFK relation : existingSerieRelations) {
+                allDeleted = allDeleted && actorSerie.delete(new PairIDFK(relation.getFk(), idSerie)); // Remove ator → série
+                allDeleted = allDeleted && serieActor.delete(relation); // Remove série → ator
+            }
+        }
+
+        return allDeleted; 
     }
 }

@@ -75,6 +75,46 @@ public class ControllerActor {
     }
 
     /**
+     * Inclui uma nova ator no sistema, coletando os dados por meio da interface
+     * de visualização.
+     */
+    public void incluirAtor() {
+        System.out.println("\n\n===============================");
+        System.out.println("      Inclusão de ator");
+        System.out.println("===============================");
+
+        String name = visao.obterNome();
+        if (name == null || name.isEmpty()) {
+            System.out.println("Nome inválido. Inclusão cancelada.");
+            return;
+        }
+
+        if (visao.confirmAction(1)) {
+            try {
+                Actor novaAtor = new Actor(name);
+                novaAtor.setId(arqAtor.create(novaAtor));
+                System.out.println("-------------------------------");
+                System.out.println("Ator incluído com sucesso.");
+                System.out.println("===============================");
+
+                visao.mostraAtor(novaAtor);
+                System.out.println("\n>>> Pressione Enter para voltar.");
+                console.nextLine();
+            } catch (Exception e) {
+                System.err.println("Erro do sistema. Não foi possível incluir o ator!");
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("-------------------------------");
+            System.out.println("Inclusão cancelada.");
+            System.out.println("===============================");
+
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
+        }
+    }
+
+    /**
      * Permite buscar uma ator pelo nome e exibe suas informações detalhadas.
      */
     public void buscarAtor() {
@@ -128,47 +168,6 @@ public class ControllerActor {
             System.err.println("Erro do sistema. Não foi possível buscar as ators!");
             e.printStackTrace();
         }
-
-    }
-
-    /**
-     * Inclui uma nova ator no sistema, coletando os dados por meio da interface
-     * de visualização.
-     */
-    public void incluirAtor() {
-        System.out.println("\n\n===============================");
-        System.out.println("      Inclusão de ator");
-        System.out.println("===============================");
-
-        String name = visao.obterNome();
-        if (name == null || name.isEmpty()) {
-            System.out.println("Nome inválido. Inclusão cancelada.");
-            return;
-        }
-
-        if (visao.confirmAction(1)) {
-            try {
-                Actor novaAtor = new Actor(name);
-                arqAtor.create(novaAtor);
-                System.out.println("-------------------------------");
-                System.out.println("Ator incluído com sucesso.");
-                System.out.println("===============================");
-
-                visao.mostraAtor(novaAtor);
-                System.out.println("\n>>> Pressione Enter para voltar.");
-                console.nextLine();
-            } catch (Exception e) {
-                System.err.println("Erro do sistema. Não foi possível incluir o ator!");
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("-------------------------------");
-            System.out.println("Inclusão cancelada.");
-            System.out.println("===============================");
-
-            System.out.println("\n>>> Pressione Enter para voltar.");
-            console.nextLine();
-        }
     }
 
     /**
@@ -208,18 +207,18 @@ public class ControllerActor {
                         System.out.print("Escolha um número entre 1 e " + (n - 1) + ": ");
                 } while (o <= 0 || o > n - 1);
 
-                Actor serie = atores[o - 1];
-                visao.mostraAtor(serie);
+                Actor atorUpdate = atores[o - 1];
+                visao.mostraAtor(atorUpdate);
 
                 String novoNome = visao.obterNome();
                 if (novoNome != null && !novoNome.isEmpty()) {
-                    serie.setName(novoNome);
+                    atorUpdate.setName(novoNome);
                 } else {
-                    novoNome = serie.getName(); // Mantém o nome antigo
+                    novoNome = atorUpdate.getName(); // Mantém o nome antigo
                 }
 
                 if (visao.confirmAction(2)) {
-                    boolean alterado = arqAtor.update(serie);
+                    boolean alterado = arqAtor.update(atorUpdate);
                     if (alterado) {
                         System.out.println("-------------------------------");
                         System.out.println("Ator alterado com sucesso.");

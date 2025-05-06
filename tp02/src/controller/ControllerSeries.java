@@ -128,7 +128,7 @@ public class ControllerSeries {
             try {
                 Series novaSerie = new Series(name, synopsis, releaseYear, streaming);
                 arqSeries.create(novaSerie);
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 System.out.println("Série incluída com sucesso.");
                 System.out.println("===============================");
 
@@ -140,7 +140,7 @@ public class ControllerSeries {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             System.out.println("Inclusão cancelada.");
             System.out.println("===============================");
 
@@ -166,7 +166,7 @@ public class ControllerSeries {
             Series[] series = arqSeries.readNome(name);
 
             if (series == null || series.length == 0) { // Verifica se é nulo ou vazio
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 System.out.println("Nenhuma série encontrada.");
                 System.out.println("===============================");
                 System.out.println("\n>>> Pressione Enter para voltar.");
@@ -175,12 +175,12 @@ public class ControllerSeries {
             }
 
             int n = 1;
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             for (Series s : series) {
                 System.out.println((n++) + ": " + s.getName());
             }
 
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             System.out.print("Escolha a Série: ");
 
             int o;
@@ -225,12 +225,12 @@ public class ControllerSeries {
             if (series.length > 0) {
                 int n = 1;
 
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 for (Series s : series) {
                     System.out.println((n++) + ": " + s.getName());
                 }
 
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 System.out.print("Escolha a série: ");
                 int o;
                 do {
@@ -277,7 +277,7 @@ public class ControllerSeries {
                 if (visao.confirmAction(2)) {
                     boolean alterado = arqSeries.update(serie);
                     if (alterado) {
-                        System.out.println("-------------------------------");
+                        System.out.println("-----------------------------------");
                         System.out.println("Série alterada com sucesso.");
                         System.out.println("===============================");
                         System.out.println("\n>>> Pressione Enter para voltar.");
@@ -286,14 +286,14 @@ public class ControllerSeries {
                         System.err.println("Erro ao alterar a série.");
                     }
                 } else {
-                    System.out.println("-------------------------------");
+                    System.out.println("-----------------------------------");
                     System.out.println("Alteração cancelada.");
                     System.out.println("===============================");
                     System.out.println("\n>>> Pressione Enter para voltar.");
                     console.nextLine();
                 }
             } else {
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 System.out.println("Nenhuma série encontrada.");
                 System.out.println("===============================");
                 System.out.println("\n>>> Pressione Enter para voltar.");
@@ -321,7 +321,7 @@ public class ControllerSeries {
         try {
             Series[] series = arqSeries.readNome(name);
             if (series.length == 0) {
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 System.out.println("Nenhuma série encontrada.");
                 System.out.println("===============================");
                 System.out.println("\n>>> Pressione Enter para voltar.");
@@ -329,14 +329,14 @@ public class ControllerSeries {
                 return;
             }
 
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             for (int i = 0; i < series.length; i++) {
                 System.out.println((i + 1) + ": " + series[i].getName());
             }
 
             int escolha;
             do {
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 System.out.print("Escolha a série: ");
                 try {
                     escolha = Integer.parseInt(console.nextLine());
@@ -362,8 +362,15 @@ public class ControllerSeries {
             }
 
             if (visao.confirmAction(3)) {
-                if (arqSeries.delete(serie.getId())) {
-                    System.out.println("-------------------------------");
+                if (!arqRelationNN.deleteAllRelations(serie.getId())) {
+                    System.out.println("-----------------------------------");
+                    System.out.println("Erro ao excluir as relações entre\nséries e atores. Exclusão cancelada.");
+                    System.out.println("===============================");
+                    System.out.println("\n>>> Pressione Enter para voltar.");
+                    console.nextLine();
+                    return;
+                } else if (arqSeries.delete(serie.getId())) {
+                    System.out.println("-----------------------------------");
                     System.out.println("Série excluída com sucesso.");
                     System.out.println("===============================");
                     System.out.println("\n>>> Pressione Enter para voltar.");
@@ -372,7 +379,7 @@ public class ControllerSeries {
                     System.err.println("Erro ao excluir a série.");
                 }
             } else {
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 System.out.println("Exclusão cancelada.");
                 System.out.println("===============================");
                 System.out.println("\n>>> Pressione Enter para voltar.");
@@ -410,12 +417,12 @@ public class ControllerSeries {
             }
 
             int n = 1;
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             for (Series s : series) {
                 System.out.println((n++) + ": " + s.getName());
             }
 
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             System.out.print("Escolha a Série: ");
 
             int escolha;
@@ -440,7 +447,7 @@ public class ControllerSeries {
                 System.out.println("Nenhum episódio encontrado para esta série.");
             } else {
                 for (Episode episodio : episodios) {
-                    System.out.println("-------------------------------");
+                    System.out.println("-----------------------------------");
                     System.out.println("Nome: " + episodio.getName());
                     System.out.println("Temporada: " + episodio.getSeason());
                     System.out.println("Duração: " + episodio.getDuration() + " minutos");
@@ -483,12 +490,12 @@ public class ControllerSeries {
             }
 
             int n = 1;
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             for (Series s : series) {
                 System.out.println((n++) + ": " + s.getName());
             }
 
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             System.out.print("Escolha a Série: ");
 
             int escolha;
@@ -525,11 +532,11 @@ public class ControllerSeries {
             }
             System.out.println("\n===============================");
             System.out.println("Temporadas:");
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             for (int i = 1; i <= temp; i++) {
                 System.out.println(i + "ª");
             }
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             System.out.print("Escolha a temporada: ");
 
             do {
@@ -597,12 +604,12 @@ public class ControllerSeries {
             }
 
             int n = 1;
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             for (Series s : series) {
                 System.out.println((n++) + ": " + s.getName());
             }
 
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             System.out.print("Escolha a Série: ");
 
             int escolha;
@@ -632,7 +639,7 @@ public class ControllerSeries {
                     int idActor = relation.getFk(); // Fetch actor ID
                     Actor actor = arqActor.read(idActor);
                     if (actor != null) {
-                        System.out.println("-------------------------------");
+                        System.out.println("-----------------------------------");
                         System.out.println("Nome: " + actor.getName());
                         System.out.println("ID: " + actor.getId());
                     } else {
@@ -666,7 +673,7 @@ public class ControllerSeries {
             }
 
             int n = 1;
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             for (Series s : series) {
                 System.out.println((n++) + ": " + s.getName());
             }
