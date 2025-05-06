@@ -16,18 +16,18 @@ public class ViewActor {
      * Exibe o menu principal de opções para manipulação de atores.
      */
     public void exibirMenu() {
-        System.out.println("\n\n===============================");
-        System.out.println("          PUCFlix 1.0");
-        System.out.println("===============================");
-        System.out.println("> Início > Atores");
-        System.out.println("-------------------------------");
+        System.out.println("\n\n===================================");
+        System.out.println("            PUCFlix 1.0");
+        System.out.println("===================================");
+        System.out.println("Início > Atores");
+        System.out.println("-----------------------------------");
         System.out.println("1 - Incluir");
         System.out.println("2 - Buscar");
         System.out.println("3 - Alterar");
         System.out.println("4 - Excluir");
-        System.out.println("5 - Listar Séries de um Ator/Atriz");
+        System.out.println("5 - Listar Séries de um ator/atriz");
         System.out.println("0 - Retornar ao menu anterior");
-        System.out.println("===============================");
+        System.out.println("===================================");
         System.out.print("Opção: ");
     }
 
@@ -38,13 +38,14 @@ public class ViewActor {
      */
     public void mostraAtor(Actor ator) {
         if (ator != null) {
-            System.out.println("\n\n===============================");
-            System.out.println("       Detalhes do Ator/Atriz:");
-            System.out.println("===============================");
-            System.out.printf("Nome.................: %s%n", ator.getName());
-            System.out.println("===============================");
+            System.out.println("\n\n===================================");
+            System.out.println("      Detalhes do Ator/Atriz:");
+            System.out.println("===================================");
+            System.out.printf("Nome...... %s%n", ator.getName());
+            System.out.printf("ID........ %s%n", ator.getId());
+            System.out.println("===================================");
         } else {
-            System.out.println("Ator/Atriz não encontrado(a).");
+            System.out.println("Ator/atriz não encontrado(a).");
         }
     }
 
@@ -54,7 +55,7 @@ public class ViewActor {
      * @return Nome da ator informado.
      */
     public String obterNome() {
-        System.out.print("Nome do Ator/Atriz: ");
+        System.out.print("Nome do ator/atriz: ");
         return console.nextLine();
     }
 
@@ -69,19 +70,19 @@ public class ViewActor {
 
         switch (actionNum) {
             case 1:
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 mensagem = "Confirma a inclusão? (S/N) ";
                 break;
             case 2:
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 mensagem = "Confirma as alterações? (S/N) ";
                 break;
             case 3:
-                System.out.println("-------------------------------");
+                System.out.println("\n-----------------------------------");
                 mensagem = "Confirma a exclusão de ator? (S/N) ";
                 break;
             default:
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 mensagem = "Confirma a ação? (S/N) ";
                 break;
         }
@@ -95,7 +96,7 @@ public class ViewActor {
             } else if (resposta.equalsIgnoreCase("N")) {
                 return false;
             } else {
-                System.out.println("Resposta inválida! Por favor, digite 'S' para Sim ou 'N' para Não.");
+                System.out.println("Resposta inválida! Por favor, digite\n'S' para Sim ou 'N' para Não.");
             }
         }
     }

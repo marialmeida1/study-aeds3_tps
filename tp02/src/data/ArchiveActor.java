@@ -38,7 +38,6 @@ public class ArchiveActor extends Archive<Actor> {
     public int create(Actor a) throws Exception {
         int id = super.create(a);
         indiceIndiretoNome.create(new PairNameID(a.getName(), id));
-        System.out.println("Ator criado com sucesso. ID: " + id); // Display the ID of the actor
         return id;
     }
 

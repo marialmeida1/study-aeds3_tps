@@ -67,7 +67,7 @@ public class ControllerActor {
                     break;
                 default:
                     System.out.println("Opção inválida!");
-                    System.out.println("\n>>> Pressione Enter para voltar.");
+                    System.out.println("\n>>> Pressione Enter para voltar <<<");
                     console.nextLine();
                     break;
             }
@@ -79,37 +79,35 @@ public class ControllerActor {
      * de visualização.
      */
     public void incluirAtor() {
-        System.out.println("\n\n===============================");
-        System.out.println("      Inclusão de ator");
-        System.out.println("===============================");
+        System.out.println("\n\n===================================");
+        System.out.println("         Inclusão de ator");
+        System.out.println("===================================");
 
         String name = visao.obterNome();
         if (name == null || name.isEmpty()) {
-            System.out.println("Nome inválido. Inclusão cancelada.");
+            System.out.println("\nNome inválido. Inclusão cancelada.");
             return;
         }
 
         if (visao.confirmAction(1)) {
             try {
                 Actor novaAtor = new Actor(name);
+                System.out.println("-----------------------------------");
                 novaAtor.setId(arqAtor.create(novaAtor));
-                System.out.println("-------------------------------");
-                System.out.println("Ator incluído com sucesso.");
-                System.out.println("===============================");
+                System.out.println("\nAtor/atriz incluído com sucesso!");
 
                 visao.mostraAtor(novaAtor);
-                System.out.println("\n>>> Pressione Enter para voltar.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
             } catch (Exception e) {
-                System.err.println("Erro do sistema. Não foi possível incluir o ator!");
+                System.err.println("Erro do sistema. Não foi possível\nincluir o ator!");
                 e.printStackTrace();
             }
         } else {
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             System.out.println("Inclusão cancelada.");
-            System.out.println("===============================");
 
-            System.out.println("\n>>> Pressione Enter para voltar.");
+            System.out.println("\n>>> Pressione Enter para voltar <<<");
             console.nextLine();
         }
     }
@@ -118,9 +116,9 @@ public class ControllerActor {
      * Permite buscar uma ator pelo nome e exibe suas informações detalhadas.
      */
     public void buscarAtor() {
-        System.out.println("\n\n===============================");
-        System.out.println("    Busca de ator por nome");
-        System.out.println("===============================");
+        System.out.println("\n\n===================================");
+        System.out.println("      Busca de ator por nome");
+        System.out.println("===================================");
         System.out.print("Digite o nome do ator: ");
         String name = console.nextLine();
 
@@ -131,21 +129,20 @@ public class ControllerActor {
             Actor[] atores = arqAtor.readNome(name);
 
             if (atores == null || atores.length == 0) { // Verifica se é nulo ou vazio
-                System.out.println("-------------------------------");
-                System.out.println("Nenhum ator encontrado.");
-                System.out.println("===============================");
-                System.out.println("\n>>> Pressione Enter para voltar.");
+                System.out.println("-----------------------------------");
+                System.out.println("\nNenhum ator encontrado.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
                 return; // Sai do método para evitar exceções
             }
 
             int n = 1;
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             for (Actor a : atores) {
                 System.out.println((n++) + ": " + a.getName() + " (ID: " + a.getId() + ")"); // Display actor name and ID
             }
 
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             System.out.print("Escolha o Ator: ");
 
             int o;
@@ -161,11 +158,11 @@ public class ControllerActor {
 
             visao.mostraAtor(atores[o - 1]);
 
-            System.out.println("\n>>> Pressione Enter para voltar.");
+            System.out.println("\n>>> Pressione Enter para voltar <<<");
             console.nextLine();
 
         } catch (Exception e) {
-            System.err.println("Erro do sistema. Não foi possível buscar as ators!");
+            System.err.println("Erro do sistema. Não foi possível\nbuscar as atores!");
             e.printStackTrace();
         }
     }
@@ -176,9 +173,9 @@ public class ControllerActor {
      * alterados.
      */
     private void alterarAtor() {
-        System.out.println("\n\n===============================");
+        System.out.println("\n\n===================================");
         System.out.println("      Alteração de Ator");
-        System.out.println("===============================");
+        System.out.println("===================================");
 
         String name = visao.obterNome();
         if (name == null || name.isEmpty())
@@ -189,12 +186,12 @@ public class ControllerActor {
             if (atores.length > 0) {
                 int n = 1;
 
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 for (Actor s : atores) {
                     System.out.println((n++) + ": " + s.getName());
                 }
 
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 System.out.print("Escolha a ator: ");
                 int o;
                 do {
@@ -220,26 +217,23 @@ public class ControllerActor {
                 if (visao.confirmAction(2)) {
                     boolean alterado = arqAtor.update(atorUpdate);
                     if (alterado) {
-                        System.out.println("-------------------------------");
+                        System.out.println("-----------------------------------");
                         System.out.println("Ator alterado com sucesso.");
-                        System.out.println("===============================");
-                        System.out.println("\n>>> Pressione Enter para voltar.");
+                        System.out.println("\n>>> Pressione Enter para voltar <<<");
                         console.nextLine();
                     } else {
                         System.err.println("Erro ao alterar o ator.");
                     }
                 } else {
-                    System.out.println("-------------------------------");
+                    System.out.println("-----------------------------------");
                     System.out.println("Alteração cancelada.");
-                    System.out.println("===============================");
-                    System.out.println("\n>>> Pressione Enter para voltar.");
+                    System.out.println(">>> Pressione Enter para voltar <<<");
                     console.nextLine();
                 }
             } else {
-                System.out.println("-------------------------------");
-                System.out.println("Nenhum ator encontrado.");
-                System.out.println("===============================");
-                System.out.println("\n>>> Pressione Enter para voltar.");
+                System.out.println("-----------------------------------");
+                System.out.println("\nNenhum ator encontrado.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
             }
         } catch (Exception e) {
@@ -253,11 +247,12 @@ public class ControllerActor {
      * ele(a).
      */
     private void excluirAtor() {
-        System.out.println("\n\n===============================");
-        System.out.println("      Exclusão de Ator");
-        System.out.println("===============================");
-        System.out.print("Digite o nome do ator: ");
+        System.out.println("\n\n===================================");
+        System.out.println("      Exclusão de Ator/Atriz");
+        System.out.println("===================================");
+        System.out.print("Digite o nome do ator/atriz: ");
         String name = console.nextLine();
+        System.out.println("-----------------------------------");
 
         if (name.isEmpty())
             return;
@@ -265,33 +260,40 @@ public class ControllerActor {
         try {
             Actor[] atores = arqAtor.readNome(name);
             if (atores.length == 0) {
-                System.out.println("Nenhum ator encontrado.");
+                System.out.println("\nNenhum ator encontrado.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
+                console.nextLine();
                 return;
             }
 
-            System.out.println("-------------------------------");
-            for (int i = 0; i < atores.length; i++) {
+            for (int i = 0; i < atores.length; i++) 
                 System.out.println((i + 1) + ": " + atores[i].getName());
-            }
-
+            
+            System.out.println("-----------------------------------");
             System.out.print("Escolha o Ator: ");
             int escolha = Integer.parseInt(console.nextLine());
             Actor ator = atores[escolha - 1];
 
             ArrayList<PairIDFK> relations = arqRelationNN.readSeriesByActor(ator.getId());
             if (relations != null && !relations.isEmpty()) {
-                System.out.println("Erro! Não é possível excluir o ator, pois ele está vinculado a uma ou mais séries.");
+                System.out.println("Erro! Não é possível excluir o ator,\npois ele está vinculado a uma ou mais\nséries.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
+                console.nextLine();
                 return;
             }
 
             if (visao.confirmAction(3)) {
+                System.out.println("-----------------------------------");
                 if (arqAtor.delete(ator.getId())) {
-                    System.out.println("Ator excluído com sucesso.");
+                    System.out.println("\nAtor excluído com sucesso.");
                 } else {
-                    System.err.println("Erro ao excluir o ator.");
+                    System.err.println("\nErro ao excluir o ator.");
                 }
             } else {
-                System.out.println("Exclusão cancelada.");
+                System.out.println("-----------------------------------");
+                System.out.println("\nExclusão cancelada.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
+                console.nextLine();
             }
         } catch (Exception e) {
             System.err.println("Erro ao excluir o ator.");
@@ -300,15 +302,15 @@ public class ControllerActor {
     }
 
     private void listSeriesByActor() {
-        System.out.println("\n\n===============================");
-        System.out.println("Participações em Séries");
-        System.out.println("===============================");
+        System.out.println("\n\n===================================");
+        System.out.println("      Busca de ator por nome");
+        System.out.println("===================================");
 
         String nomeAtor = visao.obterNome();
 
         if (nomeAtor.isEmpty()) {
-            System.out.println("Nome do Ator/Atriz inválido(a).");
-            System.out.println("\n>>> Pressione Enter para voltar.");
+            System.out.println("\nNome do ator/atriz inválido(a).");
+            System.out.println("\n>>> Pressione Enter para voltar <<<");
             console.nextLine();
             return;
         }
@@ -316,20 +318,20 @@ public class ControllerActor {
         try {
             Actor[] actors = arqAtor.readNome(nomeAtor); // Fetch actor by name
             if (actors == null || actors.length == 0) {
-                System.out.println("Nenhum Ator/Atriz encontrado(a) com o nome fornecido.");
-                System.out.println("\n>>> Pressione Enter para voltar.");
+                System.out.println("\nNenhum ator/atriz encontrado(a) com o\nnome fornecido.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
                 return;
             }
 
             int n = 1;
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             for (Actor a : actors) {
                 System.out.println((n++) + ": " + a.getName());
             }
 
-            System.out.println("-------------------------------");
-            System.out.print("Escolha o Ator/Atriz: ");
+            System.out.println("-----------------------------------");
+            System.out.print("Escolha o ator/atriz: ");
 
             int escolha;
             do {
@@ -343,34 +345,42 @@ public class ControllerActor {
             } while (escolha <= 0 || escolha > n - 1);
 
             Actor actor = actors[escolha - 1]; // Use the selected actor
-            System.out.println("\n===============================");
-            System.out.println("Ator/Atriz: " + actor.getName());
+            System.out.println("\n\n===================================");            
+            System.out.println(actor.getName() + ": Filmografia");
+            System.out.println("==================================="); 
 
             int idActor = actor.getId();
 
             ArrayList<PairIDFK> relations = arqRelationNN.readSeriesByActor(idActor); // Fetch series for the actor
 
             if (relations == null || relations.isEmpty()) {
-                System.out.println("Nenhuma série encontrada para este Ator/Atriz.");
+                System.out.println("Nenhuma série encontrada para este\nator/atriz.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
+                console.nextLine();
+                return;
             } else {
-                System.out.println("\nSéries relacionadas:");
                 for (PairIDFK relation : relations) {
                     int idSerie = relation.getFk(); // Fetch series ID
                     Series serie = arqSeries.read(idSerie);
+                    System.out.println("-----------------------------------");
                     if (serie != null) {
-                        System.out.println("-------------------------------");
                         System.out.println("Nome: " + serie.getName());
                         System.out.println("Sinopse: " + serie.getSynopsis());
                         System.out.println("Ano de lançamento: " + serie.getReleaseYear());
                         System.out.println("Streaming: " + serie.getStreaming());
                     } else {
                         System.out.println("Erro: Série com ID " + idSerie + " não encontrada."); // Debug statement
+                        System.out.println("\n>>> Pressione Enter para voltar <<<");
+                        console.nextLine();
+                        return;
                     }
                 }
-                System.out.println("===============================");
+                System.out.println("===================================");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
+                console.nextLine();
             }
         } catch (Exception e) {
-            System.out.println("Erro ao listar Séries que o(a) Ator/Atriz fez!");
+            System.out.println("Erro ao listar Séries que o(a)\nator/atriz fez!");
             e.printStackTrace();
         }
     }

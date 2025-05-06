@@ -50,8 +50,8 @@ public class Actor implements Register {
      */
     @Override
     public String toString() {
-        return "\nID:.................." + this.id +
-                "\nNome:................" + this.name;
+        return "\nNome...... " + this.name +
+                "\nID......... " + this.id;
     }
 
     /**

@@ -60,7 +60,7 @@ public class ControllerEpisode {
                     break;
                 default:
                     System.out.println("Opção inválida!");
-                    System.out.println("\n>>> Pressione Enter para voltar.");
+                    System.out.println("\n>>> Pressione Enter para voltar <<<");
                     console.nextLine();
                     break;
             }
@@ -74,37 +74,37 @@ public class ControllerEpisode {
      * @throws Exception caso ocorra erro na busca.
      */
     public Episode buscarEpisodioPorNome() throws Exception {
-        System.out.println("\n\n===============================");
+        System.out.println("\n\n===================================");
         System.out.println("       Busca de episódio");
-        System.out.println("===============================");
+        System.out.println("===================================");
     
         Series serie = buscarSeriePorNome();
         if (serie == null) return null;
     
         int fkSerie = serie.getId();
     
-        System.out.println("===============================");
+        System.out.println("===================================");
         System.out.println("    Buscar episódio por nome");
-        System.out.println("-------------------------------");
+        System.out.println("-----------------------------------");
         System.out.print("Nome: ");
         String name = console.nextLine();
     
         Episode[] episodios = arqEpisodios.readEpisodiosPorSerieENome(fkSerie, name);
         
         if (episodios == null || episodios.length == 0) {
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             System.out.println("Nenhum episódio encontrado.");
-            System.out.println("===============================");
+            System.out.println("===================================");
             return null;
         }
     
         int n = 1;
-        System.out.println("-------------------------------");
+        System.out.println("-----------------------------------");
         for (Episode e : episodios) {
             System.out.println((n++) + ": " + e.getName());
         }
     
-        System.out.println("-------------------------------");
+        System.out.println("-----------------------------------");
         System.out.print("Escolha o Episódio: ");
     
         int o;
@@ -131,11 +131,11 @@ public class ControllerEpisode {
             Episode episodio = buscarEpisodioPorNome();
             if (episodio != null) {
                 visaoEpisodios.mostraEpisodio(episodio);
-                System.out.println("\n>>> Pressione Enter para voltar.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
             }
         } catch (Exception e) {
-            System.err.println("Erro do sistema. Não foi possível buscar o episódio!");
+            System.err.println("Erro do sistema. Não foi possível\nbuscar o episódio!");
             e.printStackTrace();
         }
     }    
@@ -145,33 +145,33 @@ public class ControllerEpisode {
      * Coleta os dados do usuário e realiza a inclusão de um novo episódio.
      */
     public void incluirEpisodio() {
-        System.out.println("\n\n===============================");
+        System.out.println("\n\n===================================");
         System.out.println("      Inclusão de Episódio");
-        System.out.println("===============================");
+        System.out.println("===================================");
 
         // Buscando qual série irá inserir
         Series serie = buscarSeriePorNome();
 
         if(serie == null){
-            System.out.println("-------------------------------");
-            System.out.println("Nenhuma série encontrada! Não é possível adicionar episódios.");
-            System.out.println("===============================");
+            System.out.println("-----------------------------------");
+            System.out.println("\nNenhuma série encontrada! Não é\n" +
+                                "possível adicionar episódios.");
             
-            System.out.println("\n>>> Pressione Enter para voltar.");
+            System.out.println("\n>>> Pressione Enter para voltar <<<");
             console.nextLine();
 
             return; // Sai do método para evitar exceções
         }
 
         int fkSerie = serie.getId();
-        System.out.println("-------------------------------");
+        System.out.println("-----------------------------------");
         System.out.println("Série: " + serie.getName());
 
         // Inserindo valores
         String name = visaoEpisodios.obterNome();
         if (name == null || name.isEmpty()) {
             System.out.println("Nome inválido. Inclusão cancelada.");
-            System.out.println("\n>>> Pressione Enter para voltar.");
+            System.out.println("\n>>> Pressione Enter para voltar <<<");
             console.nextLine();
             return;
         }
@@ -179,7 +179,7 @@ public class ControllerEpisode {
         int season = visaoEpisodios.obterTemporada();
         if (season <= 0) {
             System.out.println("Temporada inválida. Inclusão cancelada.");
-            System.out.println("\n>>> Pressione Enter para voltar.");
+            System.out.println("\n>>> Pressione Enter para voltar <<<");
             console.nextLine();
             return;
         }
@@ -187,7 +187,7 @@ public class ControllerEpisode {
         LocalDate release = visaoEpisodios.obterDataLancamento();
         if (release == null) {
             System.out.println("Data de lançamento inválida. Inclusão cancelada.");
-            System.out.println("\n>>> Pressione Enter para voltar.");
+            System.out.println("\n>>> Pressione Enter para voltar <<<");
             console.nextLine();
             return;
         }
@@ -195,7 +195,7 @@ public class ControllerEpisode {
         int duration = visaoEpisodios.obterDuracao();
         if (duration <= 0) {
             System.out.println("Duração inválida. Inclusão cancelada.");
-            System.out.println("\n>>> Pressione Enter para voltar.");
+            System.out.println("\n>>> Pressione Enter para voltar <<<");
             console.nextLine();
             return;
         }
@@ -204,18 +204,17 @@ public class ControllerEpisode {
             try {
                 Episode novoEpisode = new Episode(fkSerie, name, season, release, duration);
                 arqEpisodios.create(novoEpisode);
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 System.out.println("Episódio incluído com sucesso.");
-                System.out.println("===============================");
+                System.out.println("===================================");
             } catch (Exception e) {
                 System.err.println("Erro do sistema. Não foi possível incluir o episódio!");
                 e.printStackTrace();
             }
         } else {
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             System.out.println("Inclusão de Episódio cancelada.");
-            System.out.println("===============================");
-            System.out.println("\n>>> Pressione Enter para voltar.");
+            System.out.println("\n>>> Pressione Enter para voltar <<<");
             console.nextLine();
         }
     }
@@ -224,17 +223,16 @@ public class ControllerEpisode {
      * Altera os dados de um episódio já existente.
      */
     private void alterarEpisodio() {
-        System.out.println("\n\n===============================");
+        System.out.println("\n\n===================================");
         System.out.println("      Alteração de Episódio");
-        System.out.println("===============================");
+        System.out.println("===================================");
     
         try {
             Episode episode = buscarEpisodioPorNome();
             if (episode == null) {
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 System.out.println("Nenhum episódio encontrado.");
-                System.out.println("===============================");
-                System.out.println("\n>>> Pressione Enter para voltar.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
                 return;
             }
@@ -272,23 +270,23 @@ public class ControllerEpisode {
             if (visaoEpisodios.confirmAction(2)) {
                 boolean alterado = arqEpisodios.update(episode);
                 if (alterado) {
-                    System.out.println("-------------------------------");
+                    System.out.println("-----------------------------------");
                     System.out.println("Episódio alterado com sucesso.");
-                    System.out.println("===============================");
-                    System.out.println("\n>>> Pressione Enter para voltar.");
+                    System.out.println("\n>>> Pressione Enter para voltar <<<");
                     console.nextLine();
                 } else {
                     System.err.println("Erro ao alterar o episódio.");
+                    System.out.println("\n>>> Pressione Enter para voltar <<<");
+                    console.nextLine();
                 }
             } else {
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 System.out.println("Alteração cancelada.");
-                System.out.println("===============================");
-                System.out.println("\n>>> Pressione Enter para voltar.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
             }
         } catch (Exception e) {
-            System.err.println("Erro do sistema. Não foi possível buscar o episódio!");
+            System.err.println("Erro do sistema. Não foi possível\nbuscar o episódio!");
             e.printStackTrace();
         }
     }    
@@ -297,17 +295,16 @@ public class ControllerEpisode {
      * Exclui um episódio selecionado pelo usuário.
      */
     private void excluirEpisodio() {
-        System.out.println("\n\n===============================");
+        System.out.println("\n\n===================================");
         System.out.println("      Exclusão de Episódio");
-        System.out.println("===============================");
+        System.out.println("===================================");
 
         try {
             Episode episode = buscarEpisodioPorNome();
             if (episode == null) {
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 System.out.println("Nenhum episódio encontrado.");
-                System.out.println("===============================");
-                System.out.println("\n>>> Pressione Enter para voltar.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
                 return;
             }
@@ -316,24 +313,22 @@ public class ControllerEpisode {
             if (visaoEpisodios.confirmAction(3)) {
                 boolean deletado = arqEpisodios.delete(episode.getId());
                 if (deletado) {
-                    System.out.println("-------------------------------");
-                    System.out.println("Episódio excluído com sucesso.");
-                    System.out.println("===============================");
-                    System.out.println("\n>>> Pressione Enter para voltar.");
+                    System.out.println("-----------------------------------");
+                    System.out.println("\nEpisódio excluído com sucesso.");
+                    System.out.println("\n>>> Pressione Enter para voltar <<<");
                     console.nextLine();
                 } else {
                     System.err.println("Erro ao excluir o episódio.");
                 }
             } else {
-                System.out.println("-------------------------------");
-                System.out.println("Exclusão cancelada.");
-                System.out.println("===============================");
-                System.out.println("\n>>> Pressione Enter para voltar.");
+                System.out.println("-----------------------------------");
+                System.out.println("\nExclusão cancelada.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
             }
 
         } catch (Exception e) {
-            System.err.println("Erro do sistema. Não foi possível buscar o episódio!");
+            System.err.println("Erro do sistema. Não foi possível\nbuscar o episódio!");
             e.printStackTrace();
         }
     }    
@@ -344,8 +339,9 @@ public class ControllerEpisode {
      * @return a série encontrada ou {@code null} se não encontrada.
      */
     public Series buscarSeriePorNome() {
-        System.out.println("    Buscar série por nome");
-        System.out.println("-------------------------------");
+        System.out.println("\n\n===================================");
+        System.out.println("      Busca de série por nome");
+        System.out.println("===================================");
         System.out.print("Nome: ");
         String name = console.nextLine();
 
@@ -356,21 +352,20 @@ public class ControllerEpisode {
             Series[] series = arqSeries.readNome(name);
 
             if (series == null || series.length == 0) { // Verifica se é nulo ou vazio
-                System.out.println("-------------------------------");
-                System.out.println("Nenhuma série encontrada.");
-                System.out.println("===============================");
-                System.out.println("\n>>> Pressione Enter para voltar.");
+                System.out.println("-----------------------------------");
+                System.out.println("\nNenhuma série encontrada.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
                 return null; // Sai do método para evitar exceções
             }
 
             int n = 1;
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             for (Series s : series) {
                 System.out.println((n++) + ": " + s.getName());
             }
 
-            System.out.println("-------------------------------");
+            System.out.println("-----------------------------------");
             System.out.print("Escolha a Série: ");
 
             int o;
@@ -387,7 +382,7 @@ public class ControllerEpisode {
             return series[o - 1];
 
         } catch (Exception e) {
-            System.err.println("Erro do sistema. Não foi possível buscar as séries!");
+            System.err.println("Erro do sistema. Não foi possível\nbuscar as séries!");
             e.printStackTrace();
         }
         return null;
