@@ -30,11 +30,11 @@ public class Main {
             int opcao;
             do {
 
-                System.out.println("\n===================================");
+                System.out.println("\n\n===================================");
                 System.out.println("            PUCFlix 1.0");
                 System.out.println("===================================");
                 System.out.println("Início");
-                System.out.println("-----------------------------------");
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
                 System.out.println("1 - Séries");
                 System.out.println("2 - Episódios");
                 System.out.println("3 - Ator");

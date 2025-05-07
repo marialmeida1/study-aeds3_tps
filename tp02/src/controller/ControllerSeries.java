@@ -5,6 +5,7 @@ import tp02.src.view.ViewSeries;
 import tp02.src.models.*;
 import tp02.src.storage.indexes.PairIDFK;
 import tp02.src.data.ArchiveActor;
+import tp02.src.view.ViewActor;
 import tp02.src.data.ArchiveEpisode;
 import tp02.src.data.ArchiveRelationNN;
 
@@ -91,12 +92,16 @@ public class ControllerSeries {
      */
     public void incluirSerie() {
         System.out.println("\n\n===================================");
-        System.out.println("         Inclusão de série");
+        System.out.println("         Inclusão de Série");
         System.out.println("===================================");
+        System.out.println("Início > Séries > Incluir");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 
         String name = visao.obterNome();
         if (name == null || name.isEmpty()) {
             System.out.println("Nome inválido. Inclusão cancelada.");
+            System.out.println("\n>>> Pressione Enter para voltar <<<");
+            console.nextLine();
             return;
         }
 
@@ -130,9 +135,8 @@ public class ControllerSeries {
             try {
                 Series novaSerie = new Series(name, synopsis, releaseYear, streaming);
                 arqSeries.create(novaSerie);
-                System.out.println("\nSérie incluída com sucesso.");
-
                 visao.mostraSerie(novaSerie);
+                System.out.println("\nSérie incluída com sucesso.");
                 System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
             } catch (Exception e) {
@@ -152,8 +156,11 @@ public class ControllerSeries {
      */
     public void buscarSeriePorNome() {
         System.out.println("\n\n===================================");
-        System.out.println("      Busca de série por nome");
+        System.out.println("      Busca de Série por Nome");
         System.out.println("===================================");
+        System.out.println("Início > Séries > Buscar");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+
         System.out.print("Digite o nome da série: ");
         String name = console.nextLine();
 
@@ -212,6 +219,8 @@ public class ControllerSeries {
         System.out.println("\n\n===================================");
         System.out.println("        Alteração de Série   ");
         System.out.println("===================================");
+        System.out.println("Início > Séries > Alterar");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 
         String name = visao.obterNome();
         if (name == null || name.isEmpty())
@@ -242,7 +251,7 @@ public class ControllerSeries {
 
                 Series serie = series[o - 1];
                 visao.mostraSerie(serie);
-
+                System.out.println("\n-> Editando:");
                 String novoNome = visao.obterNome();
                 if (novoNome != null && !novoNome.isEmpty()) {
                     serie.setName(novoNome);
@@ -275,7 +284,7 @@ public class ControllerSeries {
                     boolean alterado = arqSeries.update(serie);
                     if (alterado) {
                         System.out.println("-----------------------------------");
-                        System.out.println("Série alterada com sucesso.");
+                        System.out.println("\nSérie alterada com sucesso.");
                         System.out.println("\n>>> Pressione Enter para voltar <<<");
                         console.nextLine();
                     } else {
@@ -283,7 +292,7 @@ public class ControllerSeries {
                     }
                 } else {
                     System.out.println("-----------------------------------");
-                    System.out.println("Alteração cancelada.");
+                    System.out.println("\nAlteração cancelada.");
                     System.out.println("\n>>> Pressione Enter para voltar <<<");
                     console.nextLine();
                 }
@@ -303,18 +312,24 @@ public class ControllerSeries {
      * Exclui uma série do sistema, desde que não haja episódios vinculados a ela.
      */
     private void excluirSerie() {
-        System.out.println("===================================");
+        System.out.println("\n\n===================================");
         System.out.println("         Exclusão de Série");
         System.out.println("===================================");
+        System.out.println("Início > Séries > Excluir");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         System.out.print("Digite o nome da série: ");
         String name = console.nextLine();
 
-        if (name.isEmpty())
+        if (name == null || name.isEmpty()){
+            System.out.println("Nome inválido!");
+            System.out.println("\n>>> Pressione Enter para voltar <<<");
+            console.nextLine();
             return;
+        }
 
         try {
             Series[] series = arqSeries.readNome(name);
-            if (series.length == 0) {
+            if (series == null || series.length == 0) {
                 System.out.println("-----------------------------------");
                 System.out.println("\nNenhuma série encontrada.");
                 System.out.println("\n>>> Pressione Enter para voltar <<<");
@@ -388,6 +403,8 @@ public class ControllerSeries {
         System.out.println("\n\n===================================");
         System.out.println("Listagem de episódios por série");
         System.out.println("===================================");
+        System.out.println("Início > Séries > Listar Episódios");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         System.out.print("Digite o nome da série: ");
         String nomeSerie = console.nextLine();
 
@@ -458,6 +475,8 @@ public class ControllerSeries {
         System.out.println("\n\n===================================");
         System.out.println("Listagem de episódios por temporada da série");
         System.out.println("===================================");
+        System.out.println("Início > Séries > Listar Temporadas");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         System.out.print("Digite o nome da série: ");
         String nomeSerie = console.nextLine();
 
@@ -571,14 +590,15 @@ public class ControllerSeries {
     }
 
     private void listActorsBySerie() {
-        System.out.println("\n\n===================================");
+        /* System.out.println("\n\n===================================");
         System.out.println("       Buscar série por nome");
-        System.out.println("===================================");
+        System.out.println("==================================="); */
 
-        String nomeSerie = visao.obterNome();
+        System.out.print("\nDigite o nome da série: ");
+        String nomeSerie = console.nextLine();
 
         if (nomeSerie.isEmpty()) {
-            System.out.println("\nNome da série inválido.");
+            System.out.println("Nome da série inválido.");
             System.out.println("\n>>> Pressione Enter para voltar <<<");
             console.nextLine();
             return;
@@ -618,12 +638,25 @@ public class ControllerSeries {
             System.out.println("Elenco de " + serie.getName());
             System.out.println("===================================");
 
+            if(serie.getName().length() < 9){
+                System.out.println("Início > Séries > " + serie.getName() + " > Elenco");
+            } else if (serie.getName().length() < 16) {
+                System.out.println("Início > Séries > " + serie.getName() + " >\nElenco");
+            } else if (serie.getName().length() < 18) {
+                System.out.println("Início > Séries > " + serie.getName() + "\n> Elenco");
+            } else {
+                System.out.println("Início > Séries >\n" + serie.getName() + "\n> Elenco");
+            }
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+
             int idSerie = serie.getId();
 
             ArrayList<PairIDFK> relations = arqRelationNN.readActorsBySerie(idSerie); // Fetch actors for the series
 
             if (relations == null || relations.isEmpty()) {
-                System.out.println("\nNenhum ator encontrado para esta série.");
+                System.out.println("Nenhum ator encontrado para esta série.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
+                console.nextLine();
             } else {
                 for (PairIDFK relation : relations) {
                     int idActor = relation.getFk(); // Fetch actor ID
@@ -636,7 +669,7 @@ public class ControllerSeries {
                         System.out.println("Erro: Ator com ID " + idActor + " não encontrado."); // Debug statement
                     }
                 }
-                System.out.println("===================================");
+                System.out.println("-----------------------------------");
                 System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
             }
@@ -650,8 +683,12 @@ public class ControllerSeries {
         System.out.println("\n\n===================================");
         System.out.println("    Vinculação de Ator à Série");
         System.out.println("===================================");
+        System.out.println("Início > Séries > Vincular Ator");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 
-        String nomeSerie = visao.obterNome();
+        System.out.print("Digite o nome da série: ");
+        String nomeSerie = console.nextLine();
+
         if (nomeSerie.isEmpty()) {
             System.out.println("\nNome da série inválido.");
             System.out.println("\n>>> Pressione Enter para voltar <<<");
@@ -679,19 +716,65 @@ public class ControllerSeries {
             int escolha = Integer.parseInt(console.nextLine());
             Series serie = series[escolha - 1];
 
-            int idAtor = visao.obterIdAtor();
-            Actor ator = arqActor.read(idAtor);
-            if (ator == null) {
-                System.out.println("\nAtor não encontrado.");
+            ViewActor viewActor = new ViewActor();
+            System.out.print("\nDigite o nome do ator/atriz: ");
+            String atorNome = console.nextLine();
+
+            if (atorNome == null || atorNome.isEmpty()) {
+                System.out.println("\nNome do ator/atriz inválido.");
                 System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
                 return;
             }
 
-            arqRelationNN.createRelation(idAtor, serie.getId());
-            System.out.println("\nAtor vinculado à série com sucesso!");
-            System.out.println("\n>>> Pressione Enter para voltar <<<");
-            console.nextLine();
+            Actor[] atores = arqActor.readNome(atorNome);
+            if (atores == null) {
+                System.out.println("\nAtor/atriz não encontrado.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
+                console.nextLine();
+                return;
+            }
+
+            n = 1;
+            System.out.println("-----------------------------------");
+            for (Actor a : atores) {
+                System.out.println((n++) + ": " + a.getName());
+            }
+
+            System.out.println("-----------------------------------");
+            System.out.print("Escolha o ator/atriz: ");
+
+            int o;
+            do {
+                try {
+                    o = Integer.parseInt(console.nextLine());
+                } catch (NumberFormatException e) {
+                    o = -1;
+                }
+                if (o <= 0 || o > n - 1)
+                    System.out.print("Escolha um número entre 1 e " + (n - 1) + ": ");
+            } while (o <= 0 || o > n - 1);
+
+            viewActor.mostraAtor(atores[o - 1]);
+
+            if (visao.confirmAction(1)) {
+                System.out.println("-----------------------------------");
+                String debug = arqRelationNN.createRelation(atores[o - 1].getId(), serie.getId());
+                System.out.println("\nAtor vinculado à série com sucesso!");
+                System.out.print("\nPressione \"D\" para ver o debug ou\n\"Enter\" para voltar: ");
+                String resp = console.nextLine();
+
+                if(resp.equalsIgnoreCase("d")){
+                    System.out.println(debug);
+                    System.out.println("\n>>> Pressione Enter para voltar <<<");
+                    console.nextLine();
+                }
+            } else {
+                System.out.println("-----------------------------------");
+                System.out.println("\nInclusão cancelada.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
+                console.nextLine();
+            }
         } catch (Exception e) {
             System.err.println("Erro ao vincular ator à série.");
             e.printStackTrace();

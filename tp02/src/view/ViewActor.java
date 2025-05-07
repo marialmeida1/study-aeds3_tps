@@ -20,7 +20,7 @@ public class ViewActor {
         System.out.println("            PUCFlix 1.0");
         System.out.println("===================================");
         System.out.println("Início > Atores");
-        System.out.println("-----------------------------------");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         System.out.println("1 - Incluir");
         System.out.println("2 - Buscar");
         System.out.println("3 - Alterar");
@@ -38,12 +38,12 @@ public class ViewActor {
      */
     public void mostraAtor(Actor ator) {
         if (ator != null) {
-            System.out.println("\n\n===================================");
+            System.out.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.println("      Detalhes do Ator/Atriz:");
-            System.out.println("===================================");
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.printf("Nome...... %s%n", ator.getName());
             System.out.printf("ID........ %s%n", ator.getId());
-            System.out.println("===================================");
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         } else {
             System.out.println("Ator/atriz não encontrado(a).");
         }
@@ -70,11 +70,11 @@ public class ViewActor {
 
         switch (actionNum) {
             case 1:
-                System.out.println("-----------------------------------");
+                System.out.println("\n-----------------------------------");
                 mensagem = "Confirma a inclusão? (S/N) ";
                 break;
             case 2:
-                System.out.println("-----------------------------------");
+                System.out.println("\n-----------------------------------");
                 mensagem = "Confirma as alterações? (S/N) ";
                 break;
             case 3:
@@ -96,7 +96,9 @@ public class ViewActor {
             } else if (resposta.equalsIgnoreCase("N")) {
                 return false;
             } else {
+                System.out.println("-----------------------------------");
                 System.out.println("Resposta inválida! Por favor, digite\n'S' para Sim ou 'N' para Não.");
+                System.out.println("-----------------------------------");
             }
         }
     }

@@ -82,10 +82,14 @@ public class ControllerActor {
         System.out.println("\n\n===================================");
         System.out.println("         Inclusão de ator");
         System.out.println("===================================");
+        System.out.println("Início > Atores > Incluir");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 
         String name = visao.obterNome();
         if (name == null || name.isEmpty()) {
             System.out.println("\nNome inválido. Inclusão cancelada.");
+            System.out.println("\n>>> Pressione Enter para voltar <<<");
+            console.nextLine();
             return;
         }
 
@@ -94,9 +98,8 @@ public class ControllerActor {
                 Actor novaAtor = new Actor(name);
                 System.out.println("-----------------------------------");
                 novaAtor.setId(arqAtor.create(novaAtor));
-                System.out.println("\nAtor/atriz incluído com sucesso!");
-
                 visao.mostraAtor(novaAtor);
+                System.out.println("\nAtor/atriz incluído com sucesso!");
                 System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
             } catch (Exception e) {
@@ -119,6 +122,8 @@ public class ControllerActor {
         System.out.println("\n\n===================================");
         System.out.println("      Busca de ator por nome");
         System.out.println("===================================");
+        System.out.println("Início > Atores > Buscar");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         System.out.print("Digite o nome do ator: ");
         String name = console.nextLine();
 
@@ -176,6 +181,8 @@ public class ControllerActor {
         System.out.println("\n\n===================================");
         System.out.println("      Alteração de Ator");
         System.out.println("===================================");
+        System.out.println("Início > Atores > Alterar");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 
         String name = visao.obterNome();
         if (name == null || name.isEmpty())
@@ -206,7 +213,8 @@ public class ControllerActor {
 
                 Actor atorUpdate = atores[o - 1];
                 visao.mostraAtor(atorUpdate);
-
+                
+                System.out.println("\n-> Editando:");
                 String novoNome = visao.obterNome();
                 if (novoNome != null && !novoNome.isEmpty()) {
                     atorUpdate.setName(novoNome);
@@ -226,8 +234,8 @@ public class ControllerActor {
                     }
                 } else {
                     System.out.println("-----------------------------------");
-                    System.out.println("Alteração cancelada.");
-                    System.out.println(">>> Pressione Enter para voltar <<<");
+                    System.out.println("\nAlteração cancelada.");
+                    System.out.println("\n>>> Pressione Enter para voltar <<<");
                     console.nextLine();
                 }
             } else {
@@ -250,22 +258,28 @@ public class ControllerActor {
         System.out.println("\n\n===================================");
         System.out.println("      Exclusão de Ator/Atriz");
         System.out.println("===================================");
+        System.out.println("Início > Atores > Excluir");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         System.out.print("Digite o nome do ator/atriz: ");
         String name = console.nextLine();
-        System.out.println("-----------------------------------");
 
-        if (name.isEmpty())
+        if (name == null || name.isEmpty()){
+            System.out.println("\nNome inválido!");
+            System.out.println("\n>>> Pressione Enter para voltar <<<");
+            console.nextLine();
             return;
+        }
 
         try {
             Actor[] atores = arqAtor.readNome(name);
-            if (atores.length == 0) {
+            if (atores == null || atores.length == 0) {
                 System.out.println("\nNenhum ator encontrado.");
                 System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
                 return;
             }
 
+            System.out.println("-----------------------------------");
             for (int i = 0; i < atores.length; i++) 
                 System.out.println((i + 1) + ": " + atores[i].getName());
             
@@ -274,6 +288,7 @@ public class ControllerActor {
             int escolha = Integer.parseInt(console.nextLine());
             Actor ator = atores[escolha - 1];
 
+            System.err.println();
             ArrayList<PairIDFK> relations = arqRelationNN.readSeriesByActor(ator.getId());
             if (relations != null && !relations.isEmpty()) {
                 System.out.println("Erro! Não é possível excluir o ator,\npois ele está vinculado a uma ou mais\nséries.");
@@ -289,6 +304,9 @@ public class ControllerActor {
                 } else {
                     System.err.println("\nErro ao excluir o ator.");
                 }
+
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
+                console.nextLine();
             } else {
                 System.out.println("-----------------------------------");
                 System.out.println("\nExclusão cancelada.");
@@ -302,11 +320,12 @@ public class ControllerActor {
     }
 
     private void listSeriesByActor() {
-        System.out.println("\n\n===================================");
+        /* System.out.println("\n\n===================================");
         System.out.println("      Busca de ator por nome");
-        System.out.println("===================================");
+        System.out.println("==================================="); */
 
-        String nomeAtor = visao.obterNome();
+        System.out.print("\nDigite o nome do ator/atriz: ");
+        String nomeAtor = console.nextLine();
 
         if (nomeAtor.isEmpty()) {
             System.out.println("\nNome do ator/atriz inválido(a).");
@@ -345,9 +364,15 @@ public class ControllerActor {
             } while (escolha <= 0 || escolha > n - 1);
 
             Actor actor = actors[escolha - 1]; // Use the selected actor
-            System.out.println("\n\n===================================");            
-            System.out.println(actor.getName() + ": Filmografia");
+            System.out.println("\n===================================");            
+            if(actor.getName().length() < 23){
+                System.out.println(actor.getName() + ": Filmografia");
+            } else {
+                System.out.println(actor.getName() + ":\nFilmografia");
+            }
             System.out.println("==================================="); 
+            System.out.println("Início > Atores > Filmografia");
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 
             int idActor = actor.getId();
 
@@ -375,7 +400,7 @@ public class ControllerActor {
                         return;
                     }
                 }
-                System.out.println("===================================");
+                System.out.println("-----------------------------------");
                 System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
             }

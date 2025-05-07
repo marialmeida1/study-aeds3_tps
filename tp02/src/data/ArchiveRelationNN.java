@@ -35,14 +35,14 @@ public class ArchiveRelationNN {
      * @param idSerie ID da série.
      * @throws Exception caso ocorra erro durante a criação das relações.
      */
-    public void createRelation(int idActor, int idSerie) throws Exception {
+    public String createRelation(int idActor, int idSerie) throws Exception {
         if (idActor > 0 && idSerie > 0) { // Validate IDs to avoid unintended relationships
             // Check if the relationship already exists in actorSerie
             ArrayList<PairIDFK> existingActorRelations = actorSerie.read(new PairIDFK(idActor, -1)); // Busca todas as séries associadas ao ator (fk = -1 indica qualquer série)
             for (PairIDFK relation : existingActorRelations) {
                 if (relation.getFk() == idSerie) {
                     System.out.println("Relação já existente: Ator ID " + idActor + " -> Série ID " + idSerie);
-                    return; // Skip creating duplicate relationship
+                    return null; // Skip creating duplicate relationship
                 }
             }
 
@@ -51,24 +51,26 @@ public class ArchiveRelationNN {
             for (PairIDFK relation : existingSerieRelations) {
                 if (relation.getFk() == idActor) {
                     System.out.println("Relação já existente: Série ID " + idSerie + " -> Ator ID " + idActor);
-                    return; // Skip creating duplicate relationship
+                    return null; // Skip creating duplicate relationship
                 }
             }
 
             // Create the relationship if it does not already exist
             actorSerie.create(new PairIDFK(idActor, idSerie)); // Store actor -> series relationship
             serieActor.create(new PairIDFK(idSerie, idActor)); // Store series -> actor relationship
-            System.out.println("\n######################################################");
-            System.out.println("DEBUG");
-            System.out.println("------------------------------------------------------");
-            System.out.println("\nRelação criada: Ator ID " + idActor + " -> Série ID " + idSerie);
-            System.out.println("\nDados armazenados em actorSerie e serieActor:");
-            System.out.println("\n-> actorSerie: " + actorSerie.read(new PairIDFK(idActor, -1))); // Debug actorSerie
-            System.out.println("-> serieActor: " + serieActor.read(new PairIDFK(idSerie, -1))); // Debug serieActor
-            System.out.println("######################################################");
+            
+            return "\n######################################################\n"
+                    + "DEBUG\n"
+                    + "------------------------------------------------------\n"
+                    + "\nRelação criada: Ator ID " + idActor + " -> Série ID " + idSerie + "\n"
+                    + "\nDados armazenados em actorSerie e serieActor:\n"
+                    + "\n-> actorSerie: " + actorSerie.read(new PairIDFK(idActor, -1)) + "\n"   // Debug actorSerie
+                + "-> serieActor: " + serieActor.read(new PairIDFK(idSerie, -1)) + "\n"         // Debug serieActor
+                    + "######################################################";
         } else {
             System.err.println("\nErro: IDs inválidos fornecidos para criar relação. Ator ID: " + idActor + ", Série ID: " + idSerie);
         }
+        return null;
     }
 
     /**
@@ -84,7 +86,7 @@ public class ArchiveRelationNN {
         if (relations == null) {
             return null;
         } else {
-            System.out.println("Quantidade: " + relations.size() + "\n"); // Debug statement}
+            System.out.println("-> Número de atores/atrizes: " + relations.size() + "\n"); // Debug statement}
         }
 
         /* for (PairIDFK relation : relations) {
@@ -106,7 +108,7 @@ public class ArchiveRelationNN {
         if (relations == null || relations.size() <= 0) {
             return null;
         } else {
-            System.out.println("Quantidade: " + relations.size() + "\n"); // Debug statement}
+            System.out.println("-> Número de séries: " + relations.size() + "\n"); // Debug statement}
         }
 
         /* for (PairIDFK relation : relations) {
