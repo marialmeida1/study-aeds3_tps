@@ -78,7 +78,7 @@ public class ViewActor {
                 mensagem = "Confirma as alterações? (S/N) ";
                 break;
             case 3:
-                System.out.println("\n-----------------------------------");
+                System.out.println("-----------------------------------");
                 mensagem = "Confirma a exclusão de ator? (S/N) ";
                 break;
             default:

@@ -284,6 +284,7 @@ public class ControllerSeries {
                     boolean alterado = arqSeries.update(serie);
                     if (alterado) {
                         System.out.println("-----------------------------------");
+                        visao.mostraSerie(serie);
                         System.out.println("\nSérie alterada com sucesso.");
                         System.out.println("\n>>> Pressione Enter para voltar <<<");
                         console.nextLine();
@@ -330,7 +331,7 @@ public class ControllerSeries {
         try {
             Series[] series = arqSeries.readNome(name);
             if (series == null || series.length == 0) {
-                System.out.println("-----------------------------------");
+
                 System.out.println("\nNenhuma série encontrada.");
                 System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
@@ -342,21 +343,21 @@ public class ControllerSeries {
                 System.out.println((i + 1) + ": " + series[i].getName());
             }
 
-            int escolha;
+            System.out.println("-----------------------------------");
+            System.out.print("Escolha a série: ");
+            int o;
             do {
-                System.out.println("-----------------------------------");
-                System.out.print("Escolha a série: ");
                 try {
-                    escolha = Integer.parseInt(console.nextLine());
+                    o = Integer.parseInt(console.nextLine());
                 } catch (NumberFormatException e) {
-                    escolha = -1;
+                    o = -1;
                 }
-                if (escolha < 1 || escolha > series.length) {
+                if (o < 1 || o > series.length) {
                     System.out.print("Escolha um número entre 1 e " + series.length + ": ");
                 }
-            } while (escolha < 1 || escolha > series.length);
+            } while (o < 1 || o > series.length);
 
-            Series serie = series[escolha - 1];
+            Series serie = series[o - 1];
             visao.mostraSerie(serie);
             Episode[] epVinculados = arqEpisodios.readFkSerie(serie.getId());
 

@@ -185,12 +185,16 @@ public class ControllerActor {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 
         String name = visao.obterNome();
-        if (name == null || name.isEmpty())
+        if (name == null || name.isEmpty()){
+            System.out.println("Nome inválido. Inclusão cancelada.");
+            System.out.println("\n>>> Pressione Enter para voltar <<<");
+            console.nextLine();
             return;
+        }
 
         try {
             Actor[] atores = arqAtor.readNome(name);
-            if (atores.length > 0) {
+            if (atores != null && atores.length > 0) {
                 int n = 1;
 
                 System.out.println("-----------------------------------");
@@ -226,7 +230,8 @@ public class ControllerActor {
                     boolean alterado = arqAtor.update(atorUpdate);
                     if (alterado) {
                         System.out.println("-----------------------------------");
-                        System.out.println("Ator alterado com sucesso.");
+                        visao.mostraAtor(atorUpdate);
+                        System.out.println("\nAtor alterado com sucesso!");
                         System.out.println("\n>>> Pressione Enter para voltar <<<");
                         console.nextLine();
                     } else {
@@ -239,13 +244,12 @@ public class ControllerActor {
                     console.nextLine();
                 }
             } else {
-                System.out.println("-----------------------------------");
                 System.out.println("\nNenhum ator encontrado.");
                 System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
             }
         } catch (Exception e) {
-            System.err.println("Erro do sistema. Não foi possível alterar o ator!");
+            System.err.println("Erro do sistema. Não foi possível\nalterar o ator!");
             e.printStackTrace();
         }
     }
