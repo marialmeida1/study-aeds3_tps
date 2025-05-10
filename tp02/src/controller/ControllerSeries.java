@@ -4,7 +4,6 @@ import tp02.src.data.ArchiveSeries;
 import tp02.src.view.ViewSeries;
 import tp02.src.models.*;
 import tp02.src.storage.indexes.PairIDFK;
-import tp02.src.storage.indexes.PairIDFK;
 import tp02.src.data.ArchiveActor;
 import tp02.src.view.ViewActor;
 import tp02.src.data.ArchiveEpisode;
