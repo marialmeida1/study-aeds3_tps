@@ -43,6 +43,7 @@ public class ViewEpisode {
             System.out.println("\n\n===============================");
             System.out.println("      Detalhes do episodio:");
             System.out.println("===============================");
+            System.out.printf("ID Série:.............. %s%n", episodio.getFkSerie());
             System.out.printf("Nome:.............. %s%n", episodio.getName());
             System.out.printf("Temporada:......... %d%n", episodio.getSeason());
             System.out.printf("Data Lançamento:... %s%n",

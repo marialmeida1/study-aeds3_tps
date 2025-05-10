@@ -13,10 +13,10 @@ import tp02.src.storage.structures.*;
 public class ArchiveRelationNN {
 
     /** Relação de ator para série. */
-    private ArchiveTreeB<PairIDFK> actorSerie;
+    private ArchiveTreeB<PairFKFK> actorSerie;
 
     /** Relação de série para ator. */
-    private ArchiveTreeB<PairIDFK> serieActor;
+    private ArchiveTreeB<PairFKFK> serieActor;
 
     /**
      * Construtor que inicializa os arquivos de controle de relações.
@@ -24,8 +24,8 @@ public class ArchiveRelationNN {
      * @throws Exception caso ocorra falha na criação dos arquivos ou índices.
      */
     public ArchiveRelationNN() throws Exception {
-        actorSerie = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, "tp02/files/actor_serie.db");
-        serieActor = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, "tp02/files/serie_actor.db");
+        actorSerie = new ArchiveTreeB<>(PairFKFK.class.getConstructor(), 5, "tp02/files/actor_serie.db");
+        serieActor = new ArchiveTreeB<>(PairFKFK.class.getConstructor(), 5, "tp02/files/serie_actor.db");
     }
 
     /**
@@ -36,8 +36,8 @@ public class ArchiveRelationNN {
      * @throws Exception caso ocorra erro durante a criação das relações.
      */
     public void createRelation(int idActor, int idSerie) throws Exception {
-        actorSerie.create(new PairIDFK(idActor, idSerie));
-        serieActor.create(new PairIDFK(idSerie, idActor));
+        actorSerie.create(new PairFKFK(idActor, idSerie));
+        serieActor.create(new PairFKFK(idSerie, idActor));
     }
 
     /**
@@ -47,8 +47,8 @@ public class ArchiveRelationNN {
      * @return lista de relações ator -> série.
      * @throws Exception caso ocorra erro durante a leitura.
      */
-    public ArrayList<PairIDFK> readSeriesByActor(int idActor) throws Exception {
-        return actorSerie.read(new PairIDFK(idActor));
+    public ArrayList<PairFKFK> readSeriesByActor(int idActor) throws Exception {
+        return actorSerie.read(new PairFKFK(idActor));
     }
 
     /**
@@ -58,8 +58,8 @@ public class ArchiveRelationNN {
      * @return lista de relações série -> ator.
      * @throws Exception caso ocorra erro durante a leitura.
      */
-    public ArrayList<PairIDFK> readActorsBySerie(int idSerie) throws Exception {
-        return serieActor.read(new PairIDFK(idSerie));
+    public ArrayList<PairFKFK> readActorsBySerie(int idSerie) throws Exception {
+        return serieActor.read(new PairFKFK(idSerie));
     }
 
     /**
@@ -71,8 +71,8 @@ public class ArchiveRelationNN {
      * @throws Exception caso ocorra erro durante a exclusão.
      */
     public boolean deleteRelation(int idActor, int idSerie) throws Exception {
-        boolean deletedActorSerie = actorSerie.delete(new PairIDFK(idActor, idSerie));
-        boolean deletedSerieActor = serieActor.delete(new PairIDFK(idSerie, idActor));
+        boolean deletedActorSerie = actorSerie.delete(new PairFKFK(idActor, idSerie));
+        boolean deletedSerieActor = serieActor.delete(new PairFKFK(idSerie, idActor));
         return deletedActorSerie && deletedSerieActor;
     }
 }
