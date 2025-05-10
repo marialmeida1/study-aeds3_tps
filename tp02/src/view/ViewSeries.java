@@ -16,19 +16,21 @@ public class ViewSeries {
      * Exibe o menu principal de opções para manipulação de séries.
      */
     public void exibirMenu() {
-        System.out.println("\n\n===============================");
-        System.out.println("          PUCFlix 1.0");
-        System.out.println("===============================");
-        System.out.println("> Início > Séries");
-        System.out.println("-------------------------------");
+        System.out.println("\n\n===================================");
+        System.out.println("            PUCFlix 1.0");
+        System.out.println("===================================");
+        System.out.println("Início > Séries");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         System.out.println("1 - Incluir");
         System.out.println("2 - Buscar");
         System.out.println("3 - Alterar");
         System.out.println("4 - Excluir");
         System.out.println("5 - Listar Episódios da série");
-        System.out.println("6 - Listar Episódios por temporada da série");
+        System.out.println("6 - Listar Episódios por temporada");
+        System.out.println("7 - Listar Atores/Atrizes da série");
+        System.out.println("8 - Vincular Ator à série");
         System.out.println("0 - Retornar ao menu anterior");
-        System.out.println("===============================");
+        System.out.println("===================================");
         System.out.print("Opção: ");
     }
 
@@ -39,14 +41,14 @@ public class ViewSeries {
      */
     public void mostraSerie(Series serie) {
         if (serie != null) {
-            System.out.println("\n\n===============================");
-            System.out.println("       Detalhes da Série:");
-            System.out.println("===============================");
-            System.out.printf("Nome.................: %s%n", serie.getName());
-            System.out.printf("Sinopse..............: %s%n", serie.getSynopsis());
-            System.out.printf("Ano de Lançamento....: %d%n", serie.getReleaseYear());
-            System.out.printf("Streaming............: %s%n", serie.getStreaming());
-            System.out.println("===============================");
+            System.out.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println("         Detalhes da Série:");
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.printf("Nome............... %s%n", serie.getName());
+            System.out.printf("Sinopse............ %s%n", serie.getSynopsis());
+            System.out.printf("Ano de Lançamento.. %d%n", serie.getReleaseYear());
+            System.out.printf("Streaming.......... %s%n", serie.getStreaming());
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         } else {
             System.out.println("Série não encontrada.");
         }
@@ -104,6 +106,21 @@ public class ViewSeries {
     }
 
     /**
+     * Solicita ao usuário o ID do ator para vinculação.
+     *
+     * @return ID do ator informado.
+     */
+    public int obterIdAtor() {
+        System.out.print("ID do Ator: ");
+        try {
+            return Integer.parseInt(console.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida. Digite um número válido.");
+            return obterIdAtor();
+        }
+    }
+
+    /**
      * Solicita a confirmação do usuário antes de realizar uma ação.
      *
      * @param actionNum Código da ação: 1 - Incluir, 2 - Alterar, 3 - Excluir, outros - genérico.
@@ -114,19 +131,19 @@ public class ViewSeries {
 
         switch (actionNum) {
             case 1:
-                System.out.println("-------------------------------");
+                System.out.println("\n-----------------------------------");
                 mensagem = "Confirma a inclusão? (S/N) ";
                 break;
             case 2:
-                System.out.println("-------------------------------");
+                System.out.println("\n-----------------------------------");
                 mensagem = "Confirma as alterações? (S/N) ";
                 break;
             case 3:
-                System.out.println("-------------------------------");
-                mensagem = "Confirma a exclusão da série? (S/N) "; // Corrigido para "série"
+                System.out.println("\n-----------------------------------");
+                mensagem = "Confirma a exclusão da série? (S/N) ";
                 break;
             default:
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 mensagem = "Confirma a ação? (S/N) ";
                 break;
         }
@@ -140,7 +157,9 @@ public class ViewSeries {
             } else if (resposta.equalsIgnoreCase("N")) {
                 return false;
             } else {
-                System.out.println("Resposta inválida! Por favor, digite 'S' para Sim ou 'N' para Não.");
+                System.out.println("-----------------------------------");
+                System.out.println("Resposta inválida! Por favor, digite\n'S' paraSim ou 'N' para Não.");
+                System.out.println("-----------------------------------");
             }
         }
     }

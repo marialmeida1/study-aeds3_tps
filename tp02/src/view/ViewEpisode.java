@@ -19,17 +19,17 @@ public class ViewEpisode {
      * Exibe o menu principal de ações disponíveis para episódios.
      */
     public void exibirMenu() {
-        System.out.println("\n===============================");
-        System.out.println("          PUCFlix 1.0");
-        System.out.println("===============================");
-        System.out.println("> Início > Episódio");
-        System.out.println("-------------------------------");
+        System.out.println("\n===================================");
+        System.out.println("            PUCFlix 1.0");
+        System.out.println("===================================");
+        System.out.println("Início > Episódio");
+        System.out.println("-----------------------------------");
         System.out.println("1 - Incluir");
         System.out.println("2 - Buscar");
         System.out.println("3 - Alterar");
         System.out.println("4 - Excluir");
         System.out.println("0 - Retornar ao menu anterior");
-        System.out.println("===============================");
+        System.out.println("===================================");
         System.out.print("Opção: ");
     }
 
@@ -40,16 +40,15 @@ public class ViewEpisode {
      */
     public void mostraEpisodio(Episode episodio) {
         if (episodio != null) {
-            System.out.println("\n\n===============================");
-            System.out.println("      Detalhes do episodio:");
-            System.out.println("===============================");
-            System.out.printf("ID Série:.............. %s%n", episodio.getFkSerie());
-            System.out.printf("Nome:.............. %s%n", episodio.getName());
-            System.out.printf("Temporada:......... %d%n", episodio.getSeason());
-            System.out.printf("Data Lançamento:... %s%n",
+            System.out.println("\n\n===================================");
+            System.out.println("       Detalhes do episodio:");
+            System.out.println("===================================");
+            System.out.printf("Nome............... %s%n", episodio.getName());
+            System.out.printf("Temporada.......... %d%n", episodio.getSeason());
+            System.out.printf("Data Lançamento.... %s%n",
                     episodio.getRelease().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-            System.out.printf("Duração:........... %d%n minutos", episodio.getDuration());
-            System.out.println("\n===============================");
+            System.out.printf("Duração em minutos.. %d%n minutos", episodio.getDuration());
+            System.out.println("\n===================================");
         } else {
             System.out.println("Episódio não encontrado.");
         }
@@ -111,10 +110,10 @@ public class ViewEpisode {
                 if (temporada > 0) {
                     return temporada;
                 } else {
-                    System.out.println("Temporada inválida! O valor deve ser maior que zero.");
+                    System.out.println("Temporada inválida! O valor deve ser\nmaior que zero.");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida! Digite um valor numérico para a temporada.");
+                System.out.println("Entrada inválida! Digite um valor\nnumérico para a duração.");
             }
         }
     }
@@ -134,7 +133,7 @@ public class ViewEpisode {
             try {
                 return LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             } catch (Exception e) {
-                System.out.println("Data inválida! O formato correto é DD/MM/AAAA.");
+                System.out.println("Data inválida! O formato correto é\nDD/MM/AAAA.");
             }
         }
     }
@@ -157,10 +156,11 @@ public class ViewEpisode {
                 if (duracao > 0) {
                     return duracao;
                 } else {
-                    System.out.println("Duração inválida! O valor deve ser maior que zero.");
+                    System.out.println("Duração inválida! O valor deve ser\nmaior que zero.");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida! Digite um valor numérico para a duração.");
+
+                System.out.println("Entrada inválida! Digite um valor\nnumérico para a duração.");
             }
         }
     }
@@ -176,19 +176,19 @@ public class ViewEpisode {
 
         switch (actionNum) {
             case 1:
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 mensagem = "Confirma a inclusão? (S/N) ";
                 break;
             case 2:
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 mensagem = "Confirma as alterações? (S/N) ";
                 break;
             case 3:
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 mensagem = "Confirma a exclusão do episódio? (S/N) "; // Corrigido para "série"
                 break;
             default:
-                System.out.println("-------------------------------");
+                System.out.println("-----------------------------------");
                 mensagem = "Confirma a ação? (S/N) ";
                 break;
         }
@@ -202,7 +202,7 @@ public class ViewEpisode {
             } else if (resposta.equals("N")) {
                 return false;
             } else {
-                System.out.print("Resposta inválida! Digite 'S' para Sim ou 'N' para Não: ");
+                System.out.print("Resposta inválida! Digite 'S' para\nSim ou 'N' para Não: ");
             }
         }
     }

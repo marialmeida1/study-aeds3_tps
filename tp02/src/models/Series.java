@@ -76,11 +76,11 @@ public class Series implements Register {
      */
     @Override
     public String toString() {
-        return "\nID...........................: " + this.id +
-               "\nname.........................: " + this.name +
-               "\nAno de Lançamento............: " + this.releaseYear +
-               "\nsynopsis......................: " + this.synopsis +
-               "\nStreaming....................: " + this.streaming;
+        return "\nID................. " + this.id +
+               "\nname............... " + this.name +
+               "\nAno de Lançamento.. " + this.releaseYear +
+               "\nSinopse............ " + this.synopsis +
+               "\nStreaming.......... " + this.streaming;
     }
 
     /**

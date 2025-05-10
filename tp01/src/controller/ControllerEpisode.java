@@ -165,7 +165,7 @@ public class ControllerEpisode {
 
         int fkSerie = serie.getId();
         System.out.println("-------------------------------");
-        System.out.println("Série: " + serie.getName());
+        System.out.println("Nome da série: " + serie.getName());
 
         // Inserindo valores
         String name = visaoEpisodios.obterNome();
@@ -234,8 +234,6 @@ public class ControllerEpisode {
                 System.out.println("-------------------------------");
                 System.out.println("Nenhum episódio encontrado.");
                 System.out.println("===============================");
-                System.out.println("\n>>> Pressione Enter para voltar.");
-                console.nextLine();
                 return;
             }
     
@@ -244,29 +242,21 @@ public class ControllerEpisode {
             String novoNome = visaoEpisodios.obterNome();
             if (novoNome != null && !novoNome.isEmpty()) {
                 episode.setName(novoNome);
-            } else {
-                novoNome = episode.getName();
             }
     
             int novaTemporada = visaoEpisodios.obterTemporada();
             if (novaTemporada > 0) {
                 episode.setSeason(novaTemporada);
-            } else {
-                novaTemporada = episode.getSeason();
             }
     
             LocalDate novaData = visaoEpisodios.obterDataLancamento();
             if (novaData != null) {
                 episode.setRelease(novaData);
-            } else {
-                novaData = episode.getRelease();
             }
     
-            int novaDuracao = visaoEpisodios.obterDuracao(); // Correção aqui
+            int novaDuracao = visaoEpisodios.obterDuracao(); // <-- Este método precisa existir
             if (novaDuracao > 0) {
                 episode.setDuration(novaDuracao);
-            } else {
-                novaDuracao = episode.getDuration();
             }
     
             if (visaoEpisodios.confirmAction(2)) {
@@ -275,8 +265,6 @@ public class ControllerEpisode {
                     System.out.println("-------------------------------");
                     System.out.println("Episódio alterado com sucesso.");
                     System.out.println("===============================");
-                    System.out.println("\n>>> Pressione Enter para voltar.");
-                    console.nextLine();
                 } else {
                     System.err.println("Erro ao alterar o episódio.");
                 }
@@ -284,11 +272,10 @@ public class ControllerEpisode {
                 System.out.println("-------------------------------");
                 System.out.println("Alteração cancelada.");
                 System.out.println("===============================");
-                System.out.println("\n>>> Pressione Enter para voltar.");
-                console.nextLine();
             }
+    
         } catch (Exception e) {
-            System.err.println("Erro do sistema. Não foi possível buscar o episódio!");
+            System.err.println("Erro do sistema. Não foi possível alterar o episódio!");
             e.printStackTrace();
         }
     }    
@@ -300,7 +287,7 @@ public class ControllerEpisode {
         System.out.println("\n\n===============================");
         System.out.println("      Exclusão de Episódio");
         System.out.println("===============================");
-
+    
         try {
             Episode episode = buscarEpisodioPorNome();
             if (episode == null) {
@@ -312,31 +299,33 @@ public class ControllerEpisode {
                 return;
             }
     
-            
+            // Mostra o episódio encontrado
+            visaoEpisodios.mostraEpisodio(episode);
+    
+            // Confirma exclusão
             if (visaoEpisodios.confirmAction(3)) {
                 boolean deletado = arqEpisodios.delete(episode.getId());
                 if (deletado) {
                     System.out.println("-------------------------------");
                     System.out.println("Episódio excluído com sucesso.");
-                    System.out.println("===============================");
-                    System.out.println("\n>>> Pressione Enter para voltar.");
-                    console.nextLine();
                 } else {
                     System.err.println("Erro ao excluir o episódio.");
                 }
             } else {
                 System.out.println("-------------------------------");
                 System.out.println("Exclusão cancelada.");
-                System.out.println("===============================");
-                System.out.println("\n>>> Pressione Enter para voltar.");
-                console.nextLine();
             }
-
+    
+            System.out.println("===============================");
+            System.out.println("\n>>> Pressione Enter para voltar.");
+            console.nextLine();
+    
         } catch (Exception e) {
             System.err.println("Erro do sistema. Não foi possível buscar o episódio!");
             e.printStackTrace();
         }
-    }    
+    }
+      
 
     /**
      * Realiza a busca de uma série pelo nome.

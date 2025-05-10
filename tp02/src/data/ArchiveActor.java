@@ -30,7 +30,7 @@ public class ArchiveActor extends Archive<Actor> {
     /**
      * Cria uma nova ator, armazenando-a no arquivo e no índice de nomes.
      * 
-     * @param s a ator a ser criada.
+     * @param a ator a ser criada.
      * @return o ID gerado para a ator.
      * @throws Exception se ocorrer erro durante o armazenamento.
      */
@@ -96,18 +96,18 @@ public class ArchiveActor extends Archive<Actor> {
     /**
      * Atualiza os dados de uma ator, ajustando o índice de nomes se o nome tiver mudado.
      * 
-     * @param novoAtor o novo objeto contendo os dados atualizados da ator.
+     * @param atorUpdate o novo objeto contendo os dados atualizados da ator.
      * @return {@code true} se a atualização for bem-sucedida, {@code false} caso contrário.
      * @throws Exception se ocorrer erro durante a atualização.
      */
     @Override
-    public boolean update(Actor novoAtor) throws Exception {
-        Actor a = read(novoAtor.getId()); // na superclasse
+    public boolean update(Actor atorUpdate) throws Exception {
+        Actor a = read(atorUpdate.getId()); // na superclasse
         if (a != null) {
-            if (super.update(novoAtor)) {
-                if (!a.getName().equals(novoAtor.getName())) {
+            if (super.update(atorUpdate)) {
+                if (!a.getName().equals(atorUpdate.getName())) {
                     indiceIndiretoNome.delete(new PairNameID(a.getName(), a.getId()));
-                    indiceIndiretoNome.create(new PairNameID(novoAtor.getName(), novoAtor.getId()));
+                    indiceIndiretoNome.create(new PairNameID(atorUpdate.getName(), atorUpdate.getId()));
                 }
                 return true;
             }

@@ -119,12 +119,12 @@ public class Episode implements Register {
      */
     @Override
     public String toString() {
-        return "\nID:.................." + this.id +
-                "\nFk Serie:............" + this.fkSerie +
-                "\nNome:................" + this.name +
-                "\nTemporada:..........." + this.season +
-                "\nData Lançamento:....." + this.release +
-                "\nDuração:............." + this.duration;
+        return "\nID................ " + this.id +
+                "\nFk Serie......... " + this.fkSerie +
+                "\nNome............. " + this.name +
+                "\nTemporada........ " + this.season +
+                "\nData Lançamento.. " + this.release +
+                "\nDuração.......... " + this.duration;
     }
 
     /**

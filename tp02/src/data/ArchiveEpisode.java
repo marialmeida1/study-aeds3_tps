@@ -16,7 +16,7 @@ public class ArchiveEpisode extends Archive<Episode> {
     ArchiveTreeB<PairNameID> indiceIndiretoNome;
 
     /** Índice indireto relacionando o ID do episódio com o ID da série (chave estrangeira). */
-    ArchiveTreeB<PairIDFK> relacao1N;
+    ArchiveTreeB<PairIDFK> relacao1N; 
 
     /**
      * Construtor padrão que inicializa os arquivos de episódios e os índices auxiliares.
