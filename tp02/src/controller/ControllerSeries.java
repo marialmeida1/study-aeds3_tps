@@ -164,8 +164,12 @@ public class ControllerSeries {
         System.out.print("Digite o nome da série: ");
         String name = console.nextLine();
 
-        if (name.isEmpty())
+        if (name == null || name.isEmpty()){
+            System.out.println("Nome inválido!");
+            System.out.println("\n>>> Pressione Enter para voltar <<<");
+            console.nextLine();
             return;
+        }
 
         try {
             Series[] series = arqSeries.readNome(name);
@@ -223,8 +227,12 @@ public class ControllerSeries {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 
         String name = visao.obterNome();
-        if (name == null || name.isEmpty())
+        if (name == null || name.isEmpty()){
+            System.out.println("Nome inválido!");
+            System.out.println("\n>>> Pressione Enter para voltar <<<");
+            console.nextLine();
             return;
+        }
 
         try {
             Series[] series = arqSeries.readNome(name);

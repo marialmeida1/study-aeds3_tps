@@ -19,11 +19,11 @@ public class ViewEpisode {
      * Exibe o menu principal de ações disponíveis para episódios.
      */
     public void exibirMenu() {
-        System.out.println("\n===================================");
+        System.out.println("\n\n===================================");
         System.out.println("            PUCFlix 1.0");
         System.out.println("===================================");
         System.out.println("Início > Episódio");
-        System.out.println("-----------------------------------");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         System.out.println("1 - Incluir");
         System.out.println("2 - Buscar");
         System.out.println("3 - Alterar");
@@ -40,15 +40,15 @@ public class ViewEpisode {
      */
     public void mostraEpisodio(Episode episodio) {
         if (episodio != null) {
-            System.out.println("\n\n===================================");
+            System.out.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.println("       Detalhes do episodio:");
-            System.out.println("===================================");
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.printf("Nome............... %s%n", episodio.getName());
             System.out.printf("Temporada.......... %d%n", episodio.getSeason());
             System.out.printf("Data Lançamento.... %s%n",
                     episodio.getRelease().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-            System.out.printf("Duração em minutos.. %d%n minutos", episodio.getDuration());
-            System.out.println("\n===================================");
+            System.out.printf("Duração em minutos.. %d%n", episodio.getDuration());
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         } else {
             System.out.println("Episódio não encontrado.");
         }
@@ -146,7 +146,7 @@ public class ViewEpisode {
     public int obterDuracao() {
         int duracao;
         while (true) {
-            System.out.print("Duração: ");
+            System.out.print("Duração (minutos): ");
             String input = console.nextLine();
             if (input.isEmpty()) {
                 return -1; // Retorna -1 para indicar que o usuário não quer alterar
@@ -176,7 +176,7 @@ public class ViewEpisode {
 
         switch (actionNum) {
             case 1:
-                System.out.println("-----------------------------------");
+                System.out.println("\n-----------------------------------");
                 mensagem = "Confirma a inclusão? (S/N) ";
                 break;
             case 2:
