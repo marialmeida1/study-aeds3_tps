@@ -48,7 +48,11 @@ public class ControllerSeries {
         int opcao;
         do {
             visao.exibirMenu();
-            opcao = Integer.valueOf(console.nextLine());
+            try {
+                opcao = Integer.valueOf(console.nextLine());
+            } catch (NumberFormatException e) {
+                opcao = -1;
+            }
 
             switch (opcao) {
                 case 1:
@@ -78,7 +82,7 @@ public class ControllerSeries {
                 case 0:
                     break;
                 default:
-                    System.out.println("Opção inválida!");
+                    System.out.println("\nOpção inválida!");
                     System.out.println("\n>>> Pressione Enter para voltar <<<");
                     console.nextLine();
                     break;
@@ -469,7 +473,8 @@ public class ControllerSeries {
                     System.out.println("Duração: " + episodio.getDuration() + " minutos");
                     System.out.println("Data de Lançamento: " + episodio.getRelease());
                 }
-                System.out.println("===================================");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
+                console.nextLine();
             }
         } catch (Exception e) {
             System.out.println("Erro ao listar episódios por série!");

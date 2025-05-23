@@ -45,7 +45,11 @@ public class ControllerActor {
         int opcao;
         do {
             visao.exibirMenu();
-            opcao = Integer.valueOf(console.nextLine());
+            try {
+                opcao = Integer.valueOf(console.nextLine());
+            } catch (NumberFormatException e) {
+                opcao = -1;
+            }
 
             switch (opcao) {
                 case 1:
@@ -66,7 +70,7 @@ public class ControllerActor {
                 case 0:
                     break;
                 default:
-                    System.out.println("Opção inválida!");
+                    System.out.println("\nOpção inválida!");
                     System.out.println("\n>>> Pressione Enter para voltar <<<");
                     console.nextLine();
                     break;
