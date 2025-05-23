@@ -413,19 +413,13 @@ public class ControllerSeries {
      * Lista os episódios vinculados a uma série específica, buscada pelo nome.
      */
     public void listarEpisodiosPorSerie() {
-        System.out.println("\n\n===================================");
-        System.out.println("Listagem de episódios por série");
-        System.out.println("===================================");
-        System.out.println("Início > Séries > Listar Episódios");
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-        System.out.print("Digite o nome da série: ");
+        System.out.print("\nDigite o nome da série: ");
         String nomeSerie = console.nextLine();
 
         if (nomeSerie.isEmpty()) {
             System.out.println("\nNome da série inválido.");
             System.out.println("\n>>> Pressione Enter para voltar <<<");
             console.nextLine();
-
             return;
         }
 
@@ -433,6 +427,8 @@ public class ControllerSeries {
             Series[] series = arqSeries.readNome(nomeSerie); // Fetch series by name
             if (series == null || series.length == 0) {
                 System.out.println("\nNenhuma série encontrada com o nome fornecido.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
+                console.nextLine();
                 return;
             }
 
@@ -458,20 +454,27 @@ public class ControllerSeries {
 
             Series serie = series[escolha - 1]; // Use the selected series
             System.out.println("\n===================================");
-            System.out.println("Série: " + serie.getName());
+            System.out.println("Episódios da série " + serie.getName());
+            System.out.println("===================================");
+            System.out.println("Início > Séries > Listar Episódios");
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 
             int idSerie = serie.getId();
             Episode[] episodios = arqEpisodios.readFkSerie(idSerie); // Fetch episodes for the series
 
             if (episodios == null || episodios.length == 0) {
                 System.out.println("\nNenhum episódio encontrado para esta série.");
+                System.out.println("\n>>> Pressione Enter para voltar <<<");
+                console.nextLine();
+                return;
             } else {
+                System.out.println("-----------------------------------");
                 for (Episode episodio : episodios) {
-                    System.out.println("-----------------------------------");
                     System.out.println("Nome: " + episodio.getName());
                     System.out.println("Temporada: " + episodio.getSeason());
                     System.out.println("Duração: " + episodio.getDuration() + " minutos");
                     System.out.println("Data de Lançamento: " + episodio.getRelease());
+                    System.out.println("-----------------------------------");
                 }
                 System.out.println("\n>>> Pressione Enter para voltar <<<");
                 console.nextLine();
@@ -487,7 +490,7 @@ public class ControllerSeries {
      */
     public void listarEpisodiosPorTemporada() {
         System.out.println("\n\n===================================");
-        System.out.println("Listagem de episódios por temporada da série");
+        System.out.println("Listagem de episódios por temporada\nda série");
         System.out.println("===================================");
         System.out.println("Início > Séries > Listar Temporadas");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
@@ -579,18 +582,17 @@ public class ControllerSeries {
             // Filter episodes by the desired season
             System.out.println("Episódios da temporada " + escolha + ":");
             boolean encontrouEpisodios = false;
+            System.out.println("\n-----------------------------------");
             for (Episode ep : episodios) {
                 if (ep.getSeason() == escolha) {
-                    System.out.println("----------------------------");
                     System.out.println("Nome: " + ep.getName());
                     System.out.println("Temporada: " + ep.getSeason());
                     System.out.println("Duração: " + ep.getDuration() + " minutos");
                     System.out.println("Data de Lançamento: " + ep.getRelease());
+                    System.out.println("-----------------------------------");
                     encontrouEpisodios = true;
                 }
             }
-            System.out.println("===================================");
-
             if (!encontrouEpisodios)
                 System.out.println("\nNenhum episódio encontrado para a temporada " + temp + ".");
 
