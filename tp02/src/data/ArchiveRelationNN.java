@@ -36,39 +36,52 @@ public class ArchiveRelationNN {
      * @throws Exception caso ocorra erro durante a criação das relações.
      */
     public String createRelation(int idActor, int idSerie) throws Exception {
-        if (idActor > 0 && idSerie > 0) { // Validate IDs to avoid unintended relationships
-            // Check if the relationship already exists in actorSerie
-            ArrayList<PairIDFK> existingActorRelations = actorSerie.read(new PairIDFK(idActor, -1)); // Busca todas as séries associadas ao ator (fk = -1 indica qualquer série)
+        if (idActor > 0 && idSerie > 0) { // Valida os IDs para evitar relacionamentos indesejados
+            // Verifica se a relação já existe em actorSerie
+            ArrayList<PairIDFK> existingActorRelations = actorSerie.read(new PairIDFK(idActor, -1)); // Busca todas as
+                                                                                                     // séries
+                                                                                                     // associadas ao
+                                                                                                     // ator (fk = -1
+                                                                                                     // indica qualquer
+                                                                                                     // série)
             for (PairIDFK relation : existingActorRelations) {
                 if (relation.getFk() == idSerie) {
                     System.out.println("Relação já existente: Ator ID " + idActor + " -> Série ID " + idSerie);
-                    return null; // Skip creating duplicate relationship
+                    return null; // Pula a criação se a relação já existir
                 }
             }
 
-            // Check if the relationship already exists in serieActor
-            ArrayList<PairIDFK> existingSerieRelations = serieActor.read(new PairIDFK(idSerie, -1)); // Busca todas os atores associados à série (fk = -1 indica qualquer ator)
+            // Verifica se a relação já existe em serieActor
+            ArrayList<PairIDFK> existingSerieRelations = serieActor.read(new PairIDFK(idSerie, -1)); // Busca todos os
+                                                                                                     // atores
+                                                                                                     // associados à
+                                                                                                     // série (fk = -1
+                                                                                                     // indica qualquer
+                                                                                                     // ator)
             for (PairIDFK relation : existingSerieRelations) {
                 if (relation.getFk() == idActor) {
                     System.out.println("Relação já existente: Série ID " + idSerie + " -> Ator ID " + idActor);
-                    return null; // Skip creating duplicate relationship
+                    return null; // Pula a criação se a relação já existir
                 }
             }
 
-            // Create the relationship if it does not already exist
-            actorSerie.create(new PairIDFK(idActor, idSerie)); // Store actor -> series relationship
-            serieActor.create(new PairIDFK(idSerie, idActor)); // Store series -> actor relationship
-            
+            // Cria a relação se ela ainda não existir
+            actorSerie.create(new PairIDFK(idSerie, idActor)); // Cria relação ator -> série (invertido devido à
+                                                               // estrutura de PairIDFK)
+            serieActor.create(new PairIDFK(idActor, idSerie)); // Cria relação série -> ator (invertido devido à
+                                                               // estrutura de PairIDFK)
+
             return "\n######################################################\n"
                     + "DEBUG\n"
                     + "------------------------------------------------------\n"
                     + "\nRelação criada: Ator ID " + idActor + " -> Série ID " + idSerie + "\n"
                     + "\nDados armazenados em actorSerie e serieActor:\n"
-                    + "\n-> actorSerie: " + actorSerie.read(new PairIDFK(idActor, -1)) + "\n"   // Debug actorSerie
-                + "-> serieActor: " + serieActor.read(new PairIDFK(idSerie, -1)) + "\n"         // Debug serieActor
+                    + "\n-> actorSerie: " + actorSerie.read(new PairIDFK(idActor, -1)) + "\n"
+                    + "-> serieActor: " + serieActor.read(new PairIDFK(idSerie, -1)) + "\n"
                     + "######################################################";
         } else {
-            System.err.println("\nErro: IDs inválidos fornecidos para criar relação. Ator ID: " + idActor + ", Série ID: " + idSerie);
+            System.err.println("\nErro: IDs inválidos fornecidos para criar relação. Ator ID: " + idActor
+                    + ", Série ID: " + idSerie);
         }
         return null;
     }
@@ -81,17 +94,21 @@ public class ArchiveRelationNN {
      * @throws Exception caso ocorra erro durante a leitura.
      */
     public ArrayList<PairIDFK> readActorsBySerie(int idSerie) throws Exception {
-        ArrayList<PairIDFK> relations = serieActor.read(new PairIDFK(idSerie, -1)); // Retrieve series -> actor relationships
-        
+        ArrayList<PairIDFK> relations = actorSerie.read(new PairIDFK(idSerie, -1)); // Retrieve series -> actor
+                                                                                    // relationships
+
         if (relations == null) {
             return null;
         } else {
             System.out.println("-> Número de atores/atrizes: " + relations.size() + "\n"); // Debug statement}
         }
 
-        /* for (PairIDFK relation : relations) {
-            System.out.println("Relacionamento: Série ID " + idSerie + " -> Ator ID " + relation.getFk()); // Debug statement
-        } */
+        /*
+         * for (PairIDFK relation : relations) {
+         * System.out.println("Relacionamento: Série ID " + idSerie + " -> Ator ID " +
+         * relation.getFk()); // Debug statement
+         * }
+         */
         return relations;
     }
 
@@ -103,7 +120,7 @@ public class ArchiveRelationNN {
      * @throws Exception caso ocorra erro durante a leitura.
      */
     public ArrayList<PairIDFK> readSeriesByActor(int idActor) throws Exception {
-        ArrayList<PairIDFK> relations = actorSerie.read(new PairIDFK(idActor, -1)); // Ensure the correct key is used
+        ArrayList<PairIDFK> relations = serieActor.read(new PairIDFK(idActor, -1)); // Ensure the correct key is used
 
         if (relations == null || relations.size() <= 0) {
             return null;
@@ -111,9 +128,12 @@ public class ArchiveRelationNN {
             System.out.println("-> Número de séries: " + relations.size() + "\n"); // Debug statement}
         }
 
-        /* for (PairIDFK relation : relations) {
-            System.out.println("Relacionamento: Ator ID " + idActor + " -> Série ID " + relation.getFk()); // Debug statement
-        } */
+        /*
+         * for (PairIDFK relation : relations) {
+         * System.out.println("Relacionamento: Ator ID " + idActor + " -> Série ID " +
+         * relation.getFk()); // Debug statement
+         * }
+         */
         return relations;
     }
 
@@ -137,20 +157,23 @@ public class ArchiveRelationNN {
      * @param idSerie O ID da série cujas relações com atores devem ser excluídas.
      * @return Um valor booleano que indica se todas as exclusões foram realizadas
      *         com sucesso (`true`) ou se houve falha em alguma exclusão (`false`).
-     * @throws Exception Se ocorrer um erro durante a operação de leitura ou exclusão.
+     * @throws Exception Se ocorrer um erro durante a operação de leitura ou
+     *                   exclusão.
      */
     public boolean deleteAllRelations(int idSerie) throws Exception {
         boolean allDeleted = true;
-        
-        // Remove todas as relações da série com atores nas estruturas actorSerie e serieActor
+
+        // Remove todas as relações da série com atores nas estruturas actorSerie e
+        // serieActor
         ArrayList<PairIDFK> existingSerieRelations = serieActor.read(new PairIDFK(idSerie, -1));
         if (existingSerieRelations != null && !existingSerieRelations.isEmpty()) {
             for (PairIDFK relation : existingSerieRelations) {
-                allDeleted = allDeleted && actorSerie.delete(new PairIDFK(relation.getFk(), idSerie)); // Remove ator → série
+                allDeleted = allDeleted && actorSerie.delete(new PairIDFK(relation.getFk(), idSerie)); // Remove ator →
+                                                                                                       // série
                 allDeleted = allDeleted && serieActor.delete(relation); // Remove série → ator
             }
         }
 
-        return allDeleted; 
+        return allDeleted;
     }
 }

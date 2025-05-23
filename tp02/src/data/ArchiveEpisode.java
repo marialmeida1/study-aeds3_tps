@@ -44,6 +44,7 @@ public class ArchiveEpisode extends Archive<Episode> {
     public int create(Episode e) throws Exception {
         int id = super.create(e);
         indiceIndiretoNome.create(new PairNameID(e.getName(), id));
+        System.out.println(e.getId());
         relacao1N.create(new PairIDFK(e.getFkSerie(), e.getId()));
         return id;
     }
@@ -56,7 +57,8 @@ public class ArchiveEpisode extends Archive<Episode> {
      * @throws Exception caso ocorra erro durante a leitura.
      */
     public Episode[] readFkSerie(int fkSeries) throws Exception { // Faz a busca somente dentro de epsódios
-        ArrayList<PairIDFK> pares = relacao1N.read(new PairIDFK(fkSeries));
+        System.out.println(fkSeries);
+        ArrayList<PairIDFK> pares = relacao1N.read(new PairIDFK(fkSeries, -1));
         
         if (pares.size() > 0) {
 
@@ -176,7 +178,7 @@ public class ArchiveEpisode extends Archive<Episode> {
             if (super.update(novaEpisodio)) {
                 if (!e.getName().equals(novaEpisodio.getName())) {
                     indiceIndiretoNome.delete(new PairNameID(e.getName(), e.getId()));
-                    relacao1N.delete(new PairIDFK(e.getId(), e.getFkSerie()));
+                    relacao1N.delete(new PairIDFK(e.getFkSerie(), e.getId()));
                     indiceIndiretoNome.create(new PairNameID(novaEpisodio.getName(), novaEpisodio.getId()));
                     relacao1N.create(new PairIDFK(e.getFkSerie(), e.getId()));
                 }

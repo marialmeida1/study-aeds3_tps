@@ -599,10 +599,6 @@ public class ControllerSeries {
     }
 
     private void listActorsBySerie() {
-        /* System.out.println("\n\n===================================");
-        System.out.println("       Buscar série por nome");
-        System.out.println("==================================="); */
-
         System.out.print("\nDigite o nome da série: ");
         String nomeSerie = console.nextLine();
 
@@ -668,7 +664,7 @@ public class ControllerSeries {
                 console.nextLine();
             } else {
                 for (PairIDFK relation : relations) {
-                    int idActor = relation.getFk(); // Fetch actor ID
+                    int idActor = relation.getId(); // É ao contrário porque a busca em PairIDFK é feita por fk e não id
                     Actor actor = arqActor.read(idActor);
                     System.out.println("-----------------------------------");
                     if (actor != null) {

@@ -44,7 +44,7 @@ public class ArquivoEpisode extends Archive<Episode> {
     public int create(Episode e) throws Exception {
         int id = super.create(e);
         indiceIndiretoNome.create(new PairNameID(e.getName(), id));
-        relacaoNN.create(new PairIDFK(e.getId(), e.getFkSerie()));
+        relacaoNN.create(new PairIDFK(e.getFkSerie(), e.getId()));
         return id;
     }
 
@@ -176,9 +176,9 @@ public class ArquivoEpisode extends Archive<Episode> {
             if (super.update(novaEpisodio)) {
                 if (!e.getName().equals(novaEpisodio.getName())) {
                     indiceIndiretoNome.delete(new PairNameID(e.getName(), e.getId()));
-                    relacaoNN.delete(new PairIDFK(e.getId(), e.getFkSerie()));
+                    relacaoNN.delete(new PairIDFK(e.getFkSerie(), e.getId()));
                     indiceIndiretoNome.create(new PairNameID(novaEpisodio.getName(), novaEpisodio.getId()));
-                    relacaoNN.create(new PairIDFK(e.getId(), e.getFkSerie()));
+                    relacaoNN.create(new PairIDFK(e.getFkSerie(), e.getId()));
                 }
                 return true;
             }

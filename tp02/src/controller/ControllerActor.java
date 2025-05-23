@@ -389,7 +389,7 @@ public class ControllerActor {
                 return;
             } else {
                 for (PairIDFK relation : relations) {
-                    int idSerie = relation.getFk(); // Fetch series ID
+                    int idSerie = relation.getId(); // É ao contrário porque a busca em PairIDFK é feita por fk e não id
                     Series serie = arqSeries.read(idSerie);
                     System.out.println("-----------------------------------");
                     if (serie != null) {
