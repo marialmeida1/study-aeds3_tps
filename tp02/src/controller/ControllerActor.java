@@ -148,7 +148,7 @@ public class ControllerActor {
             int n = 1;
             System.out.println("-----------------------------------");
             for (Actor a : atores) {
-                System.out.println((n++) + ": " + a.getName() + " (ID: " + a.getId() + ")"); // Display actor name and ID
+                System.out.println((n++) + ": " + a.getName()); // Display actor name and ID
             }
 
             System.out.println("-----------------------------------");

@@ -42,7 +42,6 @@ public class ViewActor {
             System.out.println("      Detalhes do Ator/Atriz:");
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.printf("Nome...... %s%n", ator.getName());
-            System.out.printf("ID........ %s%n", ator.getId());
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         } else {
             System.out.println("Ator/atriz não encontrado(a).");
