@@ -2,6 +2,7 @@ package tp02.src.view;
 
 import tp02.src.models.*;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -123,20 +124,28 @@ public class ViewEpisode {
      * 
      * @return Data de lançamento em {@link LocalDate}, ou {@code null} se a entrada for vazia.
      */
-    public LocalDate obterDataLancamento() {
-        while (true) {
-            System.out.print("Data de lançamento (DD/MM/AAAA): ");
-            String data = console.nextLine();
-            if (data.isEmpty()) {
-                return null; // Retorna null para indicar que o usuário não quer alterar
-            }
-            try {
-                return LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-            } catch (Exception e) {
-                System.out.println("Data inválida! O formato correto é\nDD/MM/AAAA.");
-            }
+public LocalDate obterDataLancamento() {
+    System.out.println("Inserir Data de Lançamento: ");
+    while (true) {
+        try {
+            System.out.print("......Dia (1-31): ");
+            int dia = Integer.parseInt(console.nextLine().trim());
+
+            System.out.print("......Mês (1-12): ");
+            int mes = Integer.parseInt(console.nextLine().trim());
+
+            System.out.print("......Ano (ex: 2024): ");
+            int ano = Integer.parseInt(console.nextLine().trim());
+
+            // Tentativa de criação válida da data
+            return LocalDate.of(ano, mes, dia);
+        } catch (NumberFormatException e) {
+            System.out.println("-> Você deve digitar números válidos. Tente novamente.");
+        } catch (DateTimeException e) {
+            System.out.println("-> A data digitada não existe. Verifique os valores e tente novamente.");
         }
     }
+}
 
     /**
      * Solicita ao usuário a duração do episódio.
