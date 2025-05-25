@@ -42,9 +42,6 @@ public class PairIDFK implements RegisterTreeB<PairIDFK> {
 
   @Override
   public int compareTo(PairIDFK a) {
-    System.out.println("FK (chave estrangeira): " + this.fk);
-    System.out.println("ID (chave primária): " + this.id);
-
     if (this.id == -1) {
       return this.fk - a.fk;
     }
