@@ -1,4 +1,4 @@
-# TP 01 - Projeto: PUCFlix - Gerenciamento de Séries e EpisódiosPUCFlix
+# TP 02 - Projeto: PUCFlix - Gerenciamento de Séries, Episódios e Atores - PUCFlix
 
 ## Informações Gerais
 **Disciplina:** Algoritmos e Estrutura de Dados  
@@ -9,17 +9,23 @@
 - Gustavo Henrique Rodrigues de Castro  <br>          [<img src = "https://img.shields.io/badge/github-black.svg?&style=for-the-badge&logo=github&logoColor=white">](https://github.com/GhrCastro) 
 
 ## Sobre a Tarefa
-O objetivo deste projeto é desenvolver um sistema para gerenciar séries e episódios, implementando funcionalidades essenciais de CRUD (Create, Read, Update, Delete) e garantindo a integridade dos relacionamentos entre as entidades. A principal estrutura de dados utilizada será a Árvore B+ para otimização das buscas e indexação, além da Tabela Hash Extensível.
+
+Este trabalho prático tem como objetivo aprofundar o uso de estruturas de dados para representar relacionamentos entre entidades no contexto de um sistema de gerenciamento de séries, chamado PUCFlix 1.0. Após a implementação de um relacionamento 1:N no primeiro trabalho (TP1), o foco agora está na implementação de um relacionamento N:N (muitos-para-muitos) entre as entidades Série e Ator, utilizando duas Árvores B+ para garantir buscas eficientes e consistência dos dados.
+
+No sistema, cada série pode ter vários atores e cada ator pode participar de várias séries. Para isso, foram implementadas estruturas que permitem associar os IDs das séries aos IDs dos atores e vice-versa. Além disso, foi desenvolvido o CRUD completo para atores, com validações que impedem a exclusão de um ator caso ele esteja vinculado a alguma série.
+
+O menu principal do programa foi ampliado para incluir a manutenção de atores, e as visões de séries e atores foram adaptadas para exibir os vínculos entre eles. A manipulação desses vínculos também pode ser feita durante o cadastro ou edição de séries, garantindo assim uma interface intuitiva e a integridade dos dados.
+
+Este trabalho reforça a importância de organizar bem as estruturas de dados, garantir consistência nas operações e manter uma interface clara para o usuário final.
 
 ## Organização do Grupo
+
 A equipe está organizada por meio das seguintes ferramentas e metodologias:
 - **Metodologia Ágil:** As tarefas foram distribuídas em **sprints**.
 - **Comunicação:** O grupo utiliza **Discord** e **WhatsApp** para alinhamento das atividades.
 - **Gerenciamento de Tarefas:** O acompanhamento das atividades ocorre no **GitHub Projects**.
 
 ## Organização de Pastas do Projeto
-
-- **`tp02/base_code`**: Armazena implementações de código base, como árvores B+, tabelas hash extensíveis e operações CRUD, ainda não utilizadas no projeto, mas fundamentais para futuras expansões.
 
 - **`tp02/bin`**: Contém os arquivos `.class` compilados do código-fonte, organizados conforme a estrutura de pacotes de `src`. São usados para rodar a aplicação.
 
@@ -32,60 +38,7 @@ A equipe está organizada por meio das seguintes ferramentas e metodologias:
 
 - **`tp02/files`**: Armazena os dados persistentes do sistema, como arquivos de clientes e índices.
 
-- **`tp02/appendix`**: Armazena os arquivos correspondentes ao relatos de cada aluno.
-
-
 Essa estrutura facilita a organização modular e futura expansão do projeto.
-
-
-## Sprints e Tarefas
-
-### 🟢 Sprint 1: Estrutura e Funcionalidade Principal (Foco no CRUD e no Relacionamento 1:N)
-**Prazo recomendado:** Até 24
-
-1️⃣ **Implementar CRUD de Séries** (🗂️)  
-   - Criar a estrutura da entidade Série  
-   - Implementar inclusão, alteração, busca e exclusão  
-
-2️⃣ **Implementar CRUD de Episódios** (🎞️)  
-   - Criar a estrutura da entidade Episódio  
-   - Implementar inclusão, alteração, busca e exclusão  
-
-3️⃣ **Criar a relação 1:N entre séries e episódios usando Árvore B+** (🔗)  
-   - Definir o par (idSerie; idEpisódio)  
-   - Criar e gerenciar os índices na Árvore B+  
-
-4️⃣ **Criar a visão e controle de séries (Interface + Lógica)** (📺)  
-   - Criar a classe VisaoSeries para entrada/saída de dados  
-   - Criar a classe ControleSeries para gerenciar operações  
-
-5️⃣ **Criar a visão e controle de episódios (Interface + Lógica)** (🎭)  
-   - Criar a classe VisaoEpisodios para entrada/saída de dados  
-   - Criar a classe ControleEpisodios para gerenciar operações  
-
-6️⃣ **Garantir que séries não possam ser excluídas se tiverem episódios vinculados** (🚫)  
-   - Implementar regra de negócio para evitar exclusão incorreta  
-
-### 🟡 Sprint 2: Regras Extras, Testes e Documentação (Foco em otimização, regras e finalização)
-**Prazo recomendado:** Até 30 (com tolerância até 31)
-
-7️⃣ **Permitir visualização dos episódios organizados por temporada** (📆)  
-   - Criar método para exibir episódios de uma série separados por temporada  
-
-8️⃣ **Criar e configurar os índices usando Tabela Hash Extensível e Árvore B+** (📌)  
-   - Implementar os índices para otimizar as buscas  
-
-9️⃣ **Garantir que episódios só possam ser criados para séries existentes** (✔️)  
-   - Criar validação para impedir episódios sem série válida  
-
-🔟 **Testar todas as operações e validar o funcionamento** (🔍)  
-   - Testar CRUD, relacionamento 1:N e regras de exclusão  
-
-1️⃣1️⃣ **Criar documentação e relatório (README) para o GitHub** (📝)  
-   - Explicar como o sistema funciona, estrutura de classes e métodos principais  
-
-1️⃣2️⃣ **Responder ao checklist do professor e relatar desafios** ✅ (📑)  
-   - Verificar cada requisito do trabalho e documentar dificuldades enfrentadas  
 
 
 ## Rodando o Código
