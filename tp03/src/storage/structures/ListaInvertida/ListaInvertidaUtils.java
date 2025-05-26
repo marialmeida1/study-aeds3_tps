@@ -46,7 +46,7 @@ public class ListaInvertidaUtils {
 
   // Remove stop words de um array de termos e retorna um novo array sem as stop
   // words
-  private String[] extractTerms(String texto) {
+  public String[] extractTerms(String texto) {
     texto = texto.toLowerCase();
     String[] termosSeparados = texto.split(" ");
     ArrayList<String> result = new ArrayList<>();
