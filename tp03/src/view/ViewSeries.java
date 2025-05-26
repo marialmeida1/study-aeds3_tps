@@ -1,6 +1,6 @@
 package tp03.src.view;
 
-import tp02.src.models.Series;
+import tp03.src.models.Series;
 
 import java.util.Scanner;
 

@@ -27,16 +27,16 @@ A equipe está organizada por meio das seguintes ferramentas e metodologias:
 
 ## Organização de Pastas do Projeto
 
-- **`tp02/bin`**: Contém os arquivos `.class` compilados do código-fonte, organizados conforme a estrutura de pacotes de `src`. São usados para rodar a aplicação.
+- **`tp03/bin`**: Contém os arquivos `.class` compilados do código-fonte, organizados conforme a estrutura de pacotes de `src`. São usados para rodar a aplicação.
 
-- **`tp02/src`**: Contém o código-fonte da aplicação, organizado em subpastas:
+- **`tp03/src`**: Contém o código-fonte da aplicação, organizado em subpastas:
   - **data**: Manipulação e leitura de dados (ex: `ArquivoCliente`).
   - **models**: Representação das entidades do sistema (ex: `Cliente`, `Serie`).
   - **storeage**: Lógica de armazenamento e persistência de dados (ex: `HashExtensivel`).
   - **util**: Funções auxiliares e utilitárias (ex: `ParCPFID`).
   - **view**: Interfaces e interação com o usuário (ex: `MenuEpisodios`, `MenuSeries`).
 
-- **`tp02/files`**: Armazena os dados persistentes do sistema, como arquivos de clientes e índices.
+- **`tp03/files`**: Armazena os dados persistentes do sistema, como arquivos de clientes e índices.
 
 Essa estrutura facilita a organização modular e futura expansão do projeto.
 
@@ -46,13 +46,13 @@ Essa estrutura facilita a organização modular e futura expansão do projeto.
 **Compilando o código:**
 
 ```bash
-javac -d tp02/bin tp02/src/**/*.java 
+javac -d tp03/bin tp03/src/**/*.java 
 ```
 
 **Rodando o código:**
 
 ```bash
-java -cp tp02/bin tp02.src.Main                                    
+java -cp tp03/bin tp03.src.Main                                    
 ```
 
 ---

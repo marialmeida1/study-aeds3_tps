@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
-import tp02.src.storage.records.RegisterExtensibleHash;
+import tp03.src.storage.records.RegisterExtensibleHash;
 
 import java.lang.reflect.Constructor;
 

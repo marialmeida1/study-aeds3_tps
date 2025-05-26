@@ -2,8 +2,8 @@ package tp03.src.data;
 
 import java.util.ArrayList;
 
-import tp02.src.storage.indexes.*;
-import tp02.src.storage.structures.*;
+import tp03.src.storage.indexes.*;
+import tp03.src.storage.structures.*;
 
 /**
  * Classe responsável pelo controle de relações entre IDs,
@@ -24,8 +24,8 @@ public class ArchiveRelationNN {
      * @throws Exception caso ocorra falha na criação dos arquivos ou índices.
      */
     public ArchiveRelationNN() throws Exception {
-        actorSerie = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, "tp02/files/actor_serie.db");
-        serieActor = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, "tp02/files/serie_actor.db");
+        actorSerie = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, "tp03/files/actor_serie.db");
+        serieActor = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, "tp03/files/serie_actor.db");
     }
 
     /**

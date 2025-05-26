@@ -1,6 +1,6 @@
 package tp03.src.view;
 
-import tp02.src.models.*;
+import tp03.src.models.*;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;

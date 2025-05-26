@@ -1,7 +1,7 @@
 package tp03.src;
 
 import java.util.Scanner;
-import tp02.src.controller.*;
+import tp03.src.controller.*;
 
 /**
  * Classe principal do sistema PUCFlix.

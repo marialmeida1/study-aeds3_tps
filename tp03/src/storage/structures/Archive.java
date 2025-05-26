@@ -3,8 +3,8 @@ import java.io.File;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 
-import tp02.src.storage.indexes.PairIDAddress;
-import tp02.src.storage.records.Register;
+import tp03.src.storage.indexes.PairIDAddress;
+import tp03.src.storage.records.Register;
 
 public class Archive<T extends Register> {
     final int TAM_CABECALHO = 12;
@@ -14,20 +14,20 @@ public class Archive<T extends Register> {
     ExtensibleHash<PairIDAddress> indiceDireto;
 
     public Archive(String na, Constructor<T> c) throws Exception {
-        // Define o diretório onde os dados serão armazenados (tp02/files)
-        File d = new File("tp02/files");
+        // Define o diretório onde os dados serão armazenados (tp03/files)
+        File d = new File("tp03/files");
         if (!d.exists()) {
-            d.mkdir();  // Cria o diretório tp02/files se não existir
+            d.mkdir();  // Cria o diretório tp03/files se não existir
         }
     
         // Agora cria o subdiretório com o nome fornecido em 'na'
-        d = new File("tp02/files/" + na);
+        d = new File("tp03/files/" + na);
         if (!d.exists()) {
             d.mkdir();  // Cria o subdiretório com o nome fornecido em 'na'
         }
     
         // Define o nome do arquivo e o caminho completo
-        this.nomeArquivo = "tp02/files/" + na + "/" + na + ".db";
+        this.nomeArquivo = "tp03/files/" + na + "/" + na + ".db";
         this.construtor = c;
         arquivo = new RandomAccessFile(this.nomeArquivo, "rw");
     
@@ -41,8 +41,8 @@ public class Archive<T extends Register> {
         indiceDireto = new ExtensibleHash<>(
             PairIDAddress.class.getConstructor(), 
             4, 
-            "tp02/files/" + na + "/" + na + ".d.db", // diretório
-            "tp02/files/" + na + "/" + na + ".c.db"  // cestos
+            "tp03/files/" + na + "/" + na + ".d.db", // diretório
+            "tp03/files/" + na + "/" + na + ".c.db"  // cestos
         );
     }
         
