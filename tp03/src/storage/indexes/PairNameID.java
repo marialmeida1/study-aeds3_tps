@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
 
-import tp02.src.storage.records.RegisterTreeB;
+import tp03.src.storage.records.RegisterTreeB;
 
 /**
  * Classe que representa um par (nome, ID), usada em estruturas como Árvores B+.

@@ -2,7 +2,7 @@ package tp03.src.models;
 
 import java.time.LocalDate;
 
-import tp02.src.storage.records.Register;
+import tp03.src.storage.records.Register;
 
 import java.io.IOException;
 import java.io.ByteArrayOutputStream;

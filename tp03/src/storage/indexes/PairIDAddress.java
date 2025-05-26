@@ -5,7 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import tp02.src.storage.records.RegisterExtensibleHash;
+import tp03.src.storage.records.RegisterExtensibleHash;
 
 /**
  * Representa um par (chave, valor) para uso em hashing extensível,

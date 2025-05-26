@@ -1,10 +1,10 @@
 package tp03.src.controller;
 
-import tp02.src.models.Episode;
-import tp02.src.models.Series;
-import tp02.src.data.ArchiveEpisode;
-import tp02.src.data.ArchiveSeries;
-import tp02.src.view.ViewEpisode;
+import tp03.src.models.Episode;
+import tp03.src.models.Series;
+import tp03.src.data.ArchiveEpisode;
+import tp03.src.data.ArchiveSeries;
+import tp03.src.view.ViewEpisode;
 
 import java.time.LocalDate;
 import java.util.Scanner;

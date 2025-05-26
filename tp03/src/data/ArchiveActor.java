@@ -1,9 +1,9 @@
 package tp03.src.data;
 import java.util.ArrayList;
 
-import tp02.src.models.Actor;
-import tp02.src.storage.indexes.*;
-import tp02.src.storage.structures.*;
+import tp03.src.models.Actor;
+import tp03.src.storage.indexes.*;
+import tp03.src.storage.structures.*;
 
 /**
  * Classe responsável pela manipulação dos dados de atores,
@@ -24,7 +24,7 @@ public class ArchiveActor extends Archive<Actor> {
         super("atores", Actor.class.getConstructor());
 
         indiceIndiretoNome = new ArchiveTreeB<>(
-                PairNameID.class.getConstructor(), 5, "tp02/files/atores/indiceNome.db");
+                PairNameID.class.getConstructor(), 5, "tp03/files/atores/indiceNome.db");
     }
 
     /**

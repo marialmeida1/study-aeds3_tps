@@ -17,7 +17,7 @@ package tp03.src.storage.structures;
 import java.io.*;
 import java.util.ArrayList;
 
-import tp02.src.storage.records.RegisterTreeB;
+import tp03.src.storage.records.RegisterTreeB;
 
 import java.lang.reflect.Constructor;
 

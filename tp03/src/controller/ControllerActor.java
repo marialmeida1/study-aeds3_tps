@@ -1,15 +1,15 @@
 package tp03.src.controller;
 
-import tp02.src.data.ArchiveActor;
-import tp02.src.data.ArchiveRelationNN;
-import tp02.src.data.ArchiveSeries;
-import tp02.src.view.ViewActor;
-import tp02.src.models.*;
+import tp03.src.data.ArchiveActor;
+import tp03.src.data.ArchiveRelationNN;
+import tp03.src.data.ArchiveSeries;
+import tp03.src.view.ViewActor;
+import tp03.src.models.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import tp02.src.storage.indexes.PairIDFK;
+import tp03.src.storage.indexes.PairIDFK;
 
 /**
  * Controlador principal para manipulação de ator.

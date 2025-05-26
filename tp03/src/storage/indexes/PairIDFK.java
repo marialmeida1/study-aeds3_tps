@@ -2,7 +2,7 @@ package tp03.src.storage.indexes;
 
 import java.io.*;
 
-import tp02.src.storage.records.RegisterTreeB;
+import tp03.src.storage.records.RegisterTreeB;
 
 public class PairIDFK implements RegisterTreeB<PairIDFK> {
 
