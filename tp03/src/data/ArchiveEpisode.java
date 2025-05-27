@@ -1,10 +1,12 @@
 package tp03.src.data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import tp03.src.models.Episode;
 import tp03.src.storage.indexes.*;
 import tp03.src.storage.structures.*;
+import tp03.src.storage.structures.ListaInvertida.Buscador;
 import tp03.src.storage.structures.ListaInvertida.ElementoLista;
 import tp03.src.storage.structures.ListaInvertida.ListaInvertida;
 
@@ -14,6 +16,8 @@ import tp03.src.storage.structures.ListaInvertida.ListaInvertida;
  */
 public class ArchiveEpisode extends Archive<Episode> {
     ListaInvertida listaInvertidaNome;
+    private Buscador buscador;
+    private ArchiveTreeB<PairNameID> indiceIndiretoNome;
 
     /** Índice indireto relacionando o ID do episódio com o ID da série (chave estrangeira). */
     ArchiveTreeB<PairIDFK> relacao1N; 
@@ -31,7 +35,9 @@ public class ArchiveEpisode extends Archive<Episode> {
                 "tp03/files/episodios/blocos.listainv.db", // caminho do índice invertido
                 "tp03/files/episodios/dicionario.listainv.db");      // opcional: mapeia termos
 
-        relacao1N = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, "tp03/files/episodios/relacao1N.db");
+        buscador = new Buscador(listaInvertidaNome, null, null);
+        indiceIndiretoNome = new ArchiveTreeB<>(PairNameID.class.getConstructor(), 5, "tp03/files/episodios/indiceIndiretoNome.db");
+        buscador = new Buscador(listaInvertidaNome, null, null);
     }
 
     /**
@@ -93,26 +99,14 @@ public class ArchiveEpisode extends Archive<Episode> {
         if (nome.length() == 0)
             return null;
 
-        ArrayList<PairNameID> pares = indiceIndiretoNome.read(new PairNameID(nome, -1));
+        List<Integer> ids = buscador.buscarEpisodios(nome);
+        if (ids.isEmpty()) return null;
 
-        if (pares.size() > 0) {
-
-            Episode[] episodios = new Episode[pares.size()];
-
-            int i = 0;
-
-            for (PairNameID par : pares) {
-
-                episodios[i++] = read(par.getId());
-
-            }
-
-            return episodios;
-
-        } else {
-            return null;
+        Episode[] episodios = new Episode[ids.size()];
+        for (int i = 0; i < ids.size(); i++) {
+            episodios[i] = read(ids.get(i));
         }
-
+        return episodios;
     }
 
     /**

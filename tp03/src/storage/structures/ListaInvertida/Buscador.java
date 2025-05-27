@@ -26,6 +26,10 @@ public class Buscador {
         return buscar(termos, listaAtores);
     }
 
+    public List<Integer> read(String termos, ListaInvertida lista) throws Exception {
+        return buscar(termos, lista);
+    }
+
     private List<Integer> buscar(String termos, ListaInvertida lista) throws Exception {
         // Normalizar e processar os termos
         ListaInvertidaUtils utils = new ListaInvertidaUtils();
