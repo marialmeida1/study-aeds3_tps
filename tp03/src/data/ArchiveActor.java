@@ -12,8 +12,9 @@ import tp03.src.storage.structures.ListaInvertida.ListaInvertida;
  * incluindo operações CRUD e indexação por nome.
  */
 public class ArchiveActor extends Archive<Actor> {
-    /** Índice invertido baseado no nome do ator. */
-    ListaInvertida listaInvertidaNome;
+    private ListaInvertida listaInvertida;
+    /** Índice indireto baseado no nome da ator. */
+    ArchiveTreeB<PairNameID> indiceIndiretoNome;
 
     /**
      * Construtor padrão que inicializa o arquivo e o índice indireto de nomes.
@@ -21,12 +22,10 @@ public class ArchiveActor extends Archive<Actor> {
      * @throws Exception se ocorrer erro durante a criação do arquivo ou índice.
      */
     public ArchiveActor() throws Exception {
-
         super("atores", Actor.class.getConstructor());
-
-        listaInvertidaNome = new ListaInvertida(5,
-                "tp03/files/atores/blocos.listainv.db", // caminho do índice invertido
-                "tp03/files/atores/dicionario.listainv.db");    // opcional: mapeia termos
+        indiceIndiretoNome = new ArchiveTreeB<>(
+                PairNameID.class.getConstructor(), 5, "tp03/files/atores/indiceNome.db");
+        listaInvertida = new ListaInvertida(10, "tp03/files/atores/listaInvertidaDicionario.db", "tp03/files/atores/listaInvertidaBlocos.db");
     }
 
     /**
@@ -39,11 +38,11 @@ public class ArchiveActor extends Archive<Actor> {
     @Override
     public int create(Actor a) throws Exception {
         int id = super.create(a);
-        
-        ElementoLista elemento = new ElementoLista(id, 1.0f);
-        listaInvertidaNome.create(a.getName(), elemento);
+        indiceIndiretoNome.create(new PairNameID(a.getName(), id));
+        listaInvertida.create(a.getName(), new ElementoLista(id, 1)); // Adiciona o ator na ListaInvertida
         return id;
     }
+
 
     /**
      * Lê todas as ators com o nome especificado.
@@ -91,7 +90,9 @@ public class ArchiveActor extends Archive<Actor> {
         Actor a = super.read(id);
         if (a != null) {
             if (super.delete(id)) {
-                return listaInvertidaNome.delete(a.getName(), id);
+                indiceIndiretoNome.delete(new PairNameID(a.getName(), id));
+                listaInvertida.delete(a.getName(), id); // Remove o ator da ListaInvertida
+                return true;
             }
         }
         return false;
@@ -106,19 +107,19 @@ public class ArchiveActor extends Archive<Actor> {
      */
     @Override
     public boolean update(Actor atorUpdate) throws Exception {
-        Actor a = read(atorUpdate.getId()); // na superclasse
+        Actor a = read(atorUpdate.getId());
         if (a != null) {
-            ElementoLista elemento = new ElementoLista(a.getId(), 1.0f);
             if (super.update(atorUpdate)) {
                 if (!a.getName().equals(atorUpdate.getName())) {
-                    listaInvertidaNome.delete(a.getName(), a.getId());
-                    listaInvertidaNome.create(atorUpdate.getName(), elemento);
+                    indiceIndiretoNome.delete(new PairNameID(a.getName(), a.getId()));
+                    indiceIndiretoNome.create(new PairNameID(atorUpdate.getName(), atorUpdate.getId()));
+                    listaInvertida.delete(a.getName(), a.getId()); // Remove o nome antigo da ListaInvertida
+                    listaInvertida.create(atorUpdate.getName(), new ElementoLista(atorUpdate.getId(), 1)); // Adiciona o nome atualizado
                 }
                 return true;
             }
         }
         return false;
     }
-
 }
 

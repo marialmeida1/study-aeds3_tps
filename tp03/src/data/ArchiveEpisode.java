@@ -13,7 +13,9 @@ import tp03.src.storage.structures.ListaInvertida.ListaInvertida;
  * incluindo persistência, leitura e gerenciamento de índices.
  */
 public class ArchiveEpisode extends Archive<Episode> {
-    ListaInvertida listaInvertidaNome;
+    private ListaInvertida listaInvertida;
+    /** Índice indireto baseado no nome do episódio. */
+    ArchiveTreeB<PairNameID> indiceIndiretoNome;
 
     /** Índice indireto relacionando o ID do episódio com o ID da série (chave estrangeira). */
     ArchiveTreeB<PairIDFK> relacao1N; 
@@ -24,14 +26,11 @@ public class ArchiveEpisode extends Archive<Episode> {
      * @throws Exception caso ocorra falha na criação dos arquivos ou índices.
      */
     public ArchiveEpisode() throws Exception {
-
         super("episodios", Episode.class.getConstructor());
-
-        listaInvertidaNome = new ListaInvertida(5,
-                "tp03/files/episodios/blocos.listainv.db", // caminho do índice invertido
-                "tp03/files/episodios/dicionario.listainv.db");      // opcional: mapeia termos
-
+        indiceIndiretoNome = new ArchiveTreeB<>(
+                PairNameID.class.getConstructor(), 5, "tp03/files/episodios/indiceNome.db");
         relacao1N = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, "tp03/files/episodios/relacao1N.db");
+        listaInvertida = new ListaInvertida(10, "tp03/files/episodios/listaInvertidaDicionario.db", "tp03/files/episodios/listaInvertidaBlocos.db");
     }
 
     /**
@@ -44,10 +43,9 @@ public class ArchiveEpisode extends Archive<Episode> {
     @Override
     public int create(Episode e) throws Exception {
         int id = super.create(e);
-        ElementoLista elemento = new ElementoLista(id, 1.0f);
-        listaInvertidaNome.create(e.getName(), elemento);
-        System.out.println(e.getId());
+        indiceIndiretoNome.create(new PairNameID(e.getName(), id));
         relacao1N.create(new PairIDFK(e.getFkSerie(), e.getId()));
+        listaInvertida.create(e.getName(), new ElementoLista(id, 1)); // Adiciona o episódio na ListaInvertida
         return id;
     }
 
@@ -160,7 +158,10 @@ public class ArchiveEpisode extends Archive<Episode> {
         Episode e = super.read(id);
         if (e != null) {
             if (super.delete(id)) {
-                return listaInvertidaNome.delete(e.getName(), id) && relacao1N.delete(new PairIDFK(e.getId(), e.getFkSerie()));
+                indiceIndiretoNome.delete(new PairNameID(e.getName(), id));
+                relacao1N.delete(new PairIDFK(e.getFkSerie(), e.getId()));
+                listaInvertida.delete(e.getName(), id); // Remove o episódio da ListaInvertida
+                return true;
             }
         }
         return false;
@@ -175,20 +176,20 @@ public class ArchiveEpisode extends Archive<Episode> {
      */
     @Override
     public boolean update(Episode novaEpisodio) throws Exception {
-        Episode e = read(novaEpisodio.getId()); // na superclasse
+        Episode e = read(novaEpisodio.getId());
         if (e != null) {
-            ElementoLista elemento = new ElementoLista(e.getId(), 1.0f);
             if (super.update(novaEpisodio)) {
                 if (!e.getName().equals(novaEpisodio.getName())) {
-                    listaInvertidaNome.delete(e.getName(), e.getId());
+                    indiceIndiretoNome.delete(new PairNameID(e.getName(), e.getId()));
                     relacao1N.delete(new PairIDFK(e.getFkSerie(), e.getId()));
-                    listaInvertidaNome.create(novaEpisodio.getName(), elemento);
+                    listaInvertida.delete(e.getName(), e.getId()); // Remove o nome antigo da ListaInvertida
+                    indiceIndiretoNome.create(new PairNameID(novaEpisodio.getName(), novaEpisodio.getId()));
                     relacao1N.create(new PairIDFK(e.getFkSerie(), e.getId()));
+                    listaInvertida.create(novaEpisodio.getName(), new ElementoLista(novaEpisodio.getId(), 1)); // Adiciona o nome atualizado
                 }
                 return true;
             }
         }
         return false;
     }
-
 }

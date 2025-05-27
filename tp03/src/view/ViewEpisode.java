@@ -125,16 +125,16 @@ public class ViewEpisode {
      * @return Data de lançamento em {@link LocalDate}, ou {@code null} se a entrada for vazia.
      */
 public LocalDate obterDataLancamento() {
-    System.out.println("Inserir Data de Lançamento: ");
+    System.out.println("Data de Lançamento: ");
     while (true) {
         try {
-            System.out.print("......Dia (1-31): ");
+            System.out.print("Dia (1-31): ");
             int dia = Integer.parseInt(console.nextLine().trim());
 
-            System.out.print("......Mês (1-12): ");
+            System.out.print("Mês (1-12): ");
             int mes = Integer.parseInt(console.nextLine().trim());
 
-            System.out.print("......Ano (ex: 2024): ");
+            System.out.print("Ano (ex: 2024): ");
             int ano = Integer.parseInt(console.nextLine().trim());
 
             // Tentativa de criação válida da data

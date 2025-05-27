@@ -12,7 +12,9 @@ import tp03.src.storage.structures.ListaInvertida.ListaInvertida;
  * incluindo operações CRUD e indexação por nome.
  */
 public class ArchiveSeries extends Archive<Series> {
-    ListaInvertida listaInvertidaNome;
+    private ListaInvertida listaInvertida;
+    /** Índice indireto baseado no nome da série. */
+    ArchiveTreeB<PairNameID> indiceIndiretoNome;
 
     /**
      * Construtor padrão que inicializa o arquivo e o índice indireto de nomes.
@@ -23,9 +25,9 @@ public class ArchiveSeries extends Archive<Series> {
 
         super("series", Series.class.getConstructor());
 
-        listaInvertidaNome = new ListaInvertida(5,
-                "tp03/files/series/blocos.listainv.db", // caminho do índice invertido
-                "tp03/files/series/dicionario.listainv.db");    // opcional: mapeia termos
+        indiceIndiretoNome = new ArchiveTreeB<>(
+                PairNameID.class.getConstructor(), 5, "tp03/files/series/indiceNome.db");
+        listaInvertida = new ListaInvertida(10, "tp03/files/series/listaInvertidaDicionario.db", "tp03/files/series/listaInvertidaBlocos.db");
     }
 
     /**
@@ -37,14 +39,14 @@ public class ArchiveSeries extends Archive<Series> {
      */
     @Override
     public int create(Series s) throws Exception {
-        // Check if a series with the same name already exists
+        // Verifica se já existe uma série com o mesmo nome
         Series[] existingSeries = readNome(s.getName());
         if (existingSeries != null && existingSeries.length > 0) {
             throw new Exception("Série com o mesmo nome já existe.");
         }
         int id = super.create(s);
-        ElementoLista elemento = new ElementoLista(id, 1.0f);
-        listaInvertidaNome.create(s.getName(), elemento);
+        indiceIndiretoNome.create(new PairNameID(s.getName(), id));
+        listaInvertida.create(s.getName(), new ElementoLista(id, 1)); // Adiciona a série na ListaInvertida
         return id;
     }
 
@@ -94,7 +96,9 @@ public class ArchiveSeries extends Archive<Series> {
         Series s = super.read(id);
         if (s != null) {
             if (super.delete(id)) {
-                return listaInvertidaNome.delete(s.getName(), id);
+                indiceIndiretoNome.delete(new PairNameID(s.getName(), id));
+                listaInvertida.delete(s.getName(), id); // Remove a série da ListaInvertida
+                return true;
             }
         }
         return false;
@@ -109,19 +113,19 @@ public class ArchiveSeries extends Archive<Series> {
      */
     @Override
     public boolean update(Series novaSerie) throws Exception {
-        Series s = read(novaSerie.getId()); // na superclasse
+        Series s = read(novaSerie.getId());
         if (s != null) {
-            ElementoLista elemento = new ElementoLista(s.getId(), 1.0f);
             if (super.update(novaSerie)) {
                 if (!s.getName().equals(novaSerie.getName())) {
-                    listaInvertidaNome.delete(s.getName(), s.getId());
-                    listaInvertidaNome.create(novaSerie.getName(), elemento);
+                    indiceIndiretoNome.delete(new PairNameID(s.getName(), s.getId()));
+                    indiceIndiretoNome.create(new PairNameID(novaSerie.getName(), novaSerie.getId()));
+                    listaInvertida.delete(s.getName(), s.getId()); // Remove o nome antigo da ListaInvertida
+                    listaInvertida.create(novaSerie.getName(), new ElementoLista(novaSerie.getId(), 1)); // Adiciona o nome atualizado
                 }
                 return true;
             }
         }
         return false;
     }
-
 }
 

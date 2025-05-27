@@ -676,7 +676,6 @@ public class ControllerSeries {
                     System.out.println("-----------------------------------");
                     if (actor != null) {
                         System.out.println("Nome: " + actor.getName());
-                        System.out.println("ID: " + actor.getId());
                     } else {
                         System.out.println("Erro: Ator com ID " + idActor + " não encontrado."); // Debug statement
                     }
