@@ -1,9 +1,6 @@
 package tp03.src.storage.structures.ListaInvertida;
 
 import java.util.*;
-import tp03.src.storage.structures.ListaInvertida.ElementoLista;
-import tp03.src.storage.structures.ListaInvertida.ListaInvertida;
-import tp03.src.storage.structures.ListaInvertida.ListaInvertidaUtils;
 
 public class Buscador {
 

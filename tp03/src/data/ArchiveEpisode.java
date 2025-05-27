@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import tp03.src.models.Episode;
 import tp03.src.storage.indexes.*;
 import tp03.src.storage.structures.*;
+import tp03.src.storage.structures.ListaInvertida.ElementoLista;
+import tp03.src.storage.structures.ListaInvertida.ListaInvertida;
 
 /**
  * Classe responsável pela manipulação dos episódios,
  * incluindo persistência, leitura e gerenciamento de índices.
  */
 public class ArchiveEpisode extends Archive<Episode> {
-
-    /** Índice indireto baseado no nome do episódio. */
-    ArchiveTreeB<PairNameID> indiceIndiretoNome;
+    ListaInvertida listaInvertidaNome;
 
     /** Índice indireto relacionando o ID do episódio com o ID da série (chave estrangeira). */
     ArchiveTreeB<PairIDFK> relacao1N; 
@@ -27,8 +27,9 @@ public class ArchiveEpisode extends Archive<Episode> {
 
         super("episodios", Episode.class.getConstructor());
 
-        indiceIndiretoNome = new ArchiveTreeB<>(
-                PairNameID.class.getConstructor(), 5, "tp03/files/episodios/indiceNome.db");
+        listaInvertidaNome = new ListaInvertida(5,
+                "tp03/files/episodios/blocos.listainv.db", // caminho do índice invertido
+                "tp03/files/episodios/dicionario.listainv.db");      // opcional: mapeia termos
 
         relacao1N = new ArchiveTreeB<>(PairIDFK.class.getConstructor(), 5, "tp03/files/episodios/relacao1N.db");
     }
@@ -43,7 +44,8 @@ public class ArchiveEpisode extends Archive<Episode> {
     @Override
     public int create(Episode e) throws Exception {
         int id = super.create(e);
-        indiceIndiretoNome.create(new PairNameID(e.getName(), id));
+        ElementoLista elemento = new ElementoLista(id, 1.0f);
+        listaInvertidaNome.create(e.getName(), elemento);
         System.out.println(e.getId());
         relacao1N.create(new PairIDFK(e.getFkSerie(), e.getId()));
         return id;
@@ -158,7 +160,7 @@ public class ArchiveEpisode extends Archive<Episode> {
         Episode e = super.read(id);
         if (e != null) {
             if (super.delete(id)) {
-                return indiceIndiretoNome.delete(new PairNameID(e.getName(), id)) && relacao1N.delete(new PairIDFK(e.getId(), e.getFkSerie()));
+                return listaInvertidaNome.delete(e.getName(), id) && relacao1N.delete(new PairIDFK(e.getId(), e.getFkSerie()));
             }
         }
         return false;
@@ -175,11 +177,12 @@ public class ArchiveEpisode extends Archive<Episode> {
     public boolean update(Episode novaEpisodio) throws Exception {
         Episode e = read(novaEpisodio.getId()); // na superclasse
         if (e != null) {
+            ElementoLista elemento = new ElementoLista(e.getId(), 1.0f);
             if (super.update(novaEpisodio)) {
                 if (!e.getName().equals(novaEpisodio.getName())) {
-                    indiceIndiretoNome.delete(new PairNameID(e.getName(), e.getId()));
+                    listaInvertidaNome.delete(e.getName(), e.getId());
                     relacao1N.delete(new PairIDFK(e.getFkSerie(), e.getId()));
-                    indiceIndiretoNome.create(new PairNameID(novaEpisodio.getName(), novaEpisodio.getId()));
+                    listaInvertidaNome.create(novaEpisodio.getName(), elemento);
                     relacao1N.create(new PairIDFK(e.getFkSerie(), e.getId()));
                 }
                 return true;

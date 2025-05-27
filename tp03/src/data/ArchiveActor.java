@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import tp03.src.models.Actor;
 import tp03.src.storage.indexes.*;
 import tp03.src.storage.structures.*;
+import tp03.src.storage.structures.ListaInvertida.ElementoLista;
+import tp03.src.storage.structures.ListaInvertida.ListaInvertida;
 
 /**
  * Classe responsável pela manipulação dos dados de atores,
  * incluindo operações CRUD e indexação por nome.
  */
 public class ArchiveActor extends Archive<Actor> {
-
-    /** Índice indireto baseado no nome da ator. */
-    ArchiveTreeB<PairNameID> indiceIndiretoNome;
+    /** Índice invertido baseado no nome do ator. */
+    ListaInvertida listaInvertidaNome;
 
     /**
      * Construtor padrão que inicializa o arquivo e o índice indireto de nomes.
@@ -23,8 +24,9 @@ public class ArchiveActor extends Archive<Actor> {
 
         super("atores", Actor.class.getConstructor());
 
-        indiceIndiretoNome = new ArchiveTreeB<>(
-                PairNameID.class.getConstructor(), 5, "tp03/files/atores/indiceNome.db");
+        listaInvertidaNome = new ListaInvertida(5,
+                "tp03/files/atores/blocos.listainv.db", // caminho do índice invertido
+                "tp03/files/atores/dicionario.listainv.db");    // opcional: mapeia termos
     }
 
     /**
@@ -37,7 +39,9 @@ public class ArchiveActor extends Archive<Actor> {
     @Override
     public int create(Actor a) throws Exception {
         int id = super.create(a);
-        indiceIndiretoNome.create(new PairNameID(a.getName(), id));
+        
+        ElementoLista elemento = new ElementoLista(id, 1.0f);
+        listaInvertidaNome.create(a.getName(), elemento);
         return id;
     }
 
@@ -87,7 +91,7 @@ public class ArchiveActor extends Archive<Actor> {
         Actor a = super.read(id);
         if (a != null) {
             if (super.delete(id)) {
-                return indiceIndiretoNome.delete(new PairNameID(a.getName(), id));
+                return listaInvertidaNome.delete(a.getName(), id);
             }
         }
         return false;
@@ -104,10 +108,11 @@ public class ArchiveActor extends Archive<Actor> {
     public boolean update(Actor atorUpdate) throws Exception {
         Actor a = read(atorUpdate.getId()); // na superclasse
         if (a != null) {
+            ElementoLista elemento = new ElementoLista(a.getId(), 1.0f);
             if (super.update(atorUpdate)) {
                 if (!a.getName().equals(atorUpdate.getName())) {
-                    indiceIndiretoNome.delete(new PairNameID(a.getName(), a.getId()));
-                    indiceIndiretoNome.create(new PairNameID(atorUpdate.getName(), atorUpdate.getId()));
+                    listaInvertidaNome.delete(a.getName(), a.getId());
+                    listaInvertidaNome.create(atorUpdate.getName(), elemento);
                 }
                 return true;
             }

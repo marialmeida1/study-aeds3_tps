@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import tp03.src.models.Series;
 import tp03.src.storage.indexes.*;
 import tp03.src.storage.structures.*;
+import tp03.src.storage.structures.ListaInvertida.ElementoLista;
+import tp03.src.storage.structures.ListaInvertida.ListaInvertida;
 
 /**
  * Classe responsável pela manipulação dos dados de séries,
  * incluindo operações CRUD e indexação por nome.
  */
 public class ArchiveSeries extends Archive<Series> {
-
-    /** Índice indireto baseado no nome da série. */
-    ArchiveTreeB<PairNameID> indiceIndiretoNome;
+    ListaInvertida listaInvertidaNome;
 
     /**
      * Construtor padrão que inicializa o arquivo e o índice indireto de nomes.
@@ -23,8 +23,9 @@ public class ArchiveSeries extends Archive<Series> {
 
         super("series", Series.class.getConstructor());
 
-        indiceIndiretoNome = new ArchiveTreeB<>(
-                PairNameID.class.getConstructor(), 5, "tp03/files/series/indiceNome.db");
+        listaInvertidaNome = new ListaInvertida(5,
+                "tp03/files/series/blocos.listainv.db", // caminho do índice invertido
+                "tp03/files/series/dicionario.listainv.db");    // opcional: mapeia termos
     }
 
     /**
@@ -42,7 +43,8 @@ public class ArchiveSeries extends Archive<Series> {
             throw new Exception("Série com o mesmo nome já existe.");
         }
         int id = super.create(s);
-        indiceIndiretoNome.create(new PairNameID(s.getName(), id));
+        ElementoLista elemento = new ElementoLista(id, 1.0f);
+        listaInvertidaNome.create(s.getName(), elemento);
         return id;
     }
 
@@ -92,7 +94,7 @@ public class ArchiveSeries extends Archive<Series> {
         Series s = super.read(id);
         if (s != null) {
             if (super.delete(id)) {
-                return indiceIndiretoNome.delete(new PairNameID(s.getName(), id));
+                return listaInvertidaNome.delete(s.getName(), id);
             }
         }
         return false;
@@ -109,10 +111,11 @@ public class ArchiveSeries extends Archive<Series> {
     public boolean update(Series novaSerie) throws Exception {
         Series s = read(novaSerie.getId()); // na superclasse
         if (s != null) {
+            ElementoLista elemento = new ElementoLista(s.getId(), 1.0f);
             if (super.update(novaSerie)) {
                 if (!s.getName().equals(novaSerie.getName())) {
-                    indiceIndiretoNome.delete(new PairNameID(s.getName(), s.getId()));
-                    indiceIndiretoNome.create(new PairNameID(novaSerie.getName(), novaSerie.getId()));
+                    listaInvertidaNome.delete(s.getName(), s.getId());
+                    listaInvertidaNome.create(novaSerie.getName(), elemento);
                 }
                 return true;
             }
