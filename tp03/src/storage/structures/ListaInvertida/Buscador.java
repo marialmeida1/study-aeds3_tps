@@ -37,7 +37,8 @@ public class Buscador {
             if (elementos != null) {
                 for (ElementoLista elemento : elementos) {
                     int id = elemento.getId();
-                    float tf = elemento.getFrequencia();
+                    float tf = calcFrequencia(termos, termo);
+                    elemento.setFrequencia(tf);
                     float idf = calcularIDF(lista, termo);
                     float tfidf = tf * idf;
 
@@ -69,5 +70,25 @@ public class Buscador {
         }
 
         return (float) Math.log((double) totalDocumentos / documentosComTermo);
+    }
+
+    private float calcFrequencia(String texto, String termo) {
+        // Normalize the input text and term
+        texto = texto.toLowerCase();
+        termo = termo.toLowerCase();
+
+        // Split the text into terms
+        String[] termos = texto.split("\\s+");
+
+        // Count occurrences of the term
+        int count = 0;
+        for (String t : termos) {
+            if (t.equals(termo)) {
+                count++;
+            }
+        }
+
+        // Calculate term frequency (tf)
+        return (float) count / termos.length;
     }
 }
