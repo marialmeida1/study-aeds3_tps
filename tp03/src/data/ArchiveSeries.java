@@ -105,6 +105,8 @@ public class ArchiveSeries extends Archive<Series> {
         // Realiza a busca usando o Buscador
         List<Integer> idsEncontrados = buscador.buscarSeries(nome);
 
+        System.out.println("IDs encontrados: " + idsEncontrados);
+        
         // Se nenhum ID foi encontrado, retorna null
         if (idsEncontrados.isEmpty()) {
             return null;
