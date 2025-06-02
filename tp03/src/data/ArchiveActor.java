@@ -1,9 +1,10 @@
 package tp03.src.data;
-import java.util.ArrayList;
+import java.util.List;
 
 import tp03.src.models.Actor;
 import tp03.src.storage.indexes.*;
 import tp03.src.storage.structures.*;
+import tp03.src.storage.structures.ListaInvertida.Buscador;
 import tp03.src.storage.structures.ListaInvertida.ElementoLista;
 import tp03.src.storage.structures.ListaInvertida.ListaInvertida;
 
@@ -56,26 +57,25 @@ public class ArchiveActor extends Archive<Actor> {
         if (nome.length() == 0)
             return null;
 
-        ArrayList<PairNameID> pares = indiceIndiretoNome.read(new PairNameID(nome, -1));
+        // Instancia o Buscador com a Lista Invertida de atores
+        Buscador buscador = new Buscador(null, null, listaInvertida);
 
-        if (pares.size() > 0) {
+        // Realiza a busca usando o Buscador
+        List<Integer> idsEncontrados = buscador.buscarAtores(nome);
 
-            Actor[] atores = new Actor[pares.size()];
-
-            int i = 0;
-
-            for (PairNameID par : pares) {
-
-                atores[i++] = read(par.getId());
-
-            }
-
-            return atores;
-
-        } else {
+        // Se nenhum ID foi encontrado, retorna null
+        if (idsEncontrados.isEmpty()) {
             return null;
         }
 
+        // Lê os atores correspondentes aos IDs encontrados
+        Actor[] atores = new Actor[idsEncontrados.size()];
+        int i = 0;
+        for (Integer id : idsEncontrados) {
+            atores[i++] = read(id);
+        }
+
+        return atores;
     }
 
     /**

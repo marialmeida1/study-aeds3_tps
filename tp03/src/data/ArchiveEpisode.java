@@ -1,10 +1,12 @@
 package tp03.src.data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import tp03.src.models.Episode;
 import tp03.src.storage.indexes.*;
 import tp03.src.storage.structures.*;
+import tp03.src.storage.structures.ListaInvertida.Buscador;
 import tp03.src.storage.structures.ListaInvertida.ElementoLista;
 import tp03.src.storage.structures.ListaInvertida.ListaInvertida;
 
@@ -86,31 +88,30 @@ public class ArchiveEpisode extends Archive<Episode> {
      * @return array de episódios com o nome correspondente ou {@code null} se não houver.
      * @throws Exception caso ocorra erro durante a leitura.
      */
-    public Episode[] readNome(String nome) throws Exception { // Faz a busca somente dentro de epsódios
+    public Episode[] readNome(String nome) throws Exception {
 
         if (nome.length() == 0)
             return null;
 
-        ArrayList<PairNameID> pares = indiceIndiretoNome.read(new PairNameID(nome, -1));
+        // Instancia o Buscador com a Lista Invertida de episódios
+        Buscador buscador = new Buscador(null, listaInvertida, null);
 
-        if (pares.size() > 0) {
+        // Realiza a busca usando o Buscador
+        List<Integer> idsEncontrados = buscador.buscarEpisodios(nome);
 
-            Episode[] episodios = new Episode[pares.size()];
-
-            int i = 0;
-
-            for (PairNameID par : pares) {
-
-                episodios[i++] = read(par.getId());
-
-            }
-
-            return episodios;
-
-        } else {
+        // Se nenhum ID foi encontrado, retorna null
+        if (idsEncontrados.isEmpty()) {
             return null;
         }
 
+        // Lê os episódios correspondentes aos IDs encontrados
+        Episode[] episodios = new Episode[idsEncontrados.size()];
+        int i = 0;
+        for (Integer id : idsEncontrados) {
+            episodios[i++] = read(id);
+        }
+
+        return episodios;
     }
 
     /**

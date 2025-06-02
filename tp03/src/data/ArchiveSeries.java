@@ -1,9 +1,10 @@
 package tp03.src.data;
-import java.util.ArrayList;
+import java.util.List;
 
 import tp03.src.models.Series;
 import tp03.src.storage.indexes.*;
 import tp03.src.storage.structures.*;
+import tp03.src.storage.structures.ListaInvertida.Buscador;
 import tp03.src.storage.structures.ListaInvertida.ElementoLista;
 import tp03.src.storage.structures.ListaInvertida.ListaInvertida;
 
@@ -62,26 +63,25 @@ public class ArchiveSeries extends Archive<Series> {
         if (nome.length() == 0)
             return null;
 
-        ArrayList<PairNameID> pares = indiceIndiretoNome.read(new PairNameID(nome, -1));
+        // Instancia o Buscador com a Lista Invertida de séries
+        Buscador buscador = new Buscador(listaInvertida, null, null);
 
-        if (pares.size() > 0) {
+        // Realiza a busca usando o Buscador
+        List<Integer> idsEncontrados = buscador.buscarSeries(nome);
 
-            Series[] series = new Series[pares.size()];
-
-            int i = 0;
-
-            for (PairNameID par : pares) {
-
-                series[i++] = read(par.getId());
-
-            }
-
-            return series;
-
-        } else {
+        // Se nenhum ID foi encontrado, retorna null
+        if (idsEncontrados.isEmpty()) {
             return null;
         }
 
+        // Lê as séries correspondentes aos IDs encontrados
+        Series[] series = new Series[idsEncontrados.size()];
+        int i = 0;
+        for (Integer id : idsEncontrados) {
+            series[i++] = read(id);
+        }
+
+        return series;
     }
 
     /**
