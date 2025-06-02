@@ -65,7 +65,7 @@ public class ListaInvertidaUtils {
     return result.toArray(new String[0]);
   }
 
-  private float calcFrequencia(String texto, String termo) {
+  public float calcFrequencia(String texto, String termo) {
     // Normalize the input text and term
     texto = texto.toLowerCase();
     termo = termo.toLowerCase();
@@ -85,7 +85,7 @@ public class ListaInvertidaUtils {
     return (float) count / termos.length;
 }
   
-private float calcularIDF(ListaInvertida lista, String termo) throws Exception {
+public float calcularIDF(ListaInvertida lista, String termo) throws Exception {
   int totalDocumentos = lista.numeroEntidades();
   ElementoLista[] elementos = lista.read(termo);
   int documentosComTermo = (elementos != null) ? elementos.length : 0;
