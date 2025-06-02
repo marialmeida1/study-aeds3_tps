@@ -65,10 +65,37 @@ public class ListaInvertidaUtils {
     return result.toArray(new String[0]);
   }
 
-  /* private static float[] calculateFrequencies(String[] termos) {
-   
-  } */
+  private float calcFrequencia(String texto, String termo) {
+    // Normalize the input text and term
+    texto = texto.toLowerCase();
+    termo = termo.toLowerCase();
+
+    // Split the text into terms
+    String[] termos = texto.split("\\s+");
+
+    // Count occurrences of the term
+    int count = 0;
+    for (String t : termos) {
+        if (t.equals(termo)) {
+            count++;
+        }
+    }
+
+    // Calculate term frequency (tf)
+    return (float) count / termos.length;
+}
   
+private float calcularIDF(ListaInvertida lista, String termo) throws Exception {
+  int totalDocumentos = lista.numeroEntidades();
+  ElementoLista[] elementos = lista.read(termo);
+  int documentosComTermo = (elementos != null) ? elementos.length : 0;
+
+  if (documentosComTermo == 0) {
+      return 0;
+  }
+
+  return (float) Math.log((double) totalDocumentos / documentosComTermo);
+}
   // na função principal (de ordenar os resultados), normalizar os termos depois da chamada de extractTerms
   // além disso, terá de ser implementada a função para calcular a frequência
 }
