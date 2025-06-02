@@ -1,4 +1,5 @@
 package tp03.src.data;
+import java.util.ArrayList;
 import java.util.List;
 
 import tp03.src.models.Series;
@@ -41,7 +42,7 @@ public class ArchiveSeries extends Archive<Series> {
     @Override
     public int create(Series s) throws Exception {
         // Verifica se já existe uma série com o mesmo nome
-        Series[] existingSeries = readNome(s.getName());
+        Series[] existingSeries = readEntity(s.getName());
         if (existingSeries != null && existingSeries.length > 0) {
             throw new Exception("Série com o mesmo nome já existe.");
         }
@@ -58,6 +59,41 @@ public class ArchiveSeries extends Archive<Series> {
      * @return array de séries com o nome correspondente, ou {@code null} se não houver.
      * @throws Exception se ocorrer erro durante a leitura.
      */
+
+        /**
+     * Lê todas as séries com o nome especificado.
+     * 
+     * @param nome o nome da série.
+     * @return array de séries com o nome correspondente, ou {@code null} se não houver.
+     * @throws Exception se ocorrer erro durante a leitura.
+     */
+    public Series[] readEntity(String nome) throws Exception {
+
+        if (nome.length() == 0)
+            return null;
+
+        ArrayList<PairNameID> pares = indiceIndiretoNome.read(new PairNameID(nome, -1));
+
+        if (pares.size() > 0) {
+
+            Series[] series = new Series[pares.size()];
+
+            int i = 0;
+
+            for (PairNameID par : pares) {
+
+                series[i++] = read(par.getId());
+
+            }
+
+            return series;
+
+        } else {
+            return null;
+        }
+
+    }
+
     public Series[] readNome(String nome) throws Exception {
 
         if (nome.length() == 0)
