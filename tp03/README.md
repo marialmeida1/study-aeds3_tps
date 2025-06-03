@@ -57,6 +57,10 @@ java -cp tp03/bin tp03.src.Main
 
 ---
 
+## Descrição do Funcionamento
+
+A estrutura de lista invertida implementada aqui permite indexar registros de forma eficiente, especialmente para facilitar buscas por palavras associadas a objetos (como nomes de séries). Basicamente, cada termo (palavra) está associado a uma lista de registros (identificados por ID) que o contém. Essa estrutura é muito usada em mecanismos de busca e sistemas de recuperação de informação.
+
 ## 📦 Descrição das Classes
 
 ### `Main`
@@ -298,9 +302,64 @@ Responsável pela interface com o usuário nas ações relacionadas a **atores e
 
 ---
 
+### `ListaInvertida`
+
+Responsável pela estrutura de índice invertido, armazenando termos associados a IDs de registros (como nomes de séries e seus respectivos IDs).
+
+**Funções principais:**
+
+* Criar e gerenciar os arquivos.
+* Associar termos a registros.
+* Ler os registros associados a um termo.
+* Remover um registro de um termo.
+
+**Métodos principais:**
+
+* create(ElementoLista e)
+* read(int id) 
+* update(ElementoLista e) 
+* delete(int id)
+
+### ElementoLista
+
+Representa um elemento associado a um termo da lista invertida, armazenando a identidade do registro e quantas vezes o termo aparece.
+
+**Funções principais: **
+
+* Guardar o ID do item indexado.
+* Armazenar a frequência de ocorrência do termo.
+* Permitir ordenação e clonagem de elementos.
+
+**Métodos principais: **
+
+* ElementoLista(int id, int frequencia)
+* getID() / setID(int id) 
+* getFrequencia() / setFrequencia(int freq)
+* compareTo(ElementoLista e)
+* clone()
+
+### ListaInvertidaUtils
+
+Classe utilitária para pré-processamento de termos usados na indexação.
+
+**Funções principais: **
+
+* Padronizar palavras antes da inserção na lista invertida.
+* Eliminar palavras irrelevantes (stop words).
+* Melhorar a qualidade da indexação textual.
+
+**Métodos principais: **
+
+* normalizar(String termo) 
+* removerStopWords(String[] termos)
+* extractTerms(String texto) 
+* calcFrequencia(String texto, String termo)
+* calcularIDF(ListaInvertida lista, String termo)
+
+
 ## Experiência dos Integrantes do Trabalho
 
-Cada integrante do grupo compartilhou, em primeira pessoa, um breve relato sobre sua experiência ao longo do desenvolvimento deste projeto. Esses relatos refletem os aprendizados, desafios enfrentados e contribuições individuais. A leitura desses textos complementa a visão técnica do projeto com uma perspectiva mais pessoal e colaborativa.
+Trabalhar com a estrutura de lista invertida nos permitiu compreender de forma mais clara como funcionam sistemas de indexação e recuperação de dados, algo fundamental em áreas como bancos de dados e mecanismos de busca. A implementação das funcionalidades de criação, leitura e exclusão de termos foi um desafio inicial, principalmente para garantir a integridade das informações nos arquivos binários. No entanto, à medida que integramos essa estrutura ao CRUD da entidade Séries, conseguimos visualizar na prática sua utilidade e como ela contribui significativamente para a eficiência nas buscas por texto, otimizando o acesso às informações de forma rápida e estruturada.
 
 - [Experiência de Desenvolvimento](XP.md)
 
@@ -310,13 +369,12 @@ Cada integrante do grupo compartilhou, em primeira pessoa, um breve relato sobre
 
 Para concluir, seguem abaixo as respostas ao checklist solicitado pelo professor. Todas as funcionalidades foram implementadas e testadas com sucesso durante o desenvolvimento do projeto.
 
-- As operações de inclusão, busca, alteração e exclusão de atores estão implementadas e funcionando corretamente? **- SIM**
-- O relacionamento entre séries e atores foi implementado com árvores B+ e funciona corretamente, assegurando a consistência entre as duas entidades? **- SIM**
-- É possível consultar quais são os atores de uma série? **- SIM**
-- É posssível consultar quais são as séries de um ator? **- SIM**
-- A remoção de séries remove os seus vínculos de atores? **- SIM**
-- A inclusão de um ator em uma série em um episódio se limita aos atores existentes? **- SIM**
-- A remoção de um ator checa se há alguma série vinculado a ele? **- SIM**
-- O trabalho está funcionando corretamente? **- SIM**
+- O índice invertido com os termos dos títulos das séries foi criado usando a classe ListaInvertida? **- SIM**
+- O índice invertido com os termos dos títulos dos episódios foi criado usando a classe ListaInvertida? **- SIM**
+- O índice invertido com os termos dos nomes dos atores foi criado usando a classe ListaInvertida? **- SIM**
+- É possível buscar séries por palavras usando o índice invertido? **- SIM**
+- É possível buscar episódios por palavras usando o índice invertido? **- SIM**
+- É possível buscar atores por palavras usando o índice invertido? **- SIM**
 - O trabalho está completo? **- SIM**
-- O trabalho é original e não a cópia de um trabalho de outro grupo? **- SIM**
+- O trabalho é original e não a cópia de um trabalho de um colega? **- SIM**
+
