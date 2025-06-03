@@ -324,13 +324,13 @@ Responsável pela estrutura de índice invertido, armazenando termos associados 
 
 Representa um elemento associado a um termo da lista invertida, armazenando a identidade do registro e quantas vezes o termo aparece.
 
-**Funções principais: **
+**Funções principais:**
 
 * Guardar o ID do item indexado.
 * Armazenar a frequência de ocorrência do termo.
 * Permitir ordenação e clonagem de elementos.
 
-**Métodos principais: **
+**Métodos principais:**
 
 * ElementoLista(int id, int frequencia)
 * getID() / setID(int id) 
@@ -342,13 +342,13 @@ Representa um elemento associado a um termo da lista invertida, armazenando a id
 
 Classe utilitária para pré-processamento de termos usados na indexação.
 
-**Funções principais: **
+**Funções principais:**
 
 * Padronizar palavras antes da inserção na lista invertida.
 * Eliminar palavras irrelevantes (stop words).
 * Melhorar a qualidade da indexação textual.
 
-**Métodos principais: **
+**Métodos principais:**
 
 * normalizar(String termo) 
 * removerStopWords(String[] termos)
