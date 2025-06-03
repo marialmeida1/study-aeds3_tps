@@ -5,7 +5,6 @@ import java.util.List;
 import tp03.src.models.Series;
 import tp03.src.storage.indexes.*;
 import tp03.src.storage.structures.*;
-import tp03.src.storage.structures.ListaInvertida.Buscador;
 import tp03.src.storage.structures.ListaInvertida.ElementoLista;
 import tp03.src.storage.structures.ListaInvertida.ListaInvertida;
 
@@ -94,29 +93,31 @@ public class ArchiveSeries extends Archive<Series> {
 
     }
 
+    /**
+     * Lê todas as séries com o nome especificado.
+     * 
+     * @param nome o nome da série.
+     * @return array de séries com o nome correspondente, ou {@code null} se não houver.
+     * @throws Exception se ocorrer erro durante a leitura.
+     */
     public Series[] readNome(String nome) throws Exception {
 
         if (nome.length() == 0)
             return null;
 
-        // Instancia o Buscador com a Lista Invertida de séries
-        Buscador buscador = new Buscador(listaInvertida, null, null);
+        // Busca os elementos na lista invertida
+        ElementoLista[] elementos = listaInvertida.read(nome);
 
-        // Realiza a busca usando o Buscador
-        List<Integer> idsEncontrados = buscador.buscarSeries(nome);
-
-        System.out.println("IDs encontrados: " + idsEncontrados);
-        
-        // Se nenhum ID foi encontrado, retorna null
-        if (idsEncontrados.isEmpty()) {
+        // Se nenhum elemento foi encontrado, retorna null
+        if (elementos == null || elementos.length == 0) {
             return null;
         }
 
         // Lê as séries correspondentes aos IDs encontrados
-        Series[] series = new Series[idsEncontrados.size()];
+        Series[] series = new Series[elementos.length];
         int i = 0;
-        for (Integer id : idsEncontrados) {
-            series[i++] = read(id);
+        for (ElementoLista elemento : elementos) {
+            series[i++] = read(elemento.getId());
         }
 
         return series;

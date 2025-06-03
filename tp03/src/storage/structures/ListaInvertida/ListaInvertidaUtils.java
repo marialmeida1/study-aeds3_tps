@@ -51,15 +51,16 @@ public class ListaInvertidaUtils {
     String[] termosSeparados = texto.split(" ");
     ArrayList<String> result = new ArrayList<>();
     for (String termo : termosSeparados) {
+      String termoNormalizado = normalize(termo);
       boolean isStopWord = false;
       for (String stopWord : stopWords) {
-        if (termo.equals(stopWord)) {
+        if (termoNormalizado.equals(stopWord)) {
           isStopWord = true;
           break;
         }
       }
-      if (!isStopWord && !termo.isEmpty()) {
-        result.add(termo);
+      if (!isStopWord && !termoNormalizado.isEmpty()) {
+        result.add(termoNormalizado);
       }
     }
     return result.toArray(new String[0]);

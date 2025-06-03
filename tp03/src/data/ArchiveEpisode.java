@@ -6,7 +6,6 @@ import java.util.List;
 import tp03.src.models.Episode;
 import tp03.src.storage.indexes.*;
 import tp03.src.storage.structures.*;
-import tp03.src.storage.structures.ListaInvertida.Buscador;
 import tp03.src.storage.structures.ListaInvertida.ElementoLista;
 import tp03.src.storage.structures.ListaInvertida.ListaInvertida;
 
@@ -93,22 +92,19 @@ public class ArchiveEpisode extends Archive<Episode> {
         if (nome.length() == 0)
             return null;
 
-        // Instancia o Buscador com a Lista Invertida de episódios
-        Buscador buscador = new Buscador(null, listaInvertida, null);
+        // Busca os elementos na lista invertida
+        ElementoLista[] elementos = listaInvertida.read(nome);
 
-        // Realiza a busca usando o Buscador
-        List<Integer> idsEncontrados = buscador.buscarEpisodios(nome);
-
-        // Se nenhum ID foi encontrado, retorna null
-        if (idsEncontrados.isEmpty()) {
+        // Se nenhum elemento foi encontrado, retorna null
+        if (elementos == null || elementos.length == 0) {
             return null;
         }
 
         // Lê os episódios correspondentes aos IDs encontrados
-        Episode[] episodios = new Episode[idsEncontrados.size()];
+        Episode[] episodios = new Episode[elementos.length];
         int i = 0;
-        for (Integer id : idsEncontrados) {
-            episodios[i++] = read(id);
+        for (ElementoLista elemento : elementos) {
+            episodios[i++] = read(elemento.getId());
         }
 
         return episodios;

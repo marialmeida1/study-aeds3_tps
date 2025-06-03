@@ -4,7 +4,6 @@ import java.util.List;
 import tp03.src.models.Actor;
 import tp03.src.storage.indexes.*;
 import tp03.src.storage.structures.*;
-import tp03.src.storage.structures.ListaInvertida.Buscador;
 import tp03.src.storage.structures.ListaInvertida.ElementoLista;
 import tp03.src.storage.structures.ListaInvertida.ListaInvertida;
 
@@ -44,7 +43,6 @@ public class ArchiveActor extends Archive<Actor> {
         return id;
     }
 
-
     /**
      * Lê todas as ators com o nome especificado.
      * 
@@ -57,22 +55,19 @@ public class ArchiveActor extends Archive<Actor> {
         if (nome.length() == 0)
             return null;
 
-        // Instancia o Buscador com a Lista Invertida de atores
-        Buscador buscador = new Buscador(null, null, listaInvertida);
+        // Busca os elementos na lista invertida
+        ElementoLista[] elementos = listaInvertida.read(nome);
 
-        // Realiza a busca usando o Buscador
-        List<Integer> idsEncontrados = buscador.buscarAtores(nome);
-
-        // Se nenhum ID foi encontrado, retorna null
-        if (idsEncontrados.isEmpty()) {
+        // Se nenhum elemento foi encontrado, retorna null
+        if (elementos == null || elementos.length == 0) {
             return null;
         }
 
         // Lê os atores correspondentes aos IDs encontrados
-        Actor[] atores = new Actor[idsEncontrados.size()];
+        Actor[] atores = new Actor[elementos.length];
         int i = 0;
-        for (Integer id : idsEncontrados) {
-            atores[i++] = read(id);
+        for (ElementoLista elemento : elementos) {
+            atores[i++] = read(elemento.getId());
         }
 
         return atores;
